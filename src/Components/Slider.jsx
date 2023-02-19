@@ -2,7 +2,8 @@ import styled from "styled-components"
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
 import { slideItems } from "../data";
 import { useState } from "react";
-import {mobile}  from "../responsive"
+import {mobile, tablet}  from "../responsive"
+
 
 const Container = styled.div`
     width: 100%;
@@ -58,6 +59,7 @@ const InfoContainer = styled.div`
     flex:1;
     padding:50px;
     text-align: left;
+    ${tablet({display:"none"})}
 `;
 
 const Title = styled.h1`
