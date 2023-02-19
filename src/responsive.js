@@ -13,6 +13,14 @@ export const mobile = (props) => {
 
 export const tablet = (props) => {
     return css`
+        @media only screen and (max-width: 1200px) {
+            ${props}
+        };
+    `;
+};
+
+export const desktop = (props) => {
+    return css`
         @media only screen and (max-width: 1920px) {
             ${props}
         };

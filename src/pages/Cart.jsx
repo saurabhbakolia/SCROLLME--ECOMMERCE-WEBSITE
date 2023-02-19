@@ -4,6 +4,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Navbar from './../Components/Navbar';
 import Announcement from './../Components/Announcement';
 import Footer from './../Components/Footer';
+import { Link } from 'react-router-dom';
 
 
 
@@ -158,7 +159,7 @@ const Cart = () => {
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <Link to="/"><TopButton>CONTINUE SHOPPING</TopButton></Link>
                     <TopTexts>
                         <TopText>Shopping Bag(2)</TopText>
                         <TopText>Your Wishlist (0)</TopText>
