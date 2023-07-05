@@ -82,7 +82,7 @@ const Navbar = () => {
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo><Link to="/">LAMA.</Link></Logo>
+                    <Logo><Link to="/">SCROLL<span style={{color:'teal'}}>ME</span></Link></Logo>
                 </Center>
                 <Right>
                     <MenuItem><Link to="/register">REGISTER</Link></MenuItem>
