@@ -1,6 +1,7 @@
 import { Email, Facebook, Instagram, LinkedIn, LocalPhone, LocationOn, Twitter } from "@mui/icons-material";
 import styled from "styled-components"
-import {mobile} from '../responsive'
+import { mobile } from '../responsive'
+import { Link } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -63,7 +64,7 @@ const ListItem = styled.li`
 const Right = styled.div`
     flex: 1;
     padding: 20px;
-    ${mobile({ backgroundColor: "#fff8f8"})}
+    ${mobile({ backgroundColor: "#fff8f8" })}
 `;
 
 const ContactItem = styled.div`
@@ -82,11 +83,9 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>LAMA.</Logo>
+                <Logo>SCROLL<span style={{ color: 'teal' }}>ME</span>.</Logo>
                 <Desc>
-                    There are many variations of passages of Lorem Ipsum available, but
-                    the majority have suffered alteration in some form, by injected
-                    humour, or randomised words which don’t look even slightly believable.
+                    Welcome to <span style={{ color: 'teal', fontWeight: 600 }}>ScrollMe</span> Web Store, your ultimate destination for trendy and fashionable clothing. We pride ourselves on curating a diverse collection of high-quality apparel that caters to your unique style and personality.
                 </Desc>
                 <SocialContainer>
                     <SocialIcon color="3B5999">
@@ -106,8 +105,8 @@ const Footer = () => {
             <Center>
                 <Title>Useful Links</Title>
                 <List>
-                    <ListItem>Home</ListItem>
-                    <ListItem>Cart</ListItem>
+                    <ListItem><Link to={'/'}>Home</Link></ListItem>
+                    <ListItem><Link to={'/cart'}>Cart</Link></ListItem>
                     <ListItem>Man Fashion</ListItem>
                     <ListItem>Woman Fashion</ListItem>
                     <ListItem>Accessories</ListItem>
