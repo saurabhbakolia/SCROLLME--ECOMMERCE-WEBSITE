@@ -52,10 +52,15 @@ const Agreement = styled.span`
     margin: 20px 0px;
 `;
 
+const Text = styled.p`
+    font-size: 12px;
+
+`;
+
 const Link = styled.a`
     font-size: 12px;
     margin: 5px 0px;
-    text-decoration: none;
+    text-decoration: underline;
     cursor: pointer;
 `;
 
@@ -74,7 +79,7 @@ const Register = () => {
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
                 <Form>
-                    <Input placeholder="name" />
+                    <Input placeholder="first name" />
                     <Input placeholder="last name" />
                     <Input placeholder="username" />
                     <Input placeholder="email" />
@@ -85,9 +90,9 @@ const Register = () => {
                             By creating an account, I consent to the processing of my personal
                             data in accordance with the <b>PRIVACY POLICY</b>
                         </Agreement>
-                        <Link href="/login">
-                            Already have an account? <b>LOGIN</b>
-                        </Link>
+                        <Text>
+                            Already have an account? <Link href="/login">LOGIN</Link>
+                        </Text>
                     </Box>
 
                     <Button>CREATE</Button>
