@@ -15,6 +15,15 @@ const Container = styled.div`
     justify-content: center;
 `;
 
+const Box = styled.div`
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 6px;
+`;
+
 const Wrapper = styled.div`
     width: 40%;
     padding: 20px;
@@ -43,6 +52,13 @@ const Agreement = styled.span`
     margin: 20px 0px;
 `;
 
+const Link = styled.a`
+    font-size: 12px;
+    margin: 5px 0px;
+    text-decoration: none;
+    cursor: pointer;
+`;
+
 const Button = styled.button`
     width: 40%;
     border: none;
@@ -64,10 +80,16 @@ const Register = () => {
                     <Input placeholder="email" />
                     <Input placeholder="password" />
                     <Input placeholder="confirm password" />
-                    <Agreement>
-                        By creating an account, I consent to the processing of my personal
-                        data in accordance with the <b>PRIVACY POLICY</b>
-                    </Agreement>
+                    <Box>
+                        <Agreement>
+                            By creating an account, I consent to the processing of my personal
+                            data in accordance with the <b>PRIVACY POLICY</b>
+                        </Agreement>
+                        <Link href="/login">
+                            Already have an account? <b>LOGIN</b>
+                        </Link>
+                    </Box>
+
                     <Button>CREATE</Button>
                 </Form>
             </Wrapper>
