@@ -6,18 +6,20 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart from './pages/Cart';
 import { Routes, Route } from "react-router-dom";
+import ProtectedRoute from './utils/ProtectedRoute';
 
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="product" element={<Product />} />
-        <Route path="productList" element={<ProductList />} />
-        <Route path="cart" element={<Cart />} />
+        <Route path="/" element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        } />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   );
