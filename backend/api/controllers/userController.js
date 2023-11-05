@@ -4,17 +4,21 @@ var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var User = mongoose.model('User');
+var UserToken = require('../models/userToken');
 var generateTokens = require("../controllers/generateTokenController");
+var verifyRefreshToken = require("../utils/verifyRefreshToken");
+var verifyAccessToken = require("../utils/verifyAccessToken");
 
-exports.register = function (req, res) {
-    var newUser = new User(req.body);
+exports.register = async function (req, res) {
     if (req.body.password !== req.body.confirmPassword) {
         return res.status(400).send({
             message: "Passwords do not match"
         });
     }
-    newUser.password = bcrypt.hashSync(req.body.password, 10); // we are hashing the password
-    newUser.save()
+
+    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashedPassword = await bcrypt.hashSync(req.body.password, salt);
+    await User({ ...req.body, password: hashedPassword }).save()
         .then(function (user) {
             user.password = undefined;
             return res.status(201).json({
@@ -42,7 +46,10 @@ exports.register = function (req, res) {
 exports.sign_in = async function (req, res) {
     User.findOne({ username: req.body.username })
         .then(async function (user) {
-            if (!user || !user.comparePassword(req.body.password)) {
+            const verifyPassword = await bcrypt.compareSync(req.body.password, user.password);
+            console.log(verifyPassword);
+            console.log(user);
+            if (!verifyPassword) {
                 return res.status(401).json({
                     message: 'Authentication failed. Invalid username or password!'
                 });
@@ -70,15 +77,116 @@ exports.loginRequired = function (req, res, next) {
     }
 };
 
-exports.profile = function (req, res, next) {
-    if (!req.user) {
-        return res.status(401).json({
-            message: 'Unauthorized user!'
+exports.profile = function (req, res) {
+    try {
+        if (!req.headers.authorization) {
+            return res.status(400).json({
+                message: "Authorization header is required"
+            });
+        }
+
+        // Extract the token from the Authorization header
+        const authHeader = req.headers.authorization;
+        const accessToken = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        if (!accessToken) {
+            return res.status(401).json({
+                message: "Bearer token is required"
+            });
+        }
+
+        verifyAccessToken(accessToken)
+            .then(async ({ user }) => {
+                const payload = { _id: user._id, roles: user.roles };
+                const userDetails = await getUserDetails(user._id)
+                    .then(data => {
+                        res.status(200).json({
+                            status: 'success',
+                            message: 'User Profile fetched successfully!',
+                            data: {
+                                user: {
+                                    _id: user._id,
+                                    firstName: data.firstName,
+                                    lastName: data.lastName,
+                                    username: data.username,
+                                    email: data.email,
+                                    roles: data.roles
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.log("Error fetching user:", err);
+                        return res.status(500).json({
+                            message: "Error fetching user details: " + err.message
+                        });
+                    });
+            })
+            .catch(err => {
+                console.log("Error signing access token");
+                return res.status(401).json({
+                    message: err.message
+                });
+            });
+
+    } catch (error) {
+        console.log("Error fetching user:", error);
+        return res.status(500).json({
+            message: "Error fetching user details: " + error.message
         });
     }
+};
 
-    res.json({
-        message: 'Welcome to your profile',
-        user: req.user
+
+exports.logOut = ("/", async (req, res) => {
+    try {
+        if (!req.headers.authorization) {
+            return res.status(400).json({
+                message: "Authorization header is required"
+            });
+        }
+
+        // Extract the token from the Authorization header
+        const authHeader = req.headers.authorization;
+        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+        if (!token) {
+            return res.status(401).json({
+                message: "Bearer token is required"
+            });
+        }
+
+        const userToken = await UserToken.findOne({ accessToken: token });
+        if (!userToken) {
+            return res.status(401).json({
+                message: "Invalid token!"
+            });
+        }
+        await userToken.deleteOne();
+        res.status(200).json({
+            status: 'success',
+            message: 'User logged out successfully!'
+        });
+    } catch (error) {
+        console.log("Error logging out user:", error);
+        return res.status(500).json({
+            message: "Error logging out user"
+        });
+    }
+});
+
+const getUserDetails = async (_id) => {
+    return new Promise((resolve, reject) => {
+        User.findOne({ _id: _id })
+            .then(function (user) {
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject(null);
+                }
+            })
+            .catch(function (err) {
+                reject(err);
+            });
     });
 };

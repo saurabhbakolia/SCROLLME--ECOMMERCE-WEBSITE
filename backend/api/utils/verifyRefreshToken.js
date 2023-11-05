@@ -8,7 +8,7 @@ const verifyRefreshToken = (refreshToken) => {
     const privateKey = "SCROLLME_SECRET";
 
     return new Promise((resolve, reject) => {
-        UserToken.findOne({ token: refreshToken })
+        UserToken.findOne({ refreshToken: refreshToken })
             .then((doc) => {
                 if (!doc) {
                     console.log("user token not found");

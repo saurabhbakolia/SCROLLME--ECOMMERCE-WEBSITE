@@ -46,10 +46,6 @@ var UserSchema = new Schema({
     }
 });
 
-UserSchema.methods.comparePassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
-};
-
 UserSchema.methods.compareUsername = function (username) {
     if (username === this.username) {
         return true;

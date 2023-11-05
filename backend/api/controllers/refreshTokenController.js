@@ -1,8 +1,7 @@
 'use strict';
 
-var UserToken = require("../models/userToken");
 var jwt = require("jsonwebtoken");
-var verifyRefreshToken = require("./verifyRefreshToken");
+var verifyRefreshToken = require("../utils/verifyRefreshToken");
 
 
 exports.newAccessToken = async (req, res) => {
