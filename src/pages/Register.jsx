@@ -2,6 +2,23 @@ import styled from "styled-components";
 import axios from "axios";
 import { API_BASE_URL } from "../common/constants/apiConstants";
 import { UserRegistrationAPI } from "../services/userAPI/registerationAPI";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Triangle } from "react-loader-spinner";
+import { useEffect } from "react";
+
+const LoaderOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.6); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+`;
 
 const Container = styled.div`
     width: 100vw;
@@ -77,9 +94,12 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         console.log("Inside the handleSubmit function");
         const formData = {
             firstName: e.target.firstName.value,
@@ -92,42 +112,60 @@ const Register = () => {
 
         if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match!");
+            setIsLoading(false);
             return;
         }
-
+        setIsLoading(true);
         try {
             const response = await UserRegistrationAPI(formData);
             console.log(response.data);
         } catch (error) {
             console.log("Error: ", error);
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false);
+                navigate("/login");
+            }, 500);
         }
     };
 
     return (
-        <Container>
-            <Wrapper>
-                <Title>CREATE AN ACCOUNT</Title>
-                <Form onSubmit={(e) => handleSubmit(e)}>
-                    <Input type="text" name="firstName" placeholder="first name" required />
-                    <Input type="text" name="lastName" placeholder="last name" required />
-                    <Input type="text" name="username" placeholder="username" required />
-                    <Input type="email" name="email" placeholder="email" required />
-                    <Input type="password" name="password" placeholder="password" required />
-                    <Input type="password" name="confirmPassword" placeholder="confirm password" required />
-                    <Box>
-                        <Agreement>
-                            By creating an account, I consent to the processing of my personal
-                            data in accordance with the <b>PRIVACY POLICY</b>
-                        </Agreement>
-                        <Text>
-                            Already have an account? <Link href="/login">LOGIN</Link>
-                        </Text>
-                    </Box>
+        <>
+            {isLoading && (
+                <LoaderOverlay>
+                    <Triangle
+                        color="teal"
+                        height={80}
+                        width={80}
+                        ariaLabel="triangle-loading"
+                    />
+                </LoaderOverlay>
+            )}
+            <Container>
+                <Wrapper>
+                    <Title>CREATE AN ACCOUNT</Title>
+                    <Form onSubmit={(e) => handleSubmit(e)}>
+                        <Input type="text" name="firstName" placeholder="first name" required />
+                        <Input type="text" name="lastName" placeholder="last name" required />
+                        <Input type="text" name="username" placeholder="username" required />
+                        <Input type="email" name="email" placeholder="email" required />
+                        <Input type="password" name="password" placeholder="password" required />
+                        <Input type="password" name="confirmPassword" placeholder="confirm password" required />
+                        <Box>
+                            <Agreement>
+                                By creating an account, I consent to the processing of my personal
+                                data in accordance with the <b>PRIVACY POLICY</b>
+                            </Agreement>
+                            <Text>
+                                Already have an account? <Link href="/login">LOGIN</Link>
+                            </Text>
+                        </Box>
 
-                    <Button type="submit">CREATE</Button>
-                </Form>
-            </Wrapper>
-        </Container>
+                        <Button type="submit">CREATE</Button>
+                    </Form>
+                </Wrapper>
+            </Container>
+        </>
     );
 };
 

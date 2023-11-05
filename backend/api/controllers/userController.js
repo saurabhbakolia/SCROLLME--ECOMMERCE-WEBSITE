@@ -16,10 +16,11 @@ exports.register = function (req, res) {
     newUser.save()
         .then(function (user) {
             user.password = undefined;
-            return res.json({
-                message: 'user registration successful!',
+            return res.status(201).json({
+                success: true,
+                message: 'User registration successful!',
                 data: user
-            });
+            })
         })
         .catch(function (err) {
             if (err.code === 11000) {
