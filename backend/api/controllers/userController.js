@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 var User = mongoose.model('User');
+var generateTokens = require("../controllers/generateTokenController");
 
 exports.register = function (req, res) {
     var newUser = new User(req.body);
@@ -17,10 +18,9 @@ exports.register = function (req, res) {
         .then(function (user) {
             user.password = undefined;
             return res.status(201).json({
-                success: true,
+                status: "success",
                 message: 'User registration successful!',
-                data: user
-            })
+            });
         })
         .catch(function (err) {
             if (err.code === 11000) {
@@ -39,22 +39,20 @@ exports.register = function (req, res) {
 };
 
 
-exports.sign_in = function (req, res) {
+exports.sign_in = async function (req, res) {
     User.findOne({ username: req.body.username })
-        .then(function (user) {
+        .then(async function (user) {
             if (!user || !user.comparePassword(req.body.password)) {
                 return res.status(401).json({
                     message: 'Authentication failed. Invalid username or password!'
                 });
             }
-            return res.json({
-                message: 'user login successful!',
-                token: jwt.sign({
-                    username: user.username,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    _id: user.id
-                }, 'SCROLLME_SECRET')
+
+            const { accessToken, refreshToken } = await generateTokens(user);
+            return res.status(200).json({
+                status: 'success',
+                message: 'Logged in successfully!',
+                data: { accessToken, refreshToken }
             });
         })
         .catch(function (err) {

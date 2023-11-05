@@ -1,35 +1,25 @@
 'use strict';
 
 var express = require('express');
+const dbConnect = require('./api/database/dbConnect.js');
 var cors = require('cors');
-const app = express();
+require('dotenv').config();
+var User = require('./api/models/userModel');
+var bodyParser = require('body-parser');
+var jsonwebtoken = require('jsonwebtoken');
+var userRoute = require('./api/routes/userRoute.js');
+var refreshTokenRoute = require('./api/routes/refreshTokenRoute.js');
 
+const app = express();
 const corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200
 };
-
+var port = process.env.PORT || 8080;
 app.use(cors());
 
-var port = process.env.PORT || 8080;
 
-var User = require('./api/models/userModel');
-var bodyParser = require('body-parser');
-var jsonwebtoken = require('jsonwebtoken');
-
-const mongoose = require('mongoose');
-const option = {
-    socketTimeoutMS: 30000,
-    keepAlive: true,
-    // reconnectTries: 30000
-};
-
-const mongooseURI = process.env.MONGODB_URI;
-mongoose.connect('mongodb://127.0.01:27017/scrollme', option).then(function () {
-    console.log('connected to db');
-}, function (err) {
-    console.log(err);
-});
+dbConnect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -59,8 +49,10 @@ app.use(function (req, res, next) {
     }
 });
 
-var routes = require('./api/routes/userRoute.js');
-routes(app);
+
+// Use Routes
+app.use('/auth/user', userRoute);
+app.use('/auth', refreshTokenRoute);
 
 app.use(function (req, res) {
     res.status(404).send({
