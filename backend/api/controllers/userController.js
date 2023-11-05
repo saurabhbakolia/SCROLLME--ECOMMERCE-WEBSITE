@@ -16,12 +16,24 @@ exports.register = function (req, res) {
     newUser.save()
         .then(function (user) {
             user.password = undefined;
-            return res.json(user);
+            return res.json({
+                message: 'user registration successful!',
+                data: user
+            });
         })
         .catch(function (err) {
-            return res.status(400).send({
-                message: err
-            });
+            if (err.code === 11000) {
+                // Extract the field from the error message
+                const field = err.message.split("index:")[1].split(" dup key")[0].split("_1")[0].trim();
+                return res.status(409).json({
+                    message: `An account with that ${field} already exists.`
+                });
+            } else {
+                // If it's not a duplicate key error, send a generic error message
+                return res.status(400).send({
+                    message: 'There was a problem registering the user.'
+                });
+            }
         });
 };
 

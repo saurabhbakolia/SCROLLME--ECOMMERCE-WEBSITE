@@ -1,7 +1,16 @@
 'use strict';
 
 var express = require('express');
+var cors = require('cors');
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+};
+
+app.use(cors());
+
 var port = process.env.PORT || 8080;
 
 var User = require('./api/models/userModel');
