@@ -7,9 +7,11 @@ import Login from './pages/Login';
 import Cart from './pages/Cart';
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from './utils/ProtectedRoute';
+import useAuthCheck from './hooks/useAuthCheck';
 
 
 function App() {
+  useAuthCheck();
   return (
     <div className="App">
       <Routes>

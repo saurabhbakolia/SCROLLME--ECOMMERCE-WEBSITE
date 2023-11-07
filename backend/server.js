@@ -6,9 +6,11 @@ var cors = require('cors');
 require('dotenv').config();
 var User = require('./api/models/userModel');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var jsonwebtoken = require('jsonwebtoken');
 var userRoute = require('./api/routes/userRoute.js');
 var refreshTokenRoute = require('./api/routes/refreshTokenRoute.js');
+var authCheckStatusRoute = require('./api/routes/authCheckStatusRoute.js');
 
 const app = express();
 const corsOptions = {
@@ -17,7 +19,7 @@ const corsOptions = {
 };
 var port = process.env.PORT || 8080;
 app.use(cors(corsOptions));
-
+app.use(cookieParser());
 
 dbConnect();
 
@@ -27,6 +29,7 @@ app.use(bodyParser.json());
 // Use Routes
 app.use('/auth/user', userRoute);
 app.use('/auth', refreshTokenRoute);
+app.use('/api/auth/', authCheckStatusRoute);
 
 app.use(function (req, res) {
     res.status(404).send({
