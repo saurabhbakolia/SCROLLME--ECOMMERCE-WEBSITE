@@ -14,8 +14,9 @@ const useAuthCheck = () => {
         const checkAuthStatus = async () => {
             try {
                 const response = await axios.get(API_BASE_URL + '/api/auth/check', { withCredentials: true });
-                dispatch(changeAuthenticated(response.data.isAuthenticated));
-                if (!response.data.isAuthenticated) {
+                dispatch(changeAuthenticated(response.data.data.isAuthenticated));
+                console.log('response.data.isAuthenticated', response.data.data.isAuthenticated);
+                if (!response.data.data.isAuthenticated && response.data.data.isAuthenticated !== undefined) {
                     navigate('/login');
                 }
             } catch (error) {
@@ -28,7 +29,7 @@ const useAuthCheck = () => {
         checkAuthStatus();
 
         // Set up an interval to check auth status every 2 minutes
-        const intervalId = setInterval(checkAuthStatus, 2 * 60 * 1000);
+        const intervalId = setInterval(checkAuthStatus, 1000);
 
         // Clear the interval when the component unmounts
         return () => clearInterval(intervalId);

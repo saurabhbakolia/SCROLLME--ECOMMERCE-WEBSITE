@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Badge, ShoppingCartOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const Container = styled.div`
@@ -71,6 +72,8 @@ const MenuItem = styled.div`
 
 
 const Navbar = () => {
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+
     return (
         <Container>
             <Wrapper>
@@ -82,11 +85,11 @@ const Navbar = () => {
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo><Link to="/">SCROLL<span style={{color:'teal'}}>ME</span></Link></Logo>
+                    <Logo><Link to="/">SCROLL<span style={{ color: 'teal' }}>ME</span></Link></Logo>
                 </Center>
                 <Right>
-                    <MenuItem><Link to="/register">REGISTER</Link></MenuItem>
-                    <MenuItem><Link to="/login">SIGN IN</Link></MenuItem>
+                    {!isAuthenticated && <MenuItem><Link to="/register">REGISTER</Link></MenuItem>}
+                    {!isAuthenticated && <MenuItem><Link to="/login">SIGN IN</Link></MenuItem>}
                     <MenuItem>
                         <Link to="/cart">
                             <Badge badgecontent={4} color="primary">
