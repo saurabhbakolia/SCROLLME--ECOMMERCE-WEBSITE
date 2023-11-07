@@ -46,7 +46,10 @@ exports.register = async function (req, res) {
 exports.sign_in = async function (req, res) {
     User.findOne({ username: req.body.username })
         .then(async function (user) {
-            const verifyPassword = await bcrypt.compareSync(req.body.password, user.password);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const verifyPassword = bcrypt.compareSync(req.body.password, user.password);
             console.log(verifyPassword);
             console.log(user);
             if (!verifyPassword) {
@@ -56,10 +59,21 @@ exports.sign_in = async function (req, res) {
             }
 
             const { accessToken, refreshToken } = await generateTokens(user);
+            res.cookie('accessToken', accessToken, {
+                httpOnly: true,
+                secure: true, // set to true if using https
+                sameSite: 'none', // adjust according to your needs
+                maxAge: 15 * 60 * 1000, // token expiration time in milliseconds
+            });
+            res.cookie('refreshToken', refreshToken, {
+                httpOnly: true,
+                secure: true, // set to true if using https
+                sameSite: 'none', // adjust according to your needs
+                maxAge: 7 * 24 * 60 * 60 * 1000, // token expiration time in milliseconds
+            });
             return res.status(200).json({
                 status: 'success',
                 message: 'Logged in successfully!',
-                data: { accessToken, refreshToken }
             });
         })
         .catch(function (err) {

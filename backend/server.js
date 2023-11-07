@@ -13,10 +13,10 @@ var refreshTokenRoute = require('./api/routes/refreshTokenRoute.js');
 const app = express();
 const corsOptions = {
     origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
+    credentials: true,
 };
 var port = process.env.PORT || 8080;
-app.use(cors());
+app.use(cors(corsOptions));
 
 
 dbConnect();

@@ -10,12 +10,14 @@ import {
     REGISTER
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
 import userReducer from "./Slices/UserSlice";
 
 const persistConfig = {
     key: "root", 
     version: 1, 
-    storage
+    storage,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 };
 
 const rootReducer = persistReducer(persistConfig, userReducer);

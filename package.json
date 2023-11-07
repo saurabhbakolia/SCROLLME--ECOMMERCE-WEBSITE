@@ -19,6 +19,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "save": "^2.9.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"

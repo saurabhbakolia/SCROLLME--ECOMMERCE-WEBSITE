@@ -33,10 +33,15 @@ exports.newAccessToken = async (req, res) => {
                 { userId: user._id },
                 { accessToken: accessToken },
             );
+            res.cookie('accessToken', accessToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                maxAge: 15 * 60 * 1000, // token expiration time in milliseconds
+            });
             res.status(200).json({
                 status: 'success',
                 message: 'New access token generated successfully!',
-                data: { accessToken }
             });
         })
         .catch(err => {

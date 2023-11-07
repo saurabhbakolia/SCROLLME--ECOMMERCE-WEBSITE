@@ -160,7 +160,6 @@ const Register = () => {
                                 Already have an account? <Link href="/login">LOGIN</Link>
                             </Text>
                         </Box>
-
                         <Button type="submit">CREATE</Button>
                     </Form>
                 </Wrapper>
