@@ -15,7 +15,7 @@ export const UserSignInAPI = async (loginData) => {
             })
             .catch(error => {
                 if (error.response.status === 401) {
-                    return Promise.reject(error.response.data.message);
+                    return Promise.reject(error.response.message);
                 }
                 return Promise.reject(error);
             })

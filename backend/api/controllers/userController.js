@@ -77,7 +77,10 @@ exports.sign_in = async function (req, res) {
             });
         })
         .catch(function (err) {
-            throw err;
+            return res.status(500).json({
+                status: 401,
+                message: 'Internal server error'
+            });
         })
 };
 
