@@ -2,6 +2,7 @@
 
 var jwt = require("jsonwebtoken");
 var verifyRefreshToken = require("../utils/verifyRefreshToken");
+const UserToken = require("../models/userToken");
 
 
 exports.newAccessToken = async (req, res) => {
@@ -21,14 +22,17 @@ exports.newAccessToken = async (req, res) => {
         });
     }
     verifyRefreshToken(token)
-        .then(({ user }) => {
+        .then(async ({ user }) => {
             const payload = { _id: user._id, roles: user.roles };
             const accessToken = jwt.sign(
                 payload,
                 'SCROLLME_SECRET',
                 { expiresIn: '15m' }
             );
-
+            await UserToken.findOneAndUpdate(
+                { userId: user._id },
+                { accessToken: accessToken },
+            );
             res.status(200).json({
                 status: 'success',
                 message: 'New access token generated successfully!',
