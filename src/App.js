@@ -20,8 +20,14 @@ function App() {
             <Home />
           </ProtectedRoute>
         } />
+        <Route path='/cart' element={
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        } />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path='*' element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>
   );
