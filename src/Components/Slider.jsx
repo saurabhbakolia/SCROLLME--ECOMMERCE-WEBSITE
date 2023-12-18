@@ -98,7 +98,7 @@ const Slider = () => {
                         <InfoContainer>
                             <Title>{item.title}</Title>
                             <Desc>{item.desc}</Desc>
-                            <OutlinedButton text={"SHOP NOW"} link={"/cart"}/>
+                            <OutlinedButton text={"SHOP NOW"} link={"/products"}/>
                         </InfoContainer>
                     </Slide>
                 ))}
