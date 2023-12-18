@@ -4,6 +4,7 @@ import { slideItems } from "../data";
 import { useState } from "react";
 import {mobile, tablet}  from "../responsive"
 import { Link } from 'react-router-dom';
+import OutlinedButton from "./OutlinedButton";
 
 
 const Container = styled.div`
@@ -72,12 +73,6 @@ const Desc = styled.p`
     font-weight: 500;
     letter-spacing:3px; 
 `;
-const Button = styled.button`
-    padding: 10px;
-    font-size: 20px;
-    background:transparent;
-    cursor:pointer;
-`;
 
 const Slider = () => {
     const [slideIndex, setSlideIndex] = useState(0);
@@ -103,7 +98,7 @@ const Slider = () => {
                         <InfoContainer>
                             <Title>{item.title}</Title>
                             <Desc>{item.desc}</Desc>
-                            <Button><Link to="/cart">SHOW NOW</Link></Button>
+                            <OutlinedButton text={"SHOP NOW"} link={"/cart"}/>
                         </InfoContainer>
                     </Slide>
                 ))}
