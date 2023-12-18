@@ -10,6 +10,7 @@ const Button = styled(Link)`
     text-transform: uppercase;
     text-decoration: none; /* Remove default underline */
     border: 2px solid black;
+    font-weight: 500;
 `;
 
 
