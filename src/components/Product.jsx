@@ -68,6 +68,8 @@ const Product = ({ item }) => {
 
     const handleProductSearch = (id) => {
         navigate(`/product/${id}`);
+
+        
     };
     return (
         <Container>
