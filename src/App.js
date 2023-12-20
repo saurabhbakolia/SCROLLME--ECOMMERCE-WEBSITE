@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={
-            <Home />
+          <Home />
         } />
         <Route path='/cart' element={
           <ProtectedRoute>
