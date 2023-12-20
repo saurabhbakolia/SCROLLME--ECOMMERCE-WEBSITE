@@ -1,6 +1,6 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Info = styled.div`
     opacity:0;
@@ -64,6 +64,11 @@ const Icon = styled.div`
 
 
 const Product = ({ item }) => {
+    const navigate = useNavigate();
+
+    const handleProductSearch = (id) => {
+        navigate(`/product/${id}`);
+    };
     return (
         <Container>
             <Circle />
@@ -72,7 +77,7 @@ const Product = ({ item }) => {
                 <Icon>
                     <Link to="/cart"><ShoppingCartOutlined /></Link>
                 </Icon>
-                <Icon>
+                <Icon onClick={() => handleProductSearch(item.id)}>
                     <SearchOutlined />
                 </Icon>
                 <Icon>
