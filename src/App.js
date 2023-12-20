@@ -18,9 +18,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={
-          <ProtectedRoute>
             <Home />
-          </ProtectedRoute>
         } />
         <Route path='/cart' element={
           <ProtectedRoute>
