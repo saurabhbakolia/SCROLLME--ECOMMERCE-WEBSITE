@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Navbar from './../Components/Navbar';
-import Announcement from './../Components/Announcement';
-import Products from './../Components/Products';
-import Newsletter from './../Components/Newsletter';
-import Footer from './../Components/Footer';
+import Navbar from './../components/Navbar';
+import Announcement from '../components/Announcement';
+import Products from './../components/Products';
+import Newsletter from './../components/Newsletter';
+import Footer from './../components/Footer';
 
 
 

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import Navbar from './../Components/Navbar';
-import Announcement from './../Components/Announcement';
-import Footer from './../Components/Footer';
+import Navbar from './../components/Navbar';
+import Announcement from '../components/Announcement';
+import Footer from './../components/Footer';
 import { Link } from 'react-router-dom';
 
 

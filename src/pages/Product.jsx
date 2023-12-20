@@ -1,18 +1,89 @@
 import styled from "styled-components";
-import Navbar from './../Components/Navbar';
-import Announcement from './../Components/Announcement';
-import Newsletter from './../Components/Newsletter';
-import Footer from './../Components/Footer';
+import Navbar from './../components/Navbar';
+import Announcement from '../components/Announcement';
+import Newsletter from './../components/Newsletter';
+import Footer from './../components/Footer';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import {mobile} from '../responsive'
+import { mobile, tablet } from '../responsive'
+import { useParams } from "react-router-dom";
+import { allProducts } from "../data";
+import { useEffect } from "react";
+import { useState } from "react";
+import { tab } from "@testing-library/user-event/dist/tab";
+
+const Product = () => {
+    const [product, setProduct] = useState();
+    const params = useParams();
+
+    useEffect(() => {
+        console.log("product id: ", params.productId); // "product id:  1
+        const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
+        setProduct(selectedProduct);
+        console.log("product: ", product);
+    }, [product, params.productId]);
+
+    return (
+        <Container>
+            <Navbar />
+            <Announcement />
+            <Wrapper>
+                <ImgContainer>
+                    {product && <Image src={product.img} />}
+                </ImgContainer>
+                <InfoContainer>
+                    <Title>{product && product.title}</Title>
+                    <Desc>
+                        {product && product.desc}
+                    </Desc>
+                    <Price>{product && product.price}</Price>
+                    <FilterContainer>
+                        <Filter>
+                            <FilterTitle>Color</FilterTitle>
+                            <FilterColor color="black" />
+                            <FilterColor color="darkblue" />
+                            <FilterColor color="gray" />
+                        </Filter>
+                        <Filter>
+                            <FilterTitle>Size</FilterTitle>
+                            <FilterSize>
+                                <FilterSizeOption>XS</FilterSizeOption>
+                                <FilterSizeOption>S</FilterSizeOption>
+                                <FilterSizeOption>M</FilterSizeOption>
+                                <FilterSizeOption>L</FilterSizeOption>
+                                <FilterSizeOption>XL</FilterSizeOption>
+                            </FilterSize>
+                        </Filter>
+                    </FilterContainer>
+                    <AddContainer>
+                        <AmountContainer>
+                            <RemoveIcon />
+                            <Amount>1</Amount>
+                            <AddIcon />
+                        </AmountContainer>
+                        <Button>ADD TO CART</Button>
+                    </AddContainer>
+                </InfoContainer>
+            </Wrapper>
+            <Newsletter />
+            <Footer />
+        </Container>
+    );
+};
+
+export default Product;
+
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
-    ${mobile({flexDirection:"column;"})}
+    justify-content: flex-start;
+    align-items: flex-start;
+    ${mobile({ flexDirection: "column;" })}
+    ${mobile({ padding: "10px;" })}
+    ${tablet({ padding: "10px;" })}
 `;
 
 const ImgContainer = styled.div`
@@ -21,13 +92,22 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
     width: 100%;
-    height: 90vh;
-    object-fit: cover;
+    height: 64vh;
+    object-fit: contain;
+    ${mobile({ height: "40vh;" })}
+    ${mobile({ width: "100%;" })}
+    ${tablet({ height: "40vh;" })}
+    ${tablet({ width: "100%;" })}
+    object-position: center;
 `;
 
 const InfoContainer = styled.div`
     flex: 1;
     padding: 0px 50px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    ${mobile({ padding: "4px;" })}
+    text-align: left;
 `;
 
 const Title = styled.h1`
@@ -111,58 +191,3 @@ const Button = styled.button`
         background-color: #f8f4f4;
     }
 `;
-
-const Product = () => {
-    return (
-        <Container>
-            <Navbar />
-            <Announcement />
-            <Wrapper>
-                <ImgContainer>
-                    <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
-                </ImgContainer>
-                <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                        venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-                        iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-                        tristique tortor pretium ut. Curabitur elit justo, consequat id
-                        condimentum ac, volutpat ornare.
-                    </Desc>
-                    <Price>$ 20</Price>
-                    <FilterContainer>
-                        <Filter>
-                            <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
-                        </Filter>
-                        <Filter>
-                            <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
-                                <FilterSizeOption>XS</FilterSizeOption>
-                                <FilterSizeOption>S</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
-                            </FilterSize>
-                        </Filter>
-                    </FilterContainer>
-                    <AddContainer>
-                        <AmountContainer>
-                            <RemoveIcon />
-                            <Amount>1</Amount>
-                            <AddIcon />
-                        </AmountContainer>
-                        <Button>ADD TO CART</Button>
-                    </AddContainer>
-                </InfoContainer>
-            </Wrapper>
-            <Newsletter />
-            <Footer />
-        </Container>
-    );
-};
-
-export default Product;

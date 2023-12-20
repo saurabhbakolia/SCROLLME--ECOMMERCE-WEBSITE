@@ -5,6 +5,7 @@ import { Badge, ShoppingCartOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Profile from './Profile';
 
 
 const Container = styled.div`
@@ -58,7 +59,7 @@ const Right = styled.div`
     flex:1;
     display: flex;
     align-items: center;
-    justify-content: flex-end; 
+    justify-content: center; 
     ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
@@ -92,9 +93,7 @@ const Navbar = () => {
                     {!isAuthenticated && <MenuItem><Link to="/login">SIGN IN</Link></MenuItem>}
                     <MenuItem>
                         <Link to="/cart">
-                            <Badge badgecontent={4} color="primary">
-                                <ShoppingCartOutlined />
-                            </Badge>
+                            <ShoppingCartOutlined />
                         </Link>
                     </MenuItem>
                 </Right>
