@@ -3,6 +3,7 @@ import { UserSignInAPI } from "../services/userAPI/signInAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeAuthenticated } from "../store/Slices/UserSlice";
+import { mobile, tablet } from "../responsive";
 
 const Container = styled.div`
     width: 100vw;
@@ -21,6 +22,8 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     width: 25%;
+    ${mobile({ width: "84%;" })}
+    ${tablet({ width: "84%;" })}
     padding: 20px;
     background-color: white;
 `;
