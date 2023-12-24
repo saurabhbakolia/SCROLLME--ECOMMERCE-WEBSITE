@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
 import { useEffect } from "react";
+import { mobile, tablet } from "../responsive";
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -46,6 +47,9 @@ const Box = styled.div`
 
 const Wrapper = styled.div`
     width: 40%;
+    ${mobile({ width: "84%;" })}
+    ${tablet({ width: "84%;" })}
+    ${mobile({ maxWidth: "760px" })}
     padding: 20px;
     background-color: white;
 `;
