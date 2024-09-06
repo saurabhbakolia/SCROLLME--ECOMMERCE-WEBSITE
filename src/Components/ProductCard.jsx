@@ -1,19 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
+import LazyLoad from 'react-lazyload';
 
 
 const ProductCard = (props) => {
     const navigate = useNavigate();
     const handleProductClick = (id) => {
-        console.log("Product with id " + id + "clicked");
-        navigate("/products/" + id);
+        navigate(`/products/${id}`);
     };
 
     return (
         <Container onClick={() => handleProductClick(props.product.id)}>
-            <ProductImage src={props.product.img} />
+            <LazyLoad height={389} offset={200} once placeholder={<Placeholder />}>
+                <ProductImage src={props.product.img} />
+            </LazyLoad>
             <Info>
                 <h4>{props.product.title}</h4>
                 <p>{props.product.desc}</p>
@@ -114,4 +115,15 @@ const ProductAssuredSpan = styled.span`
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
+`;
+
+const Placeholder = styled.div`
+    aspect-ratio: 1/1;
+    width: 96%;
+    height: 72%;
+    background-color: #e0e0e0; // Light gray color for the placeholder
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
 `;
