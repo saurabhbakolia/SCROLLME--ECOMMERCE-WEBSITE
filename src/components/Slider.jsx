@@ -2,9 +2,10 @@ import styled from "styled-components"
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material";
 import { slideItems } from "../data";
 import { useState } from "react";
-import {mobile, tablet}  from "../responsive"
+import { mobile, tablet } from "../responsive"
 import { Link } from 'react-router-dom';
 import OutlinedButton from "./OutlinedButton";
+import LazyLoad from 'react-lazyload';
 
 
 const Container = styled.div`
@@ -13,7 +14,7 @@ const Container = styled.div`
     display: flex;
     position: relative;
     overflow: hidden;
-    ${mobile({display:"none;"})}
+    ${mobile({ display: "none;" })}
 `;
 
 const Arrow = styled.div`
@@ -55,13 +56,13 @@ const ImgContainer = styled.div`
     flex:1;
 `;
 const Image = styled.img`
-    height:80%;
+    height:60%;
 `;
 const InfoContainer = styled.div`
     flex:1;
     padding:50px;
     text-align: left;
-    ${tablet({display:"none"})}
+    ${tablet({ display: "none" })}
 `;
 
 const Title = styled.h1`
@@ -72,6 +73,12 @@ const Desc = styled.p`
     font-size: 20px;
     font-weight: 500;
     letter-spacing:3px; 
+`;
+
+const Placeholder = styled.div`
+    height: 40%;
+    width: 40%;
+    background-color: #f0f0f0;
 `;
 
 const Slider = () => {
@@ -93,12 +100,14 @@ const Slider = () => {
                 {slideItems.map(item => (
                     <Slide bg={item.bg} key={item.id}>
                         <ImgContainer>
-                            <Image src={process.env.PUBLIC_URL + item.img} />
+                            <LazyLoad height={100} offset={40} once placeholder={<Placeholder />}>
+                                <Image src={process.env.PUBLIC_URL + item.img} />
+                            </LazyLoad>
                         </ImgContainer>
                         <InfoContainer>
                             <Title>{item.title}</Title>
                             <Desc>{item.desc}</Desc>
-                            <OutlinedButton text={"SHOP NOW"} link={"/products"}/>
+                            <OutlinedButton text={"SHOP NOW"} link={"/products"} />
                         </InfoContainer>
                     </Slide>
                 ))}

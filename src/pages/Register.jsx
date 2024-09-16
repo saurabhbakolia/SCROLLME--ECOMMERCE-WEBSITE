@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
 import { useEffect } from "react";
 import { mobile, tablet } from "../responsive";
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -97,8 +98,15 @@ const Button = styled.button`
     cursor: pointer;
 `;
 
+const PasswordBox = styled.div`
+    width: 100%;
+    padding: 2px 4px;
+    height: fit-content;
+`;
+
 const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -133,6 +141,10 @@ const Register = () => {
         }
     };
 
+    const handlePassword = (e) => {
+        setPassword(e.target.value);
+    };
+
     return (
         <>
             {isLoading && (
@@ -153,8 +165,11 @@ const Register = () => {
                         <Input type="text" name="lastName" placeholder="last name" required />
                         <Input type="text" name="username" placeholder="username" required />
                         <Input type="email" name="email" placeholder="email" required />
-                        <Input type="password" name="password" placeholder="password" required />
+                        <Input type="password" name="password" placeholder="password" required onChange={(e) => handlePassword(e)} />
                         <Input type="password" name="confirmPassword" placeholder="confirm password" required />
+                        <PasswordBox>
+                            <PasswordStrengthBar password={password} />
+                        </PasswordBox>
                         <Box>
                             <Agreement>
                                 By creating an account, I consent to the processing of my personal

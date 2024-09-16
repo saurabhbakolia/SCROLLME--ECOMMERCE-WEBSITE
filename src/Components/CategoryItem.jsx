@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 import CustomBackgroundButton from "./CustomBackgroundButton";
 
 const Container = styled.div`
@@ -37,7 +38,9 @@ const Title = styled.h1`
 const CategoryItem = ({ item }) => {
     return (
         <Container>
-            <Image src={item.img} />
+            <LazyLoad height={200} offset={100} once>
+                <Image src={item.img} />
+            </LazyLoad>
             <Info>
                 <Title>{item.title}</Title>
                 <CustomBackgroundButton link="/item.title" text="SHOP NOW" backgroundColor="white" />
