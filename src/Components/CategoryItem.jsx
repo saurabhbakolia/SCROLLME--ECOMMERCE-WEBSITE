@@ -40,7 +40,7 @@ const CategoryItem = ({ item }) => {
             <Image src={item.img} />
             <Info>
                 <Title>{item.title}</Title>
-                <CustomBackgroundButton link="/cart" text="SHOP NOW" backgroundColor="white" />
+                <CustomBackgroundButton link="/item.title" text="SHOP NOW" backgroundColor="white" />
             </Info>
         </Container>
     );

@@ -1,44 +1,43 @@
-'use strict';
-
-var express = require('express');
-const dbConnect = require('./api/database/dbConnect.js');
-var cors = require('cors');
-require('dotenv').config();
-var User = require('./api/models/userModel');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var jsonwebtoken = require('jsonwebtoken');
-var userRoute = require('./api/routes/userRoute.js');
-var refreshTokenRoute = require('./api/routes/refreshTokenRoute.js');
-var authCheckStatusRoute = require('./api/routes/authCheckStatusRoute.js');
-
+const express = require("express");
 const app = express();
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true,
-};
-var port = process.env.PORT || 8080;
-app.use(cors(corsOptions));
-app.use(cookieParser());
+const dbConnect = require("./api/database/dbConnect");
+const authRoutes = require("./api/routes/authRoute");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+require("dotenv").config();
 
+// Connect to the database
 dbConnect();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+const corsOptions = {
+	origin: "http://localhost:3000",
+	methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+	credentials: true,
+};
+// Middlewares
+app.use(cors(corsOptions));
+app.use(express.json()); // Middleware to parse JSON requests
+app.use(express.urlencoded({ extended: true })); // `extended` option allows for rich objects and arrays to be encoded into the URL-encoded format
+app.use(cookieParser());
+app.use(helmet());
 
-// Use Routes
-app.use('/auth/user', userRoute);
-app.use('/auth', refreshTokenRoute);
-app.use('/api/auth/', authCheckStatusRoute);
+app.use("/api/auth", authRoutes); // Authentication routes
 
-app.use(function (req, res) {
-    res.status(404).send({
-        url: req.originalUrl + 'not found'
-    })
+// Rate limiting middleware
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per windowMs
 });
+app.use(limiter);
 
-app.listen(port, function () {
-    console.log(`Server started on port ${port}`);
-});
+const PORT = process.env.PORT || 8080;
+if (process.env.NODE_ENV !== "test") {
+	app.listen(PORT, () => {
+		console.log(`Server running on port ${PORT}`);
+		console.log(`API available at http://localhost:${PORT}/api/auth`);
+	});
+}
 
 module.exports = app;
