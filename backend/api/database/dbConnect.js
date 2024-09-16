@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 const option = {
     socketTimeoutMS: 30000,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
 };
 
 const MONGODB_URI = process.env.MONGODB_URI;
