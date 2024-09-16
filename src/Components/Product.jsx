@@ -1,6 +1,7 @@
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import { FavoriteBorderOutlined, Place, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 
 const Info = styled.div`
     opacity:0;
@@ -39,9 +40,23 @@ const Circle = styled.div`
     background-color: white;
     position: absolute;
 `;
+
+const ImageContainer = styled.div`
+     height: 75%;   // Adjust as needed
+    width: 60%;    // Adjust as needed, should be less than or equal to height to maintain aspect ratio
+    position: relative;
+    overflow: hidden;
+    display: flex;         // Added to center content
+    align-items: center;   // Centering vertically
+    justify-content: center; // Centering horizontally
+    margin: auto;
+`;
+
 const Image = styled.img`
-    height: 75%;
-    z-index:2;
+    height: 100%;  // Ensure image fits container height
+    width: 100%;   // Ensure image fits container width
+    object-fit: cover; // Maintain aspect ratio and cover container
+    z-index: 2;
 `;
 
 const Icon = styled.div`
@@ -59,22 +74,29 @@ const Icon = styled.div`
         background-color:#e9f5f5;
         transform:scale(1.1);
     }
-
 `;
 
-
+// Placeholder styled component
+const Placeholder = styled.div`
+    height: 100%;
+    width: 100%;
+    background-color: #f0f0f0; // Placeholder color
+`;
 const Product = ({ item }) => {
     const navigate = useNavigate();
 
     const handleProductSearch = (id) => {
         navigate(`/product/${id}`);
-
-        
     };
+
     return (
         <Container>
             <Circle />
-            <Image src={item.img} />
+            <ImageContainer>
+                <LazyLoad height={200.5} offset={10} once placeholder={<Placeholder />}>
+                    <Image src={item.img} />
+                </LazyLoad>
+            </ImageContainer>
             <Info>
                 <Icon>
                     <Link to="/cart"><ShoppingCartOutlined /></Link>
