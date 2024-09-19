@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
 	try {
@@ -105,10 +106,12 @@ exports.refreshToken = async (req, res) => {
 			sameSite: "Strict",
 		});
 
-		res.status(200).json({ message: 'Tokens refreshed' });
+		res.status(200).json({ message: "Tokens refreshed" });
 	} catch (error) {
-        console.error('Refresh token error:', error);
-		res.status(500).json({ message: 'Internal server error', error: error.message });
+		console.error("Refresh token error:", error);
+		res
+			.status(500)
+			.json({ message: "Internal server error", error: error.message });
 	}
 };
 

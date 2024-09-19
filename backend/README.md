@@ -18,6 +18,8 @@ This is the backend service for an e-commerce application, built using Node.js, 
     - [User Login](#user-login)
     - [Refresh Token](#refresh-token)
   - [Testing](#testing)
+  - [Working Directory Tree Script](#working-directory-tree-script)
+  - [Script to print the working directory tree](#script-to-print-the-working-directory-tree)
 
 ## Features
 
@@ -135,3 +137,16 @@ To run tests, ensure that you have `mocha` and `chai` installed, then execute:
 
 ```bash
 npm test
+```
+
+## Working Directory Tree Script
+
+This script prints the working directory tree while excluding the `node_modules` folder. It is useful when you want to see the structure of your project without the clutter of dependencies.
+
+## Script to print the working directory tree
+
+To print the directory tree, excluding the `node_modules` folder, run the following command in Git Bash:
+
+```bash
+find . -path ./node_modules -prune -o -print
+```

@@ -1,0 +1,82 @@
+[
+	{
+		"firstName": "John",
+		"lastName": "Doe",
+		"username": "johndoe",
+		"email": "john@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	},
+	{
+		"firstName": "Jane",
+		"lastName": "Smith",
+		"username": "janesmith",
+		"email": "jane@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	},
+	{
+		"firstName": "Michael",
+		"lastName": "Johnson",
+		"username": "mjohnson",
+		"email": "michael@example.com",
+		"password": "password123",
+		"roles": ["admin"]
+	},
+	{
+		"firstName": "Emily",
+		"lastName": "Davis",
+		"username": "emilydavis",
+		"email": "emily@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	},
+	{
+		"firstName": "William",
+		"lastName": "Brown",
+		"username": "wbrown",
+		"email": "william@example.com",
+		"password": "password123",
+		"roles": ["super_admin"]
+	},
+	{
+		"firstName": "Sophia",
+		"lastName": "Miller",
+		"username": "smiller",
+		"email": "sophia@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	},
+	{
+		"firstName": "James",
+		"lastName": "Garcia",
+		"username": "jamesgarcia",
+		"email": "james@example.com",
+		"password": "password123",
+		"roles": ["admin"]
+	},
+	{
+		"firstName": "Olivia",
+		"lastName": "Martinez",
+		"username": "oliviam",
+		"email": "olivia@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	},
+	{
+		"firstName": "David",
+		"lastName": "Rodriguez",
+		"username": "davidr",
+		"email": "david@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	},
+	{
+		"firstName": "Charlotte",
+		"lastName": "Lopez",
+		"username": "clopez",
+		"email": "charlotte@example.com",
+		"password": "password123",
+		"roles": ["user"]
+	}
+]
