@@ -1,6 +1,6 @@
 # ScrollMe Ecommerce Website
 
-ScrollMe is an open-source, feature-rich eCommerce platform that provides a modern shopping experience. Built with **JavaScript**, **React**, **Styled Components**, and **MongoDB**, ScrollMe offers a robust front-end with a highly scalable backend. This project is ideal for those looking to contribute to an eCommerce solution or understand the integration of modern web technologies.
+ScrollMe is an open-source, feature-rich eCommerce platform that provides a modern shopping experience. Built with **JavaScript**, **React**, **Styled Components**, **Node.js (Express.js)**, and **MongoDB**, ScrollMe offers a robust front-end with a highly scalable backend. This project is ideal for those looking to contribute to an eCommerce solution or understand the integration of modern web technologies.
 
 ## Table of Contents
 
