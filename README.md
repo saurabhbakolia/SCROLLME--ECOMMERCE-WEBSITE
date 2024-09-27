@@ -4,13 +4,19 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
 
 ## Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- [ScrollMe Ecommerce Website](#scrollme-ecommerce-website)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Tech Stack](#tech-stack)
+    - [Frontend](#frontend)
+    - [Backend](#backend)
+    - [Additional Tools](#additional-tools)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+    - [Guidelines](#guidelines)
+  - [Code of Conduct](#code-of-conduct)
+  - [License](#license)
 
 ## Features
 
@@ -127,7 +133,7 @@ We welcome contributions from the community! To contribute to ScrollMe, follow t
 
 ## Code of Conduct
 
-We are committed to fostering a welcoming and harassment-free community. All participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please treat others with respect and professionalism in all interactions.
+We are committed to fostering a welcoming and harassment-free community. All participants are expected to adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md). Please treat others with respect and professionalism in all interactions.
 
 ## License
 
