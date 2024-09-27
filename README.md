@@ -40,6 +40,7 @@ ScrollMe is built using the following technologies:
 - **JavaScript (ES6+)**: Core language for building dynamic features.
 - **React.js**: A JavaScript library for building user interfaces.
 - **Styled Components**: A CSS-in-JS tool for modular and customizable component styling.
+- **Redux**: State management library for maintaining global app state and ensuring predictable data flow across components.
 
 ### Backend
 - **Node.js**: Runtime environment for executing server-side JavaScript.
@@ -58,5 +59,78 @@ To get started with ScrollMe locally, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/scrollme-ecommerce.git
-   cd scrollme-ecommerce
+   git clone git@github.com:saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE.git
+   cd SCROLLME--ECOMMERCE-WEBSITE
+   ```
+2. **Install dependencies for both frontend and backend**:
+   ```bash
+   # Install frontend dependencies
+   npm install
+
+   # Install backend dependencies
+   cd ./backend
+   npm install
+   ```
+3. **Set up environment variables**:  
+   In the `backend` directory, we have a `.env.example` file. You can create your own `.env` file by copying this file and adding the necessary environment variables:
+   
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
+4. **Start the development server**:
+   ```bash
+   # Start the backend
+   cd backend
+   npm run start
+
+   # Start the frontend
+   npm start
+   ```
+
+5. **Visit the app in your browser**:  
+   Open `http://localhost:3000` to view the application.
+
+
+## Usage
+
+Once the project is set up, you can:
+
+- Browse products, add items to the cart, and proceed to checkout.
+- Register or log in to track your orders.
+- Admins can manage products and orders through the admin dashboard.
+
+
+## Contributing
+
+We welcome contributions from the community! To contribute to ScrollMe, follow these steps:
+
+1. **Fork the repository** on GitHub.
+2. **Create a branch** for your feature or bugfix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. **Commit your changes**:
+   ```bash
+   git commit -m "Add feature-name"
+   ```
+4. **Push to your fork**:
+   ```bash
+   git push origin feature-name
+   ```
+5. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
+
+### Guidelines
+
+- Ensure code quality by following consistent formatting and naming conventions.
+- Write clear and concise commit messages.
+- Test your changes thoroughly before submitting a pull request.
+
+## Code of Conduct
+
+We are committed to fostering a welcoming and harassment-free community. All participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). Please treat others with respect and professionalism in all interactions.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+We appreciate your interest in ScrollMe and look forward to your contributions!
