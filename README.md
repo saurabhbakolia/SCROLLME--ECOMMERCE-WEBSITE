@@ -14,14 +14,23 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
 
 ## Features
 
-- **Modern UI/UX**: Intuitive, responsive design for a seamless shopping experience.
-- **Product Management**: Admin interface for adding, updating, and removing products.
-- **User Authentication**: Secure user registration, login, and JWT-based authentication.
-- **Search and Filters**: Search for products and apply filters based on categories, prices, and more.
-- **Shopping Cart**: Add, update, or remove items from the cart, with real-time calculations.
-- **Checkout Process**: Easy and secure checkout experience.
-- **Responsive Design**: Optimized for all devices (mobile, tablet, and desktop).
-- **MongoDB Integration**: Backend management of products, users, and orders with MongoDB.
+- [x] **Modern UI/UX**: Intuitive, responsive design for a seamless shopping experience.
+- [x] **Product Management**: Admin interface for adding, updating, and removing products.
+- [x] **User Authentication**: Secure user registration, login, and JWT-based authentication.
+- [x] **Search and Filters**: Search for products and apply filters based on categories, prices, and more.
+- [x] **Shopping Cart**: Add, update, or remove items from the cart, with real-time calculations.
+- [x] **Checkout Process**: Easy and secure checkout experience.
+- [ ] **Order History**: View past orders and order details.
+- [ ] **Product Reviews and Ratings**: Users can review and rate products.
+- [ ] **Wishlist**: Save favorite items for later purchase.
+- [ ] **Payment Gateway Integration**: Add integration with payment providers like Stripe or PayPal.
+- [x] **Responsive Design**: Optimized for all devices (mobile, tablet, and desktop).
+- [x] **MongoDB Integration**: Backend management of products, users, and orders with MongoDB.
+- [ ] **Email Notifications**: Send order confirmations and updates via email.
+- [ ] **Inventory Management**: Track stock levels and manage out-of-stock notifications.
+- [ ] **Discounts and Promotions**: Ability to add coupon codes and discounts.
+- [ ] **Multi-language Support**: Internationalization for a global audience.
+- [ ] **Admin Dashboard Analytics**: Insights into sales, customers, and product performance.
 
 ## Tech Stack
 
