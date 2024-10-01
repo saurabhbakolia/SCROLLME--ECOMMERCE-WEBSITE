@@ -14,8 +14,8 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
   - [Installation](#installation)
   - [Usage](#usage)
   - [Contributing](#contributing)
-    - [Guidelines](#guidelines)
     - [Pull Request](#pull-request)
+    - [Guidelines](#guidelines)
   - [Code of Conduct](#code-of-conduct)
   - [License](#license)
 
