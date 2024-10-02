@@ -15,6 +15,7 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
   - [Usage](#usage)
   - [Contributing](#contributing)
     - [Guidelines](#guidelines)
+  - [Pull Requests](#pull-requests)
   - [Code of Conduct](#code-of-conduct)
   - [License](#license)
 
@@ -130,6 +131,26 @@ We welcome contributions from the community! To contribute to ScrollMe, follow t
 - Ensure code quality by following consistent formatting and naming conventions.
 - Write clear and concise commit messages.
 - Test your changes thoroughly before submitting a pull request.
+
+
+
+## Pull Requests
+
+Please follow these guidelines when creating a pull request:
+
+1. **Create the branch from the `develop` branch**:
+   ```bash
+   git checkout develop
+   git checkout -b feature-branch-name
+   ```
+2. **Push your changes** and submit a pull request to the `develop` branch:
+   ```bash
+   git push origin feature-branch-name
+   ```
+
+When creating a pull request, please provide a detailed description of your changes and reference any related issues.
+
+
 
 ## Code of Conduct
 
