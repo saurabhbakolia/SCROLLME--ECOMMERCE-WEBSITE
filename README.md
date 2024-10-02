@@ -14,7 +14,6 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
   - [Installation](#installation)
   - [Usage](#usage)
   - [Contributing](#contributing)
-    - [Pull Request](#pull-request)
     - [Guidelines](#guidelines)
   - [Code of Conduct](#code-of-conduct)
   - [License](#license)
@@ -126,16 +125,6 @@ We welcome contributions from the community! To contribute to ScrollMe, follow t
    ```
 5. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
 
-### Pull Request
-
-We appreciate your contributions! Here’s how to open a pull request:
-
-1. Make sure you follow the contribution steps above to fork the repository and push your changes.
-2. Navigate to the original repository's GitHub page.
-3. Click on the "Pull requests" tab.
-4. Click "New pull request."
-5. Follow the template and ensure you provide a detailed description of the change, why it’s needed, and any issue(s) it addresses.
-6. Once your pull request is reviewed, it may be merged into the main branch.
 
 ### Guidelines
 
