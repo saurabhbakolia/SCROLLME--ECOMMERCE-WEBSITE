@@ -1,13 +1,10 @@
 import styled from "styled-components";
-import axios from "axios";
-import { API_BASE_URL } from "../common/constants/apiConstants";
 import { UserRegistrationAPI } from "../services/userAPI/registerationAPI";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
-import { useEffect } from "react";
 import { mobile, tablet } from "../responsive";
-import PasswordStrengthBar from 'react-password-strength-bar';
+import PasswordStrengthBar from "react-password-strength-bar";
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -105,86 +102,107 @@ const PasswordBox = styled.div`
 `;
 
 const Register = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
+	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-        console.log("Inside the handleSubmit function");
-        const formData = {
-            firstName: e.target.firstName.value,
-            lastName: e.target.lastName.value,
-            username: e.target.username.value,
-            email: e.target.email.value,
-            password: e.target.password.value,
-            confirmPassword: e.target.confirmPassword.value,
-        };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setIsLoading(true);
+		const formData = {
+			firstName: e.target.firstName.value,
+			lastName: e.target.lastName.value,
+			username: e.target.username.value,
+			email: e.target.email.value,
+			password: e.target.password.value,
+			confirmPassword: e.target.confirmPassword.value,
+		};
 
-        if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
-            setIsLoading(false);
-            return;
-        }
-        setIsLoading(true);
-        try {
-            const response = await UserRegistrationAPI(formData);
-            console.log(response.data);
-        } catch (error) {
-            console.log("Error: ", error);
-        } finally {
-            setTimeout(() => {
-                setIsLoading(false);
-                navigate("/login");
-            }, 500);
-        }
-    };
+		if (formData.password !== formData.confirmPassword) {
+			alert("Passwords do not match!");
+			setIsLoading(false);
+			return;
+		}
+		setIsLoading(true);
+		try {
+			await UserRegistrationAPI(formData);
+			setIsLoading(false);
+			navigate("/login");
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-    };
+	const handlePassword = (e) => {
+		setPassword(e.target.value);
+	};
 
-    return (
-        <>
-            {isLoading && (
-                <LoaderOverlay>
-                    <Triangle
-                        color="teal"
-                        height={80}
-                        width={80}
-                        ariaLabel="triangle-loading"
-                    />
-                </LoaderOverlay>
-            )}
-            <Container>
-                <Wrapper>
-                    <Title>CREATE AN ACCOUNT</Title>
-                    <Form onSubmit={(e) => handleSubmit(e)}>
-                        <Input type="text" name="firstName" placeholder="first name" required />
-                        <Input type="text" name="lastName" placeholder="last name" required />
-                        <Input type="text" name="username" placeholder="username" required />
-                        <Input type="email" name="email" placeholder="email" required />
-                        <Input type="password" name="password" placeholder="password" required onChange={(e) => handlePassword(e)} />
-                        <Input type="password" name="confirmPassword" placeholder="confirm password" required />
-                        <PasswordBox>
-                            <PasswordStrengthBar password={password} />
-                        </PasswordBox>
-                        <Box>
-                            <Agreement>
-                                By creating an account, I consent to the processing of my personal
-                                data in accordance with the <b>PRIVACY POLICY</b>
-                            </Agreement>
-                            <Text>
-                                Already have an account? <Link href="/login">LOGIN</Link>
-                            </Text>
-                        </Box>
-                        <Button type="submit">CREATE</Button>
-                    </Form>
-                </Wrapper>
-            </Container>
-        </>
-    );
+	return (
+		<>
+			{isLoading && (
+				<LoaderOverlay>
+					<Triangle
+						color="teal"
+						height={80}
+						width={80}
+						ariaLabel="triangle-loading"
+					/>
+				</LoaderOverlay>
+			)}
+			<Container>
+				<Wrapper>
+					<Title>CREATE AN ACCOUNT</Title>
+					<Form onSubmit={(e) => handleSubmit(e)}>
+						<Input
+							type="text"
+							name="firstName"
+							placeholder="first name"
+							required
+						/>
+						<Input
+							type="text"
+							name="lastName"
+							placeholder="last name"
+							required
+						/>
+						<Input
+							type="text"
+							name="username"
+							placeholder="username"
+							required
+						/>
+						<Input type="email" name="email" placeholder="email" required />
+						<Input
+							type="password"
+							name="password"
+							placeholder="password"
+							required
+							onChange={(e) => handlePassword(e)}
+						/>
+						<Input
+							type="password"
+							name="confirmPassword"
+							placeholder="confirm password"
+							required
+						/>
+						<PasswordBox>
+							<PasswordStrengthBar password={password} />
+						</PasswordBox>
+						<Box>
+							<Agreement>
+								By creating an account, I consent to the processing of my
+								personal data in accordance with the <b>PRIVACY POLICY</b>
+							</Agreement>
+							<Text>
+								Already have an account? <Link href="/login">LOGIN</Link>
+							</Text>
+						</Box>
+						<Button type="submit">CREATE</Button>
+					</Form>
+				</Wrapper>
+			</Container>
+		</>
+	);
 };
 
 export default Register;
