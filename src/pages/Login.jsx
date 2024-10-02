@@ -62,39 +62,42 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
-
 const Login = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const loginData = {
-            username: e.target.username.value,
-            password: e.target.password.value
-        };
-        try {
-            const response = await UserSignInAPI(loginData);
-            dispatch(changeAuthenticated(true));
-            navigate("/");
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    return (
-        <Container>
-            <Wrapper>
-                <Title>SIGN IN</Title>
-                <Form onSubmit={(e) => handleSubmit(e)}>
-                    <Input placeholder="username" name="username" type="text" required />
-                    <Input placeholder="password" name="password" type="password" required />
-                    <Button type="submit">LOGIN</Button>
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link href="/register">CREATE A NEW ACCOUNT</Link>
-                </Form>
-            </Wrapper>
-        </Container>
-    );
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const loginData = {
+			username: e.target.username.value,
+			password: e.target.password.value,
+		};
+		try {
+			await UserSignInAPI(loginData);
+			dispatch(changeAuthenticated(true));
+			navigate("/");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	return (
+		<Container>
+			<Wrapper>
+				<Title>SIGN IN</Title>
+				<Form onSubmit={(e) => handleSubmit(e)}>
+					<Input placeholder="username" name="username" type="text" required />
+					<Input
+						placeholder="password"
+						name="password"
+						type="password"
+						required
+					/>
+					<Button type="submit">LOGIN</Button>
+					<Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+					<Link href="/register">CREATE A NEW ACCOUNT</Link>
+				</Form>
+			</Wrapper>
+		</Container>
+	);
 };
 
 export default Login;
