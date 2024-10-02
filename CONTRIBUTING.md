@@ -33,14 +33,13 @@ Please take a moment to read through this guide before contributing. It will hel
    cd SCROLLME--ECOMMERCE-WEBSITE
    ```
 
-3. **Create a branch**:
-   Create a new branch where your changes will be isolated from the `master` branch.
+3. **Checkout the `develop` branch**
 
    ```bash
-   git checkout -b feature/your-feature
+   git checkout develop
    ```
 
-4. **Install dependencies**:
+4. **Install dependencies**
    Run the following command to install project dependencies:
 
  ```bash
@@ -53,6 +52,13 @@ Please take a moment to read through this guide before contributing. It will hel
    npm install
 ```
 
+5. **Create a branch from `develop`**
+   Create a new branch where your changes will be isolated from the `develop` branch.
+
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+
 ## How to Contribute
 
 ### Reporting Bugs
@@ -60,20 +66,20 @@ Please take a moment to read through this guide before contributing. It will hel
 If you find a bug or any issue, you can help by submitting a bug report.
 
 1. **Search for existing issues**: First, check if the issue has already been reported.
-2. **Submit a new issue**: If no existing issue matches, [open a new issue](https://github.com/your-username/scrollme-ecommerce/issues) with detailed steps to reproduce the bug, expected vs. actual behavior, and any error messages or logs.
+2. **Submit a new issue**: If no existing issue matches, [open a new issue](https://github.com/saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE/issues) with detailed steps to reproduce the bug, expected vs. actual behavior, and any error messages or logs.
 
 ### Feature Requests
 
 We are always looking to improve **ScrollMe Ecommerce Website**! If you have ideas for new features:
 
 1. **Check open issues**: Search for existing feature requests.
-2. **Open a feature request**: If your idea is new, [submit a feature request](https://github.com/your-username/scrollme-ecommerce/issues) with a clear description of the feature, how it improves the project, and any alternatives you’ve considered.
+2. **Open a feature request**: If your idea is new, [submit a feature request](https://github.com/saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE/issues) with a clear description of the feature, how it improves the project, and any alternatives you’ve considered.
 
 ### Code Contributions
 
 Contributions to code are highly appreciated. Here’s how you can contribute code:
 
-1. **Open an issue**: First, discuss the change you wish to make by [opening an issue](https://github.com/your-username/scrollme-ecommerce/issues).
+1. **Open an issue**: First, discuss the change you wish to make by [opening an issue](https://github.com/saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE/issues/new).
 2. **Work on the issue**: After discussion and approval, you can start coding.
 3. **Submit a pull request (PR)**: Once your work is done, submit a PR following the [Pull Request Guidelines](#pull-request-guidelines).
 
@@ -103,7 +109,7 @@ Ensure you have the required tools:
 ```bash
 # Start the backend
 cd backend
-npm run dev
+npm run start
 
 # Start the frontend
 npm start
@@ -114,7 +120,7 @@ npm start
 To ensure a smooth pull request (PR) process, please follow these guidelines:
 
 1. **Create a PR from your branch**:
-   Push your feature branch to your forked repository, then [create a pull request](https://github.com/your-username/scrollme-ecommerce/pulls) from your branch.
+   Push your feature branch to your forked repository, then [create a pull request](https://github.com/saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE/pulls) from your branch.
 
 2. **Describe your PR**: Provide a detailed explanation of the changes and why they are necessary.
 
