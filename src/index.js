@@ -6,7 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
-import ScrollToTop from "./Components/utils/ScrollToTop"; // from small c of components to capital C
+
+
+import ScrollToTop from "./Components/utils/ScrollToTop";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
