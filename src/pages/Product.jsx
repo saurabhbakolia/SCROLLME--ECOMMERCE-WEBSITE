@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
-import Navbar from './../Components/Navbar';
-import Announcement from '../Components/Announcement';
-import Newsletter from './../Components/Newsletter';
-
-import Navbar from '../Components/Navbar';
-import Announcement from '../Components/Announcement';
-import Newsletter from '../Components/Newsletter';
+import Navbar from '../components/Navbar';
+import Announcement from '../components/Announcement';
+import Newsletter from '../components/Newsletter';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -16,7 +12,7 @@ import { allProducts } from "../data";
 import { useEffect } from "react";
 import { useState } from "react";
 import { tab } from "@testing-library/user-event/dist/tab";
-import Footer from "../Components/Footer";
+import Footer from "../components/Footer";
 
 const Product = () => {
     const [product, setProduct] = useState();

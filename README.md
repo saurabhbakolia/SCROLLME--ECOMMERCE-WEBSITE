@@ -18,6 +18,7 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
   - [Pull Request Template](https://github.com/saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE/blob/master/PULL_REQUEST_TEMPLATE.md) 
   - [Code of Conduct](#code-of-conduct)
   - [License](#license)
+  - [Community Discussion](#community-discussion)
 
 ## Features
 
@@ -106,25 +107,49 @@ Once the project is set up, you can:
 - Register or log in to track your orders.
 - Admins can manage products and orders through the admin dashboard.
 
-
 ## Contributing
 
 We welcome contributions from the community! To contribute to ScrollMe, follow these steps:
 
 1. **Fork the repository** on GitHub.
-2. **Create a branch** for your feature or bugfix:
+2. **Checkout the `develop` branch**
+
+```bash
+   git checkout develop
+```
+
+3. **Install dependencies**
+   Run the following command to install project dependencies:
+
+ ```bash
+   # Install frontend dependencies
+   cd frontend
+   npm install
+
+   # Install backend dependencies
+   cd ../backend
+   npm install
+```
+
+4. **Create a branch** for your feature or bugfix
+
    ```bash
    git checkout -b feature-name
    ```
-3. **Commit your changes**:
+
+5. **Commit your changes**
+
    ```bash
    git commit -m "Add feature-name"
    ```
-4. **Push to your fork**:
+
+6. **Push to your fork**
+
    ```bash
    git push origin feature-name
    ```
-5. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
+
+7. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
 
 ### Guidelines
 
@@ -141,3 +166,11 @@ We are committed to fostering a welcoming and harassment-free community. All par
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 We appreciate your interest in ScrollMe and look forward to your contributions!
+
+## Community Discussion
+
+Join our Discord Server for community discussions, support, and collaboration!
+
+We appreciate your interest in ScrollMe and look forward to your contributions!
+
+Just replace https://discord.gg/w4nKprr5 with the actual link to your Discord server. Let me know if you need any further modifications!
