@@ -1,21 +1,25 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Products from '../components/Products'
-import Announcement from '../components/Announcement'
-import ProductGallery from '../components/ProductGallery'
-import Footer from '../components/Footer'
-import Newsletter from '../components/Newsletter'
+import React from "react";
+
+
+
+import ProductGallery from "../Components/ProductGallery"
+import Announcement from "../Components/Announcement"
+import Products from "../Components/Products";
+import Footer from "../Components/Footer";
+import Navbar from "../Components/Navbar";
+import Newsletter from "../Components/Newsletter";
 
 const AllProducts = () => {
-    return (
-        <div>
-            <Navbar/>   
-            <Announcement/>
-            <ProductGallery />
-            <Newsletter/>
-            <Footer/>
-        </div>
-    )
-}
+  return (
+    <div>
+      <Navbar />
+      <Announcement />
+      <Products/>
+      <ProductGallery />
+      <Newsletter />
+      <Footer />
+    </div>
+  );
+};
 
-export default AllProducts
+export default AllProducts;

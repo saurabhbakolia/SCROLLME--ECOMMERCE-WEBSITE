@@ -1,11 +1,15 @@
 import React from 'react'
-import Announcement from '../components/Announcement'
-import Categories from '../components/Categories'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
-import Newsletter from '../components/Newsletter'
-import Products from '../components/Products'
-import Slider from '../components/Slider'
+
+import Navbar from '../Components/Navbar'
+
+import Products from '../Components/Products'
+import Newsletter from '../Components/Newsletter'
+import Footer from '../Components/Footer'
+import Categories from '../Components/Categories'
+import Slider from '../Components/Slider'
+import Announcement from '../Components/Announcement'
+
+
 
 const Home = () => {
     return (
