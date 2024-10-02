@@ -76,6 +76,7 @@ To get started with ScrollMe locally, follow these steps:
    # Install backend dependencies
    cd ./backend
    npm install
+   npm install nodemon@latest
    ```
 3. **Set up environment variables**:  
    In the `backend` directory, we have a `.env.example` file. You can create your own `.env` file by copying this file and adding the necessary environment variables:
@@ -125,13 +126,11 @@ We welcome contributions from the community! To contribute to ScrollMe, follow t
    ```
 5. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
 
-
 ### Guidelines
 
 - Ensure code quality by following consistent formatting and naming conventions.
 - Write clear and concise commit messages.
 - Test your changes thoroughly before submitting a pull request.
-
 
 ## Code of Conduct
 
