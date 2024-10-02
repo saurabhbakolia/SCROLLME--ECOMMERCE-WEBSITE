@@ -125,11 +125,13 @@ We welcome contributions from the community! To contribute to ScrollMe, follow t
    ```
 5. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
 
+
 ### Guidelines
 
 - Ensure code quality by following consistent formatting and naming conventions.
 - Write clear and concise commit messages.
 - Test your changes thoroughly before submitting a pull request.
+
 
 ## Code of Conduct
 

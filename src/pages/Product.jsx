@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Navbar from './../components/Navbar';
-import Announcement from '../components/Announcement';
-import Newsletter from './../components/Newsletter';
+import Navbar from './../Components/Navbar';
+import Announcement from '../Components/Announcement';
+import Newsletter from './../Components/Newsletter';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { mobile, tablet } from '../responsive'
@@ -10,7 +10,7 @@ import { allProducts } from "../data";
 import { useEffect } from "react";
 import { useState } from "react";
 import { tab } from "@testing-library/user-event/dist/tab";
-import Footer from "../components/Footer";
+import Footer from "../Components/Footer";
 
 const Product = () => {
     const [product, setProduct] = useState();

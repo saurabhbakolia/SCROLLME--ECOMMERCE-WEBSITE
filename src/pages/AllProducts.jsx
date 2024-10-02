@@ -1,10 +1,13 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import Products from '../components/Products'
-import Announcement from '../components/Announcement'
-import ProductGallery from '../components/ProductGallery'
-import Footer from '../components/Footer'
-import Newsletter from '../components/Newsletter'
+
+
+import Navbar from '../Components/Navbar'
+import Products from '../Components/Products'
+
+import Announcement from '../Components/Announcement'
+import ProductGallery from '../Components/ProductGallery'
+import Footer from '../Components/Footer'
+import Newsletter from '../Components/Newsletter'
 
 const AllProducts = () => {
     return (
