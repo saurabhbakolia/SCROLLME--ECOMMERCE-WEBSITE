@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import SearchIcon from '@mui/icons-material/Search';
-import { Badge, ShoppingCartOutlined } from '@mui/icons-material';
+import { Badge,ShoppingCartOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -18,8 +18,15 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    ${mobile({ padding: "10px 0px;" })}
+    ${mobile({ 
+        height: "90px",
+        padding: "10px 10px", // Reduced padding for smaller screens
+        flexDirection: "column", // Stack items vertically
+        justifyContent: "space-evenly",
+        alignItems: "center", // Align items to the start
+    })}
 `;
+
 
 
 const Left = styled.div`
@@ -44,7 +51,8 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
     border: none;
-    ${mobile({ width: "50px;" })}
+    margin:"auto"
+    ${mobile({ width: "200px;", margin:"0 auto"})}
 `;
 const Center = styled.div`
     flex:1;
@@ -60,7 +68,7 @@ const Right = styled.div`
     display: flex;
     align-items: center;
     justify-content: center; 
-    ${mobile({ flex: 2, justifyContent: "center" })}
+    ${mobile({ flex: 2, justifyContent: "center"})}
 `;
 
 const MenuItem = styled.div`
