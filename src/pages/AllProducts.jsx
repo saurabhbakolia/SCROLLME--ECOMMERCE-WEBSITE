@@ -1,6 +1,9 @@
 import React from 'react'
+
+
 import Navbar from '../Components/Navbar'
 import Products from '../Components/Products'
+
 import Announcement from '../Components/Announcement'
 import ProductGallery from '../Components/ProductGallery'
 import Footer from '../Components/Footer'
