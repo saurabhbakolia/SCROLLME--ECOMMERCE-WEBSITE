@@ -1,7 +1,13 @@
 import styled from "styled-components";
+
 import Navbar from './../Components/Navbar';
 import Announcement from '../Components/Announcement';
 import Newsletter from './../Components/Newsletter';
+
+import Navbar from '../Components/Navbar';
+import Announcement from '../Components/Announcement';
+import Newsletter from '../Components/Newsletter';
+
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { mobile, tablet } from '../responsive'
