@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./backend:/app  # Bind mount the backend code for live reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - REACT_APP_API_URL=http://backend:5000  # Point frontend to backend in the network
+    volumes:
+      - ./frontend:/app  # Bind mount the frontend code for live reload
+
+networks:
+  app-network:
+    driver: bridge
