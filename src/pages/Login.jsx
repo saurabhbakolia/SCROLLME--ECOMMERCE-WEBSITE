@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeAuthenticated } from "../store/Slices/UserSlice";
 import { mobile, tablet } from "../responsive";
+import { useToast } from "@chakra-ui/react";
 
 const Container = styled.div`
     width: 100vw;
@@ -65,6 +66,7 @@ const Link = styled.a`
 const Login = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const toast = useToast();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const loginData = {
@@ -72,10 +74,25 @@ const Login = () => {
 			password: e.target.password.value,
 		};
 		try {
-			await UserSignInAPI(loginData);
+			const response = await UserSignInAPI(loginData);
+			toast({
+				title: "Login Successful",
+				description:
+					response.message || "You have successfully logged in. Welcome back!",
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
 			dispatch(changeAuthenticated(true));
 			navigate("/");
 		} catch (error) {
+			toast({
+				title: "Login Failed!",
+				description: "Invalid credentials, please try again.",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
 			console.log(error);
 		}
 	};

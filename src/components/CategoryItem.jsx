@@ -89,7 +89,7 @@ const CategoryItem = ({ item }) => {
             <Info>
                 <Title>{item.title}</Title>
                 <CustomButtonWrapper>
-                    <CustomBackgroundButton link="/item.title" text="SHOP NOW" backgroundColor="white" />
+                    <CustomBackgroundButton link="/item.title" text="SHOP NOW" backgroundcolor="white" />
                 </CustomButtonWrapper>
             </Info>
         </ContainerHover>

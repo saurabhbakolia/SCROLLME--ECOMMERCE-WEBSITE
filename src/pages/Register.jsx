@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
 import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from "react-password-strength-bar";
+import { useToast } from "@chakra-ui/react";
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -105,7 +106,7 @@ const Register = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
-
+	const toast = useToast();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
@@ -119,17 +120,39 @@ const Register = () => {
 		};
 
 		if (formData.password !== formData.confirmPassword) {
-			alert("Passwords do not match!");
+			toast({
+				title: "Password mismatch",
+				description: "Passwords do not match, please try again.",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
 			setIsLoading(false);
 			return;
 		}
-		setIsLoading(true);
+
 		try {
-			await UserRegistrationAPI(formData);
+			const response = await UserRegistrationAPI(formData);
+			toast({
+				title: "Registration Successful",
+				description: response.message,
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
 			setIsLoading(false);
 			navigate("/login");
 		} catch (error) {
 			console.error(error);
+			toast({
+				title: "Registration Failed",
+				description:
+					error.message || "Something went wrong, please try again later.",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
+			setIsLoading(false);
 		}
 	};
 

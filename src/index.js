@@ -1,22 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { store } from './store/store';
-import { Provider } from 'react-redux';
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
+import { ChakraProvider } from '@chakra-ui/react'
 import ScrollToTop from "./components/utils/ScrollToTop";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <ScrollToTop />
-      <App />
-    </BrowserRouter>
-  </Provider>
+	<Provider store={store}>
+		<BrowserRouter>
+			<ScrollToTop />
+			<ChakraProvider>
+				<App />
+			</ChakraProvider>
+		</BrowserRouter>
+	</Provider>,
 );
 
 reportWebVitals();
