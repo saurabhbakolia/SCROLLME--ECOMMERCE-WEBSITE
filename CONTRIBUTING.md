@@ -129,7 +129,8 @@ To ensure a smooth pull request (PR) process, please follow these guidelines:
 4. **Request a review**: Assign reviewers to your PR.
 
 5. **Make changes if needed**: Be open to feedback, and if adjustments are requested, push the necessary changes to your branch.
-**Note:** Always create the PR to merge into the `develop` branch.
+
+> **Note:** Always create the PR to merge into the `develop` branch.
 
 ## Code Style and Standards
 
