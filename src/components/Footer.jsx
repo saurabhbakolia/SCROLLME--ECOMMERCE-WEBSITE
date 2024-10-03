@@ -44,6 +44,13 @@ const SocialIcon = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 20px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: #${(props) => props.hoverColor || props.color};
+  }
 `;
 
 const Center = styled.div`
@@ -66,6 +73,11 @@ const List = styled.ul`
 const ListItem = styled.li`
   width: 50%;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(5px);
+  }
 `;
 
 const Right = styled.div`
@@ -85,6 +97,28 @@ const Payment = styled.img`
   width: 50%;
 `;
 
+const StyledLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: teal;
+  }
+`;
+
+const ContactLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: teal;
+  }
+`;
+
 const Footer = () => {
 	return (
 		<Container>
@@ -100,16 +134,16 @@ const Footer = () => {
 					apparel that caters to your unique style and personality.
 				</Desc>
 				<SocialContainer>
-					<SocialIcon color="3B5999">
+					<SocialIcon color="3B5999" hoverColor="4267B2">
 						<Facebook />
 					</SocialIcon>
-					<SocialIcon color="E4405F">
+					<SocialIcon color="E4405F" hoverColor="C13584">
 						<Instagram />
 					</SocialIcon>
-					<SocialIcon color="55ACEE">
+					<SocialIcon color="55ACEE" hoverColor="1DA1F2">
 						<Twitter />
 					</SocialIcon>
-					<SocialIcon color="E60023">
+					<SocialIcon color="E60023" hoverColor="0077B5">
 						<LinkedIn />
 					</SocialIcon>
 				</SocialContainer>
@@ -118,10 +152,10 @@ const Footer = () => {
 				<Title>Useful Links</Title>
 				<List>
 					<ListItem>
-						<Link to={"/"}>Home</Link>
+						<StyledLink to={"/"}>Home</StyledLink>
 					</ListItem>
 					<ListItem>
-						<Link to={"/cart"}>Cart</Link>
+						<StyledLink to={"/cart"}>Cart</StyledLink>
 					</ListItem>
 					<ListItem>Man Fashion</ListItem>
 					<ListItem>Woman Fashion</ListItem>
@@ -136,43 +170,26 @@ const Footer = () => {
 			<Right>
 				<Title>Contact</Title>
 				<ContactItem>
-					<a
+					<ContactLink
 						href="https://www.google.com/maps?q=622 Dixie Path, South Tobinchester 98336"
 						target="_blank"
 						rel="noopener noreferrer"
-						style={{
-							color: "inherit",
-							textDecoration: "none",
-							display: "flex",
-							alignItems: "center",
-						}}
 					>
 						<LocationOn style={{ marginRight: "10px" }} />
 						622 Dixie Path, South Tobinchester 98336
-					</a>
+					</ContactLink>
 				</ContactItem>
 				<ContactItem>
-					<a
-						href="tel:+12345678"
-						style={{
-							color: "inherit",
-							textDecoration: "none",
-							display: "flex",
-							alignItems: "center",
-						}}
-					>
+					<ContactLink href="tel:+12345678">
 						<LocalPhone style={{ marginRight: "10px" }} />
 						+1 234 56 78
-					</a>
+					</ContactLink>
 				</ContactItem>
 				<ContactItem>
 					<Email style={{ marginRight: "10px" }} />
-					<a
-						href="mailto:contact@lama.dev"
-						style={{ color: "inherit", textDecoration: "none" }}
-					>
+					<ContactLink href="mailto:contact@lama.dev">
 						contact@lama.dev
-					</a>
+					</ContactLink>
 				</ContactItem>
 
 				<Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
