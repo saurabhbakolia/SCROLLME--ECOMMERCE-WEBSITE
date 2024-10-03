@@ -90,9 +90,8 @@ exports.sign_in = async function (req, res) {
 			});
 		});
 };
-exports.forgot =async function (req, res, next) {
+exports.forgotPassword =async function (req, res, next) {
 	try{
-        console.log("Received password reset request");
         const user = await User.findOne({ email: req.body.email });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -110,11 +109,9 @@ exports.forgot =async function (req, res, next) {
 			{ password: hashedPassword },
 		);
         await user.save();
-		console.log("done")
 			return res.status(200).json({ message: "done" });
 	}
 	catch(e){
-		console.log(e);
 		res.status(500).json({ message: "Internal server error" });
 	}
 }
