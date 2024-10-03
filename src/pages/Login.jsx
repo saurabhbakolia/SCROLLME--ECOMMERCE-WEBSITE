@@ -89,7 +89,7 @@ const Login = () => {
                     <Input placeholder="username" name="username" type="text" required />
                     <Input placeholder="password" name="password" type="password" required />
                     <Button type="submit">LOGIN</Button>
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+                    <Link href='/forgot'>DO NOT YOU REMEMBER THE PASSWORD?</Link>
                     <Link href="/register">CREATE A NEW ACCOUNT</Link>
                 </Form>
             </Wrapper>

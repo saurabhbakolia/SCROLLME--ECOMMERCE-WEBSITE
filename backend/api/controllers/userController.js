@@ -90,6 +90,34 @@ exports.sign_in = async function (req, res) {
 			});
 		});
 };
+exports.forgot =async function (req, res, next) {
+	try{
+        console.log("Received password reset request");
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        if (!req.body.password) {
+            return res.status(400).json({ message: 'New password is required' });
+        }
+        const verifyPassword = await bcrypt.compare(req.body.password, user.password);
+        if (verifyPassword) {
+            return res.status(400).json({ message: "New password cannot be the same as the old password" });
+        }
+        const hashedPassword = await bcrypt.hash(req.body.password, Number(process.env.SALT));
+		const updatedUser = await User.findOneAndUpdate(
+			{ email: req.body.email }, 
+			{ password: hashedPassword },
+		);
+        await user.save();
+		console.log("done")
+			return res.status(200).json({ message: "done" });
+	}
+	catch(e){
+		console.log(e);
+		res.status(500).json({ message: "Internal server error" });
+	}
+}
 
 exports.loginRequired = function (req, res, next) {
 	if (req.user) {
@@ -162,42 +190,42 @@ exports.profile = function (req, res) {
 
 exports.logOut =
 	("/",
-	async (req, res) => {
-		try {
-			if (!req.headers.authorization) {
-				return res.status(400).json({
-					message: "Authorization header is required",
+		async (req, res) => {
+			try {
+				if (!req.headers.authorization) {
+					return res.status(400).json({
+						message: "Authorization header is required",
+					});
+				}
+
+				// Extract the token from the Authorization header
+				const authHeader = req.headers.authorization;
+				const token = authHeader && authHeader.split(" ")[1]; // Bearer TOKEN
+
+				if (!token) {
+					return res.status(401).json({
+						message: "Bearer token is required",
+					});
+				}
+
+				const userToken = await UserToken.findOne({ accessToken: token });
+				if (!userToken) {
+					return res.status(401).json({
+						message: "Invalid token!",
+					});
+				}
+				await userToken.deleteOne();
+				res.status(200).json({
+					status: "success",
+					message: "User logged out successfully!",
+				});
+			} catch (error) {
+				console.log("Error logging out user:", error);
+				return res.status(500).json({
+					message: "Error logging out user",
 				});
 			}
-
-			// Extract the token from the Authorization header
-			const authHeader = req.headers.authorization;
-			const token = authHeader && authHeader.split(" ")[1]; // Bearer TOKEN
-
-			if (!token) {
-				return res.status(401).json({
-					message: "Bearer token is required",
-				});
-			}
-
-			const userToken = await UserToken.findOne({ accessToken: token });
-			if (!userToken) {
-				return res.status(401).json({
-					message: "Invalid token!",
-				});
-			}
-			await userToken.deleteOne();
-			res.status(200).json({
-				status: "success",
-				message: "User logged out successfully!",
-			});
-		} catch (error) {
-			console.log("Error logging out user:", error);
-			return res.status(500).json({
-				message: "Error logging out user",
-			});
-		}
-	});
+		});
 
 const getUserDetails = async (_id) => {
 	return new Promise((resolve, reject) => {
@@ -213,4 +241,6 @@ const getUserDetails = async (_id) => {
 				reject(err);
 			});
 	});
+
 };
+
