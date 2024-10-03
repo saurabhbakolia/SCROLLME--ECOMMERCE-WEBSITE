@@ -13,7 +13,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ScrollToTop />
+      <ScrollToTop /> 
+      
       <App />
     </BrowserRouter>
   </Provider>
