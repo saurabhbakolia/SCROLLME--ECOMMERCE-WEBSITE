@@ -6,7 +6,7 @@ exports.register = async (req, res) => {
 	const requiredBody = z.object({
 		username: z.string()
 		.min(3,"username is too small")
-		.max(30,"usename is too big"),
+		.max(30,"username is too big"),
 		password: z.string()
 		.min(12,"password must be atleast 12 characters long")
 		.max(64,"password is too long")
