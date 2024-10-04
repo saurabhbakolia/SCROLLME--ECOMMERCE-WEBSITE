@@ -33,7 +33,7 @@ const useAuthCheck = () => {
 
         // Clear the interval when the component unmounts
         return () => clearInterval(intervalId);
-    }, [dispatch]);
+    }, [dispatch,navigate]);
 
     // Optionally, you can return the auth status if you need to use it directly in your components
     // const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
