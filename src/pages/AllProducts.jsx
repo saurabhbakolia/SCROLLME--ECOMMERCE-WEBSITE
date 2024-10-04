@@ -6,6 +6,8 @@ import ProductGallery from '../Components/ProductGallery'
 import Footer from '../Components/Footer'
 import Newsletter from '../Components/Newsletter'
 
+
+
 const AllProducts = () => {
     return (
         <div>

@@ -29,6 +29,7 @@
 		"mongodb": "^5.6.0",
 		"mongoose": "^8.7.0",
 		"save": "^2.9.0"
+
 	},
 	"devDependencies": {
 		"@babel/core": "^7.25.2",

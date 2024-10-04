@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import axios from "axios";
-import { API_BASE_URL } from "../common/constants/apiConstants";
 import { UserRegistrationAPI } from "../services/userAPI/registerationAPI";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
-import { useEffect } from "react";
 import { mobile, tablet } from "../responsive";
-import PasswordStrengthBar from 'react-password-strength-bar';
+import PasswordStrengthBar from "react-password-strength-bar";
+import { useToast } from "@chakra-ui/react";
 
 const LoaderOverlay = styled.div`
     position: absolute;
