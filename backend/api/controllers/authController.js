@@ -17,11 +17,11 @@ exports.register = async (req, res) => {
 	})
 
 	const parsedBody = requiredBody.safeParse(req.body);
-	if(!parsedBody.success){
+	if(!parsedBody.success)
 		return res.status(400).json(
-		 parsedBody.error.errors
+		parsedBody.error.errors
 		)
-	}
+	
 	try {
 		const { firstName, lastName, username, email, password } = req.body;
 
@@ -96,6 +96,7 @@ exports.login = async (req, res) => {
 
 		res.status(200).json({ message: "Logged in successfully" });
 	} catch (error) {
+		console.log(error);
 		res.status(500).send("Server error");
 	}
 };
