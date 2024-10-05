@@ -9,6 +9,9 @@ const Container = styled.div`
     margin: 3px;
     height: 70vh;
     position: relative;
+    ${mobile({ 
+        marginTop:"50px"
+    })}
 `;
 
 const Image = styled.img`
