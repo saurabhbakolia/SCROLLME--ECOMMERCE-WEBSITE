@@ -1,16 +1,23 @@
 const jwt = require("jsonwebtoken");
 
 const verifyRefreshToken = (req, res, next) => {
-	const { refreshToken } = req.cookies;
+	try{
+		const { refreshToken } = req.cookies;
+		console.log(req)
+		if (!refreshToken)
+			return res.status(401).json({ message: "No refresh token provided" });
+	
+		jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+			if (err) return res.status(401).send("Invalid refresh token");
+			req.user = decoded; // Add user data to request object
+			next();
+		});
+		
 
-	if (!refreshToken)
-		return res.status(401).json({ message: "No refresh token provided" });
-
-	jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-		if (err) return res.status(401).send("Invalid refresh token");
-		req.user = decoded; // Add user data to request object
-		next();
-	});
+	}catch(err){
+		// throw new err;
+		console.log(err);
+	}
 };
 
 module.exports = verifyRefreshToken;

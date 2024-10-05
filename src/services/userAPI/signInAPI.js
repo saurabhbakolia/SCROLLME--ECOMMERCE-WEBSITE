@@ -9,7 +9,7 @@ export const UserSignInAPI = async (loginData) => {
     };
     const data = loginData;
     return (
-        await axios.post(API_BASE_URL + "/auth/user/sign_in", data, { withCredentials: true })
+        await axios.post(API_BASE_URL + "/api/auth/user/sign_in", data, { withCredentials: true })
             .then(response => {
                 return Promise.resolve(response);
             })

@@ -9,7 +9,7 @@ export const UserRegistrationAPI = async (userData) => {
     };
     const data = userData;
     return (
-        await axios.post(API_BASE_URL + "/auth/user/register", data)
+        await axios.post(API_BASE_URL + "/api/auth/user/register", data)
             .then(response => {
                 return Promise.resolve(response);
             })
