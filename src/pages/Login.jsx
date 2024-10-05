@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeAuthenticated } from "../store/Slices/UserSlice";
 import { mobile, tablet } from "../responsive";
+import { useState } from "react";
 
 const Container = styled.div`
     width: 100vw;
@@ -62,10 +63,17 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
+const Message = styled.p`
+    font-size: 12px;
+    padding: 0px;
+`;
+
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [message, setMessage] = useState({ text: '', type: '' }); // State for message
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const loginData = {
@@ -77,10 +85,13 @@ const Login = () => {
             dispatch(changeAuthenticated(true));
             navigate("/");
             console.log(response);
+            setMessage({ text: "Login successful!", type: 'success' }); // Success message
         } catch (error) {
             console.log(error);
+            setMessage({ text: "Login failed! Please try again.", type: 'error' }); // Error message
         }
     };
+
     return (
         <Container>
             <Wrapper>
@@ -89,6 +100,14 @@ const Login = () => {
                     <Input placeholder="username" name="username" type="text" required />
                     <Input placeholder="password" name="password" type="password" required />
                     <Button type="submit">LOGIN</Button>
+
+                    {/* Display message between the button and the links */}
+                    {message.text && (
+                        <Message style={{ color: message.type === 'success' ? 'green' : 'red' }}>
+                            {message.text}
+                        </Message>
+                    )}
+
                     <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
                     <Link href="/register">CREATE A NEW ACCOUNT</Link>
                 </Form>
@@ -96,5 +115,6 @@ const Login = () => {
         </Container>
     );
 };
+
 
 export default Login;

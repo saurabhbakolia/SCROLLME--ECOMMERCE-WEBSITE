@@ -8,6 +8,7 @@ import { Triangle } from "react-loader-spinner";
 import { useEffect } from "react";
 import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from 'react-password-strength-bar';
+import { useState } from "react";
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -104,15 +105,22 @@ const PasswordBox = styled.div`
     height: fit-content;
 `;
 
+const Message = styled.p`
+    font-size: 12px;
+    padding: 0px;
+`;
+
 const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [password, setPassword] = useState('');
+    const [serverMessage, setServerMessage] = useState({ text: '', type: '' }); // New state for server messages
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         console.log("Inside the handleSubmit function");
+
         const formData = {
             firstName: e.target.firstName.value,
             lastName: e.target.lastName.value,
@@ -123,27 +131,32 @@ const Register = () => {
         };
 
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
+            alert("Passwords do not match!"); // Keep the alert for password mismatch
             setIsLoading(false);
             return;
         }
-        setIsLoading(true);
+
         try {
             const response = await UserRegistrationAPI(formData);
             console.log(response.data);
-        } catch (error) {
-            console.log("Error: ", error);
-        } finally {
+            setServerMessage({ text: "Account created successfully!", type: 'success' }); // Show success message
             setTimeout(() => {
                 setIsLoading(false);
                 navigate("/login");
             }, 500);
+        } catch (error) {
+            console.log("Error: ", error);
+            setServerMessage({ text: "Registration failed! Please try again.", type: 'error' }); // Show error message
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handlePassword = (e) => {
         setPassword(e.target.value);
     };
+
+  
 
     return (
         <>
@@ -170,6 +183,14 @@ const Register = () => {
                         <PasswordBox>
                             <PasswordStrengthBar password={password} />
                         </PasswordBox>
+                        
+                        {/* Display server response message */}
+                        {serverMessage.text && (
+                            <Message style={{ color: serverMessage.type === 'success' ? 'green' : 'red' }}>
+                                {serverMessage.text}
+                            </Message>
+                        )}
+                        
                         <Box>
                             <Agreement>
                                 By creating an account, I consent to the processing of my personal
