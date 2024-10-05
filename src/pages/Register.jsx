@@ -147,7 +147,7 @@ const Register = () => {
 			toast({
 				title: "Registration Failed",
 				description:
-					error.message || "Something went wrong, please try again later.",
+					error[0].message || "Something went wrong, please try again later.",
 				status: "error",
 				duration: 5000,
 				isClosable: true,

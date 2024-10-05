@@ -38,9 +38,7 @@ app.use("/api/product", productRoute); // Product routes
 // });
 // app.use(limiter);
 
-// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 8080;
-// eslint-disable-next-line no-undef
 if (process.env.NODE_ENV !== "test") 
 	app.listen(PORT, () => {
 		console.log(`Server running on port ${PORT}`);
