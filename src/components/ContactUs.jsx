@@ -100,6 +100,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    alert("Received your response. We will reach back to you soon.")
     console.log(formData);
   };
 

@@ -7,7 +7,6 @@ import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import Slider from "../components/Slider";
 import FAQ from "../components/FAQ";
-import ContactUs from "../components/ContactUs";
 
 const Home = () => {
   return (
