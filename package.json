@@ -6,7 +6,7 @@
     "@chakra-ui/react": "^2.9.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^5.11.9",
+    "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.11.9",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.16.5",
