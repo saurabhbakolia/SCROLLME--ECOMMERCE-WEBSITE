@@ -6,16 +6,20 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import useAuthCheck from "./hooks/useAuthCheck";
 import { lazy, Suspense } from "react";
 const LazyAllProducts = lazy(() => import("./pages/AllProducts"));
 const LazyCategoryProducts = lazy(() => import("./pages/CategoryProducts"));
 
 function App() {
-	useAuthCheck();
 	return (
 		<div className="App">
 			<Routes>
+
+
+
+
+
+				
 				<Route path="/" element={<Home />} />
 				<Route
 					path="/cart"

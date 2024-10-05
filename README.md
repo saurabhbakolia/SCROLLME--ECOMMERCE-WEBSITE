@@ -59,6 +59,7 @@ ScrollMe is built using the following technologies:
 - **JWT**: For secure user authentication.
 - **Axios**: HTTP client for API communication.
 - **Nodemon**: Automatically restarts the server during development.
+- **Biome**: Code formatter and linter to maintain consistent code style and detect potential errors.
   
 ## Installation
 
@@ -150,13 +151,11 @@ We welcome contributions from the community! To contribute to ScrollMe, follow t
 
 7. **Open a pull request**: Provide a detailed description of your changes in the pull request template. Link to any relevant issues.
 
-
 ### Guidelines
 
 - Ensure code quality by following consistent formatting and naming conventions.
 - Write clear and concise commit messages.
 - Test your changes thoroughly before submitting a pull request.
-
 
 ## Code of Conduct
 

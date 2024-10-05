@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.9",
+    "@chakra-ui/react": "^2.9.3",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.11.9",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.0",
+    "framer-motion": "^11.9.0",
     "myapp": "file:",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,7 +33,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*[js,mjs,cjs,jsx]",
+    "lint-fix": "eslint src/**/*[js,mjs,cjs,jsx] --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +56,22 @@
     ]
   },
   "devDependencies": {
-    "react-router-dom": "^6.26.2"
+    "@eslint/js": "^9.12.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-promise": "^6.6.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "globals": "^15.10.0",
+    "prettier": "^3.3.3",
+    "react-router-dom": "^6.26.2",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1"
   }
 }

@@ -1,14 +1,12 @@
 import styled from "styled-components";
-import axios from "axios";
-import { API_BASE_URL } from "../common/constants/apiConstants";
 import { UserRegistrationAPI } from "../services/userAPI/registerationAPI";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
-import { useEffect } from "react";
 import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useState } from "react";
+import { useToast } from "@chakra-ui/react";
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -115,6 +113,33 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [serverMessage, setServerMessage] = useState({ text: '', type: '' }); // New state for server messages
     const navigate = useNavigate();
+    const validateForm = (formData) => {
+        const { firstName, lastName, username, password } = formData;
+
+        // Username, Firstname, Lastname Validation
+        const namePattern = /^[a-zA-Z]+$/;
+        if (firstName.length < 2 || !namePattern.test(firstName)) {
+            alert("First name must be at least 2 characters long and contain only letters.");
+            return false;
+        }
+        if (lastName.length < 2 || !namePattern.test(lastName)) {
+            alert("Last name must be at least 2 characters long and contain only letters.");
+            return false;
+        }
+        if (username.length < 2) {
+            alert("Username must be at least 2 characters long.");
+            return false;
+        }
+
+        // Password Validation
+        const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+        if (!passwordPattern.test(password)) {
+            alert("Password must be at least 8 characters long, contain at least one digit and one special character.");
+            return false;
+        }
+
+        return true;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -136,6 +161,13 @@ const Register = () => {
             return;
         }
 
+        // Form validation
+        if (!validateForm(formData)) {
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(true);
         try {
             const response = await UserRegistrationAPI(formData);
             console.log(response.data);
