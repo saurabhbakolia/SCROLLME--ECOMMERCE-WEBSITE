@@ -125,9 +125,6 @@ exports.checkAuthStatus = async (req, res) => {
     // Assuming the token is sent as an HTTP-only cookie named 'accessToken'
     const accessToken = req.cookies.accessToken;
     const refreshToken = req.cookies.refreshToken;
-    // console.log(req);
-    // console.log(`Access token :${accessToken}`);
-    // console.log(`refresh token :${refreshToken}`);
     // If there's no token, the user is not logged in
     if (accessToken && refreshToken) {
 		// console.log("if ")
