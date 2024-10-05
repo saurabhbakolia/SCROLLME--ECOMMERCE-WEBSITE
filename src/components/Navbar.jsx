@@ -88,7 +88,7 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
+            <Input /> 
             <SearchIcon style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
@@ -100,6 +100,11 @@ const Navbar = () => {
           </Logo>
         </Center>
         <Right>
+          <MenuItem>
+            <Link to="/contact-us">
+            CONTACT US
+            </Link>
+          </MenuItem>
           {!isAuthenticated && (
             <MenuItem>
               <Link to="/register">REGISTER</Link>
