@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import Newsletter from '../components/Newsletter'
 
 
+
 const AllProducts = () => {
     return (
         <div>

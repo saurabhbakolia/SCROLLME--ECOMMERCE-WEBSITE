@@ -103,129 +103,119 @@ const PasswordBox = styled.div`
 `;
 
 const Register = () => {
-	const [isLoading, setIsLoading] = useState(false);
-	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
-	const toast = useToast();
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setIsLoading(true);
-		const formData = {
-			firstName: e.target.firstName.value,
-			lastName: e.target.lastName.value,
-			username: e.target.username.value,
-			email: e.target.email.value,
-			password: e.target.password.value,
-			confirmPassword: e.target.confirmPassword.value,
-		};
+    const [isLoading, setIsLoading] = useState(false);
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const validateForm = (formData) => {
+        const { firstName, lastName, username, password } = formData;
 
-		if (formData.password !== formData.confirmPassword) {
-			toast({
-				title: "Password mismatch",
-				description: "Passwords do not match, please try again.",
-				status: "error",
-				duration: 5000,
-				isClosable: true,
-			});
-			setIsLoading(false);
-			return;
-		}
+        // Username, Firstname, Lastname Validation
+        const namePattern = /^[a-zA-Z]+$/;
+        if (firstName.length < 2 || !namePattern.test(firstName)) {
+            alert("First name must be at least 2 characters long and contain only letters.");
+            return false;
+        }
+        if (lastName.length < 2 || !namePattern.test(lastName)) {
+            alert("Last name must be at least 2 characters long and contain only letters.");
+            return false;
+        }
+        if (username.length < 2) {
+            alert("Username must be at least 2 characters long.");
+            return false;
+        }
 
-		try {
-			const response = await UserRegistrationAPI(formData);
-			toast({
-				title: "Registration Successful",
-				description: response.message,
-				status: "success",
-				duration: 5000,
-				isClosable: true,
-			});
-			setIsLoading(false);
-			navigate("/login");
-		} catch (error) {
-			console.error(error);
-			toast({
-				title: "Registration Failed",
-				description:
-					error[0].message || "Something went wrong, please try again later.",
-				status: "error",
-				duration: 5000,
-				isClosable: true,
-			});
-			setIsLoading(false);
-		}
-	};
+        // Password Validation
+        const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+        if (!passwordPattern.test(password)) {
+            alert("Password must be at least 8 characters long, contain at least one digit and one special character.");
+            return false;
+        }
 
-	const handlePassword = (e) => {
-		setPassword(e.target.value);
-	};
+        return true;
+    };
 
-	return (
-		<>
-			{isLoading && (
-				<LoaderOverlay>
-					<Triangle
-						color="teal"
-						height={80}
-						width={80}
-						ariaLabel="triangle-loading"
-					/>
-				</LoaderOverlay>
-			)}
-			<Container>
-				<Wrapper>
-					<Title>CREATE AN ACCOUNT</Title>
-					<Form onSubmit={(e) => handleSubmit(e)}>
-						<Input
-							type="text"
-							name="firstName"
-							placeholder="first name"
-							required
-						/>
-						<Input
-							type="text"
-							name="lastName"
-							placeholder="last name"
-							required
-						/>
-						<Input
-							type="text"
-							name="username"
-							placeholder="username"
-							required
-						/>
-						<Input type="email" name="email" placeholder="email" required />
-						<Input
-							type="password"
-							name="password"
-							placeholder="password"
-							required
-							onChange={(e) => handlePassword(e)}
-						/>
-						<Input
-							type="password"
-							name="confirmPassword"
-							placeholder="confirm password"
-							required
-						/>
-						<PasswordBox>
-							<PasswordStrengthBar password={password} />
-						</PasswordBox>
-						<Box>
-							<Agreement>
-								By creating an account, I consent to the processing of my
-								personal data in accordance with the <b>PRIVACY POLICY</b>
-							</Agreement>
-							<Text>
-								Already have an account? <Link href="/login">LOGIN</Link>
-							</Text>
-						</Box>
-						<Button type="submit">CREATE</Button>
-					</Form>
-				</Wrapper>
-			</Container>
-		</>
-	);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        console.log("Inside the handleSubmit function");
+        const formData = {
+            firstName: e.target.firstName.value,
+            lastName: e.target.lastName.value,
+            username: e.target.username.value,
+            email: e.target.email.value,
+            password: e.target.password.value,
+            confirmPassword: e.target.confirmPassword.value,
+        };
+
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match!");
+            setIsLoading(false);
+            return;
+        }
+        // Form validation
+        if (!validateForm(formData)) {
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const response = await UserRegistrationAPI(formData);
+            console.log(response.data);
+        } catch (error) {
+            console.log("Error: ", error);
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false);
+                navigate("/login");
+            }, 500);
+        }
+    };
+
+    const handlePassword = (e) => {
+        setPassword(e.target.value);
+    };
+
+    return (
+        <>
+            {isLoading && (
+                <LoaderOverlay>
+                    <Triangle
+                        color="teal"
+                        height={80}
+                        width={80}
+                        ariaLabel="triangle-loading"
+                    />
+                </LoaderOverlay>
+            )}
+            <Container>
+                <Wrapper>
+                    <Title>CREATE AN ACCOUNT</Title>
+                    <Form onSubmit={(e) => handleSubmit(e)}>
+                        <Input type="text" name="firstName" placeholder="first name" required />
+                        <Input type="text" name="lastName" placeholder="last name" required />
+                        <Input type="text" name="username" placeholder="username" required />
+                        <Input type="email" name="email" placeholder="email" required />
+                        <Input type="password" name="password" placeholder="password" required onChange={(e) => handlePassword(e)} />
+                        <Input type="password" name="confirmPassword" placeholder="confirm password" required />
+                        <PasswordBox>
+                            <PasswordStrengthBar password={password} />
+                        </PasswordBox>
+                        <Box>
+                            <Agreement>
+                                By creating an account, I consent to the processing of my personal
+                                data in accordance with the <b>PRIVACY POLICY</b>
+                            </Agreement>
+                            <Text>
+                                Already have an account? <Link href="/login">LOGIN</Link>
+                            </Text>
+                        </Box>
+                        <Button type="submit">CREATE</Button>
+                    </Form>
+                </Wrapper>
+            </Container>
+        </>
+    );
 };
 
 export default Register;
