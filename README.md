@@ -15,7 +15,6 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
   - [Usage](#usage)
   - [Contributing](#contributing)
     - [Guidelines](#guidelines)
-  - [Pull Request Template](https://github.com/saurabhbakolia/SCROLLME--ECOMMERCE-WEBSITE/blob/master/PULL_REQUEST_TEMPLATE.md) 
   - [Code of Conduct](#code-of-conduct)
   - [License](#license)
   - [Community Discussion](#community-discussion)
@@ -60,6 +59,7 @@ ScrollMe is built using the following technologies:
 - **JWT**: For secure user authentication.
 - **Axios**: HTTP client for API communication.
 - **Nodemon**: Automatically restarts the server during development.
+- **Biome**: Code formatter and linter to maintain consistent code style and detect potential errors.
   
 ## Installation
 

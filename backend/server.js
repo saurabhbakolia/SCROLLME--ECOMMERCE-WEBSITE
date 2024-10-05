@@ -6,7 +6,6 @@ const cartRoute = require("./api/routes/cartRoute");
 const productRoute = require("./api/routes/productRoute");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const authMiddleware = require("./api/middleware/authMiddleware");
 require("dotenv").config();
@@ -39,12 +38,14 @@ app.use("/api/product", productRoute); // Product routes
 // });
 // app.use(limiter);
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 8080;
-if (process.env.NODE_ENV !== "test") {
+// eslint-disable-next-line no-undef
+if (process.env.NODE_ENV !== "test") 
 	app.listen(PORT, () => {
 		console.log(`Server running on port ${PORT}`);
 		console.log(`API available at http://localhost:${PORT}/api/auth`);
 	});
-}
+
 
 module.exports = app;

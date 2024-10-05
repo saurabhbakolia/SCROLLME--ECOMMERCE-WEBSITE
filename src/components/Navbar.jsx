@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
-import { Badge, ShoppingCartOutlined } from "@mui/icons-material";
+import { ShoppingCartOutlined } from "@mui/icons-material";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Profile from "./Profile";
 
 const Container = styled.div`
   height: 60px;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';
@@ -11,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
 import { useEffect } from "react";
 import { useState } from "react";
-import { tab } from "@testing-library/user-event/dist/tab";
 import Footer from "../components/Footer";
 
 const Product = () => {
