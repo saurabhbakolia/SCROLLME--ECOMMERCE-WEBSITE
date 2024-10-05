@@ -1,23 +1,22 @@
 import axios from "axios";
-import { API_BASE_URL } from "../../common/constants/apiConstants";
+import { AUTH_ENDPOINTS } from "../../api/endPoints";
 
 export const UserSignInAPI = async (loginData) => {
     const config = {
         headers: {
             "Content-Type": "application/json",
-        }
+        },
+        withCredentials: true // Include credentials in the request
     };
     const data = loginData;
     return (
-        await axios.post(API_BASE_URL + "/auth/user/sign_in", data, { withCredentials: true })
+        await axios.post(`${AUTH_ENDPOINTS.SIGN_IN}`, data, config)
             .then(response => {
-                return Promise.resolve(response);
+                return Promise.resolve(response.data);
             })
             .catch(error => {
-                if (error.response.status === 401) {
-                    return Promise.reject(error.response.message);
-                }
-                return Promise.reject(error);
+                console.error(error);
+                return Promise.reject(error.response.data);
             })
     );
 };
