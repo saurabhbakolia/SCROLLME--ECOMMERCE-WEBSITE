@@ -163,41 +163,27 @@ exports.profile = function (req, res) {
 exports.logOut =
 	("/",
 	async (req, res) => {
-		try {
-			if (!req.headers.authorization) {
-				return res.status(400).json({
-					message: "Authorization header is required",
-				});
+			try {
+			  // Clear the accessToken and refreshToken cookies by setting their expiration dates to the past
+			  res.cookie("accessToken", "", {
+				maxAge: 0,
+				httpOnly: true,
+				secure: true,
+				sameSite: "strict",
+			  });
+			  res.cookie("refreshToken", "", {
+				maxAge: 0,
+				httpOnly: true,
+				secure: true,
+				sameSite: "strict",
+			  });
+		  
+			  return res.status(200).json({ message: "Logged out successfully" });
+			} catch (error) {
+			  console.error("Error during logout:", error);
+			  return res.status(500).json({ message: "Internal Server Error" });
 			}
-
-			// Extract the token from the Authorization header
-			const authHeader = req.headers.authorization;
-			const token = authHeader && authHeader.split(" ")[1]; // Bearer TOKEN
-
-			if (!token) {
-				return res.status(401).json({
-					message: "Bearer token is required",
-				});
-			}
-
-			const userToken = await UserToken.findOne({ accessToken: token });
-			if (!userToken) {
-				return res.status(401).json({
-					message: "Invalid token!",
-				});
-			}
-			await userToken.deleteOne();
-			res.status(200).json({
-				status: "success",
-				message: "User logged out successfully!",
-			});
-		} catch (error) {
-			console.log("Error logging out user:", error);
-			return res.status(500).json({
-				message: "Error logging out user",
-			});
-		}
-	});
+});
 
 const getUserDetails = async (_id) => {
 	return new Promise((resolve, reject) => {
