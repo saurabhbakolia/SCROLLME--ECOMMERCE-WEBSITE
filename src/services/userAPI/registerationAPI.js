@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../../common/constants/apiConstants";
+import { AUTH_ENDPOINTS } from "../../api/endPoints";
 
 export const UserRegistrationAPI = async (userData) => {
     const config = {
@@ -9,15 +9,13 @@ export const UserRegistrationAPI = async (userData) => {
     };
     const data = userData;
     return (
-        await axios.post(API_BASE_URL + "/api/auth/user/register", data)
+        await axios.post(`${AUTH_ENDPOINTS.SIGN_UP}`, data, config)
             .then(response => {
-                return Promise.resolve(response);
+                return Promise.resolve(response.data);
             })
             .catch(error => {
-                if(error.response.status === 409){
-                    return Promise.reject(error.response.data.message);
-                }
-                return Promise.reject(error);
+                console.error(error);
+                return Promise.reject(error.response.data);
             })
     );
 

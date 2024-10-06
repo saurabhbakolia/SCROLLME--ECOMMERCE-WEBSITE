@@ -6,7 +6,6 @@ const cartRoute = require("./api/routes/cartRoute");
 const productRoute = require("./api/routes/productRoute");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const authMiddleware = require("./api/middleware/authMiddleware");
 require("dotenv").config();
@@ -32,19 +31,19 @@ app.use("/api/auth", authRoutes); // Authentication routes
 app.use("/api/cart", authMiddleware, cartRoute); // Cart routes
 app.use("/api/product", productRoute); // Product routes
 
-// Rate limiting middleware
-const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Limit each IP to 100 requests per windowMs
-});
+// // Rate limiting middleware
+// const limiter = rateLimit({
+// 	windowMs: 15 * 60 * 1000, // 15 minutes
+// 	max: 100, // Limit each IP to 100 requests per windowMs
+// });
 // app.use(limiter);
 
-const PORT = process.env.PORT || 8000;
-if (process.env.NODE_ENV !== "test") {
+const PORT = process.env.PORT || 8080;
+if (process.env.NODE_ENV !== "test") 
 	app.listen(PORT, () => {
 		console.log(`Server running on port ${PORT}`);
 		console.log(`API available at http://localhost:${PORT}/api/auth`);
 	});
-}
+
 
 module.exports = app;

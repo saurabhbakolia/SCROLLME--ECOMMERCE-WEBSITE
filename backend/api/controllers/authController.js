@@ -1,9 +1,29 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const { z } = require("zod");
 // const verifyRefreshToken = require()
 exports.register = async (req, res) => {
-  try {
-    const { firstName, lastName, username, email, password } = req.body;
+	const requiredBody = z.object({
+		username: z.string()
+		.min(3,"username is too small")
+		.max(30,"username is too big"),
+		password: z.string()
+		.min(12,"password must be atleast 12 characters long")
+		.max(64,"password is too long")
+		.regex(/[A-Z]/,"password must contain atleast one uppercase character.")
+		.regex(/[a-z]/,"password must contain atleast one lowercase character.")
+		.regex(/[0-9]/,"password must contain atleast one numeric character.")
+		.regex(/[\W_]/,"password must contain atleast one special character (e.g., ! @ # $ % ^ & *).")
+	})
+
+	const parsedBody = requiredBody.safeParse(req.body);
+	if(!parsedBody.success)
+		return res.status(400).json(
+		parsedBody.error.errors
+		)
+	
+	try {
+		const { firstName, lastName, username, email, password } = req.body;
 
     // Check if user with the same email or username exists
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
@@ -74,10 +94,11 @@ exports.login = async (req, res) => {
       sameSite: "Strict",
     });
 
-    res.status(200).json({ message: "Logged in successfully" });
-  } catch (error) {
-    res.status(500).send("Server error");
-  }
+		res.status(200).json({ message: "Logged in successfully" });
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Server error");
+	}
 };
 
 exports.refreshToken = async (req, res) => {

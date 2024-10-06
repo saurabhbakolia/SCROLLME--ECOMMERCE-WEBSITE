@@ -39,9 +39,9 @@ const useAuthCheck = () => {
     // Set up an interval to check auth status every 2 minutes
     const intervalId = setInterval(checkAuthStatus, 120000);
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [dispatch]);
+        // Clear the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, [dispatch, navigate]);
 
   // Optionally, you can return the auth status if you need to use it directly in your components
   // const isAuthenticated = useSelector((state) => state.user.isAuthenticated);

@@ -5,6 +5,7 @@ import Products from "../Components/Products";
 import Newsletter from "../Components/Newsletter";
 import Footer from "../Components/Footer";
 
+
 const Container = styled.div``;
 
 const Title = styled.h1`

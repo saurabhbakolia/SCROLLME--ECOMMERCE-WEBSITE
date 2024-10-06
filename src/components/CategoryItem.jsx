@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import { mobile } from '../responsive'
-import { Link } from 'react-router-dom';
+import styled, { keyframes } from "styled-components";
+import { mobile } from '../responsive';
 import LazyLoad from 'react-lazyload';
 import CustomBackgroundButton from "./CustomBackgroundButton";
 
@@ -9,13 +8,36 @@ const Container = styled.div`
     margin: 3px;
     height: 70vh;
     position: relative;
+    overflow: hidden;
+`;
+
+const zoomIn = keyframes`
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
+`;
+
+const glow = keyframes`
+    0% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+    }
 `;
 
 const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    ${mobile({ height: "50vh;" })}
+    transition: all 0.5s ease;
+    ${mobile({ height: "50vh" })}
 `;
 
 const Info = styled.div`
@@ -33,19 +55,44 @@ const Info = styled.div`
 const Title = styled.h1`
     color: white;
     margin-bottom: 20px;
+    transition: transform 0.3s ease, text-shadow 0.5s ease;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    &:hover {
+        animation: ${glow} 1.5s infinite alternate, ${zoomIn} 0.3s forwards;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+    }
+`;
+
+const CustomButtonWrapper = styled.div`
+    transition: transform 0.3s ease, box-shadow 0.5s ease;
+    &:hover {
+        animation: ${glow} 1.5s infinite alternate, ${zoomIn} 0.3s forwards;
+    }
+`;
+
+const ContainerHover = styled(Container)`
+    &:hover ${Image} {
+        transform: scale(1.1); 
+    }
+
+    &:hover ${Title}, &:hover ${CustomButtonWrapper} {
+        animation: ${glow} 1.5s infinite alternate, ${zoomIn} 0.3s forwards;
+    }
 `;
 
 const CategoryItem = ({ item }) => {
     return (
-        <Container>
+        <ContainerHover>
             <LazyLoad height={200} offset={100} once>
                 <Image src={item.img} />
             </LazyLoad>
             <Info>
                 <Title>{item.title}</Title>
-                <CustomBackgroundButton link="/item.title" text="SHOP NOW" backgroundColor="white" />
+                <CustomButtonWrapper>
+                    <CustomBackgroundButton link="/item.title" text="SHOP NOW" backgroundcolor="white" />
+                </CustomButtonWrapper>
             </Info>
-        </Container>
+        </ContainerHover>
     );
 };
 
