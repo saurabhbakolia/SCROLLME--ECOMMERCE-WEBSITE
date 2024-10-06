@@ -7,7 +7,9 @@
 	"scripts": {
 		"start": "nodemon server.js",
 		"test": "jest --detectOpenHandles",
-		"lint": "eslint --fix ./*.js"
+		"lint": "eslint --fix ./*.js",
+		"format": "prettier --write \"**/*.js\"",
+		"seed": "node scripts/seedDatabase.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -37,7 +39,7 @@
 		"@eslint/js": "^9.11.1",
 		"babel-jest": "^29.7.0",
 		"chai": "^5.1.1",
-		"eslint": "^9.11.1",
+		"eslint": "^9.12.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.1",
 		"globals": "^15.10.0",
