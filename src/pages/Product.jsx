@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
 import { useEffect } from "react";
 import { useState } from "react";
-import Footer from "../components/Footer";
+import Footer from "../Components/Footer";
 
 const Product = () => {
     const [product, setProduct] = useState();
