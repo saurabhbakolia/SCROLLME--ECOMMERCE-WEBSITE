@@ -6,6 +6,9 @@ import { Triangle } from "react-loader-spinner";
 import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useToast } from "@chakra-ui/react";
+import { useFirebase } from "../context/Firebase";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { FaGoogle } from "react-icons/fa"; // Import Google icon
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -36,12 +39,12 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 6px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 6px;
 `;
 
 const Wrapper = styled.div`
@@ -77,7 +80,6 @@ const Agreement = styled.span`
 
 const Text = styled.p`
     font-size: 12px;
-
 `;
 
 const Link = styled.a`
@@ -96,6 +98,29 @@ const Button = styled.button`
     cursor: pointer;
 `;
 
+const GoogleButton = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    border: none;
+    padding: 15px 20px;
+    background-color: #4285F4; // Blue color
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    marginLeft:2rem;
+
+    &:hover {
+        background-color: #357AE8; // Dark blue on hover
+    }
+
+    svg {
+        margin-right: 8px;
+    }
+`;
+
 const PasswordBox = styled.div`
     width: 100%;
     padding: 2px 4px;
@@ -106,6 +131,7 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const validateForm = (formData) => {
         const { firstName, lastName, username, password } = formData;
 
@@ -172,6 +198,20 @@ const Register = () => {
         }
     };
 
+    const handleGoogleSignIn = async () => {
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        try {
+            setIsLoading(true);
+            await signInWithPopup(auth, provider);
+            navigate("/pages/Home"); 
+        } catch (error) {
+            console.log("Google Sign-In Error: ", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const handlePassword = (e) => {
         setPassword(e.target.value);
     };
@@ -211,6 +251,10 @@ const Register = () => {
                             </Text>
                         </Box>
                         <Button type="submit">CREATE</Button>
+                        <GoogleButton onClick={handleGoogleSignIn}>
+                            <FaGoogle />
+                            Sign in with Google
+                        </GoogleButton>
                     </Form>
                 </Wrapper>
             </Container>
