@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeAuthenticated } from "../store/Slices/UserSlice";
 import { mobile, tablet } from "../responsive";
+import { useToast } from "@chakra-ui/react";
 
 const Container = styled.div`
     width: 100vw;
@@ -62,39 +63,58 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
-
 const Login = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const loginData = {
-            username: e.target.username.value,
-            password: e.target.password.value
-        };
-        try {
-            const response = await UserSignInAPI(loginData);
-            dispatch(changeAuthenticated(true));
-            navigate("/");
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    return (
-        <Container>
-            <Wrapper>
-                <Title>SIGN IN</Title>
-                <Form onSubmit={(e) => handleSubmit(e)}>
-                    <Input placeholder="username" name="username" type="text" required />
-                    <Input placeholder="password" name="password" type="password" required />
-                    <Button type="submit">LOGIN</Button>
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link href="/register">CREATE A NEW ACCOUNT</Link>
-                </Form>
-            </Wrapper>
-        </Container>
-    );
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const toast = useToast();
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const loginData = {
+			username: e.target.username.value,
+			password: e.target.password.value,
+		};
+		try {
+			const response = await UserSignInAPI(loginData);
+			toast({
+				title: "Login Successful",
+				description:
+					response.message || "You have successfully logged in. Welcome back!",
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
+			dispatch(changeAuthenticated(true));
+			navigate("/");
+		} catch (error) {
+			toast({
+				title: "Login Failed!",
+				description: "Invalid credentials, please try again.",
+				status: "error",
+				duration: 5000,
+				isClosable: true,
+			});
+			console.log(error);
+		}
+	};
+	return (
+		<Container>
+			<Wrapper>
+				<Title>SIGN IN</Title>
+				<Form onSubmit={(e) => handleSubmit(e)}>
+					<Input placeholder="username" name="username" type="text" required />
+					<Input
+						placeholder="password"
+						name="password"
+						type="password"
+						required
+					/>
+					<Button type="submit">LOGIN</Button>
+					<Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+					<Link href="/register">CREATE A NEW ACCOUNT</Link>
+				</Form>
+			</Wrapper>
+		</Container>
+	);
 };
 
 export default Login;
