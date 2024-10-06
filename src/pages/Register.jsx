@@ -5,9 +5,9 @@ import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
 import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { useToast } from "@chakra-ui/react";
-import { useFirebase } from "../context/Firebase";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+// import { useToast } from "@chakra-ui/react";
+// import { useFirebase } from "../context/Firebase";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FaGoogle } from "react-icons/fa"; // Import Google icon
 
 const LoaderOverlay = styled.div`
