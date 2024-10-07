@@ -196,7 +196,7 @@ const Cart = () => {
               return (
                 <Product key={product.id}>
                   <ProductDetail>
-                    <Image src={product.img} />
+                    <Image src={product.colors[0].img} />
                     <Details>
                       <ProductName>
                         <b>Product:</b> {product.title}

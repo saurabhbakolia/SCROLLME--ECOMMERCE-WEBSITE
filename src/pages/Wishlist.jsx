@@ -83,7 +83,7 @@ const Wishlist = () => {
         {wishlistItems.length > 0 ? (
           wishlistItems.map((product) => (
             <ProductCard key={product.id}>
-              <Image src={product.img} alt={product.title} />
+              <Image src={product.colors[0].img} alt={product.title} />
               <Title>{product.title}</Title>
               <Price>{product.price}</Price>
               <RemoveButton
