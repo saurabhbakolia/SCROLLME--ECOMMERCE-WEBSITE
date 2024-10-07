@@ -81,9 +81,9 @@ export const allProducts = [
         desc: "Classic vintage-inspired t-shirt featuring a guitar design.",
         price: "$29.99",
         colors: [
-            { color: "black", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277172/Open%20Source%20assets/SCROLLME/rflmludj3blv5nndmcy8.png" },
-            { color: "white", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277224/Open%20Source%20assets/SCROLLME/ubxo8q8biicopd7r7zy0.png" },
-            { color: "purple", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277215/Open%20Source%20assets/SCROLLME/brzmyoxp4x1n1mpptsnv.png" }
+            { color: "#151517", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277172/Open%20Source%20assets/SCROLLME/rflmludj3blv5nndmcy8.png" },
+            { color: "#f0f1f5", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277224/Open%20Source%20assets/SCROLLME/ubxo8q8biicopd7r7zy0.png" },
+            { color: "#cfccde", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277215/Open%20Source%20assets/SCROLLME/brzmyoxp4x1n1mpptsnv.png" }
         ]
     },
     {
