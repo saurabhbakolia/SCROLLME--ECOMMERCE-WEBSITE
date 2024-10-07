@@ -1,311 +1,207 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { mobile, tablet } from '../responsive';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Footer from '../components/Footer';
-import { getProductByIdAPI } from '../services/products/productService';
-import { renderStars } from '../components/ProductCard';
-import { capitalizeFirstChar } from '../utils/stringUtils';
-import { Box, ButtonSpinner, Text } from '@chakra-ui/react';
+import { useParams } from "react-router-dom";
+import { allProducts } from "../data";
+import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 
 const Product = () => {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { categorySlug, productId } = useParams();
+    const [product, setProduct] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(""); // Track selected color
+    const [displayedImage, setDisplayedImage] = useState(""); // Track displayed image
+    const params = useParams();
 
-  console.log('productId: ', productId, categorySlug);
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const selectedProduct = await getProductByIdAPI(productId);
-        setProduct(selectedProduct);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
+    useEffect(() => {
+        // Fetch the product based on productId
+        const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
+        if (selectedProduct) {
+            setProduct(selectedProduct);
+            // Default to the first color's image
+            setSelectedColor(selectedProduct.colors[0].color);
+            setDisplayedImage(selectedProduct.colors[0].img);
+        }
+    }, [params.productId]);
+
+    // Function to handle color change
+    const handleColorClick = (color, img) => {
+        setSelectedColor(color);
+        setDisplayedImage(img); // Update the displayed image when a color is clicked
     };
-    fetchProduct();
-  }, [productId]);
 
-  const getDetailHeading = (detailItem) => {
-    switch(detailItem){
-      case "material":
-        return (
-          capitalizeFirstChar("material")
-        )
-      case "brand":
-        return (
-          `${capitalizeFirstChar("brand")} Name`
-        )
-      case "weight":
-        return (
-          capitalizeFirstChar("weight")
-        )
-      case "category":
-        return (
-          `${capitalizeFirstChar("category")} Name`
-        )
-      default: 
-        return null;  
-    }
-  };
-
-  const renderProductDetails = () => {
-    const productDetailItems = ["material", "brand", "weight", "category"];
-  
-    return productDetailItems.map((d) => {
-      return (
-        <DetailContainer key={d}>  {/* Add a unique key for each item */}
-          <ProductDetailInfo>{getDetailHeading(d)}</ProductDetailInfo>
-          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo> {/* Use bracket notation to access dynamic properties */}
-        </DetailContainer>
-      );
-    });
-  }
-
-  if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <ButtonSpinner size="xl" />
-      </Box>
+        <Container>
+            <Navbar />
+            <Announcement />
+            <Wrapper>
+                <ImgContainer>
+                    {product && <Image src={displayedImage} alt={product.title} />} {/* Display selected color's image */}
+                </ImgContainer>
+                <InfoContainer>
+                    <Title>{product?.title}</Title>
+                    <Desc>{product?.desc}</Desc>
+                    <Price>{product?.price}</Price>
+                    <FilterContainer>
+                        <Filter>
+                            <FilterTitle>Color</FilterTitle>
+                            {/* Loop through available colors and render each color option */}
+                            {product?.colors.map((colorOption, index) => (
+                                <FilterColor 
+                                    key={index} 
+                                    color={colorOption.color} 
+                                    onClick={() => handleColorClick(colorOption.color, colorOption.img)} // Update image on click
+                                    selected={colorOption.color === selectedColor} // Highlight selected color
+                                />
+                            ))}
+                        </Filter>
+                        <Filter>
+                            <FilterTitle>Size</FilterTitle>
+                            <FilterSize>
+                                <FilterSizeOption>XS</FilterSizeOption>
+                                <FilterSizeOption>S</FilterSizeOption>
+                                <FilterSizeOption>M</FilterSizeOption>
+                                <FilterSizeOption>L</FilterSizeOption>
+                                <FilterSizeOption>XL</FilterSizeOption>
+                            </FilterSize>
+                        </Filter>
+                    </FilterContainer>
+                    <AddContainer>
+                        <AmountContainer>
+                            <RemoveIcon />
+                            <Amount>1</Amount>
+                            <AddIcon />
+                        </AmountContainer>
+                        <Button>ADD TO CART</Button>
+                    </AddContainer>
+                </InfoContainer>
+            </Wrapper>
+            <Newsletter />
+            <Footer />
+        </Container>
     );
-  }
-
-  if (error) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <Text color="red.500" fontSize="xl">{error}</Text>
-      </Box>
-    );
-  }
-
-  return (
-    <Container>
-      <Navbar />
-      <Announcement />
-      <Wrapper>
-        <ImgContainer>{product && <Image src={product?.imageUrl} />}</ImgContainer>
-        <InfoContainer>
-          <Title>{product?.name}</Title>
-          <ProductRating>
-            <AverageRating>{product?.ratings?.averageRating}</AverageRating>
-            <ProductStar>{renderStars(product?.ratings.averageRating)}</ProductStar>
-            <ProductReview>{product?.ratings.numberOfReviews} reviews</ProductReview>
-          </ProductRating>
-          <Desc>{product?.description}</Desc>
-          <Price>$ {product?.price}</Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <ActionButtons>
-              <Button>ADD TO CART</Button>
-              <Button>BUY NOW</Button>
-            </ActionButtons>
-          </AddContainer>
-          <ProductDetails>
-              <ProductDetailTitle>Product details</ProductDetailTitle>
-              {renderProductDetails()}
-          </ProductDetails>
-        </InfoContainer>
-      </Wrapper>
-      <Newsletter />
-      <Footer />
-    </Container>
-  );
 };
 
 export default Product;
 
+// Styled components...
 const Container = styled.div``;
-
 const Wrapper = styled.div`
-  padding: 50px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  ${mobile({ flexDirection: 'column;' })}
-  ${mobile({ padding: '10px;' })}
-    ${tablet({ padding: '10px;' })}
+    padding: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    ${mobile({ flexDirection: "column;" })}
+    ${mobile({ padding: "10px;" })}
+    ${tablet({ padding: "10px;" })}
 `;
 
 const ImgContainer = styled.div`
-  flex: 1;
+    flex: 1;
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 64vh;
-  object-fit: contain;
-  ${mobile({ height: '40vh;' })}
-  ${mobile({ width: '100%;' })}
-    ${tablet({ height: '40vh;' })}
-    ${tablet({ width: '100%;' })}
+    width: 100%;
+    height: 64vh;
+    object-fit: contain;
+    ${mobile({ height: "40vh;" })}
+    ${mobile({ width: "100%;" })}
+    ${tablet({ height: "40vh;" })}
+    ${tablet({ width: "100%;" })}
     object-position: center;
 `;
 
 const InfoContainer = styled.div`
-  flex: 1;
-  padding: 0px 50px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  ${mobile({ padding: '4px;' })}
-  text-align: left;
+    flex: 1;
+    padding: 0px 50px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    ${mobile({ padding: "4px;" })}
+    text-align: left;
 `;
 
 const Title = styled.h1`
-  font-weight: 500;
-  font-size: 24px;
-`;
-
-const ProductRating = styled.div`
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-`;
-
-const AverageRating = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-`;
-
-const ProductStar = styled.div`
-  width: content-fit;
-  // height: 40px
-  margin-inline-end: 10px;
-`;
-
-const ProductReview = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: #2c90d7;
+    font-weight: 200;
 `;
 
 const Desc = styled.p`
-  margin: 10px 0px;
-  font-size: 18px;
-  font-weight: 400;
+    margin: 20px 0px;
 `;
 
 const Price = styled.span`
-  font-weight: 200;
-  font-size: 40px;
+    font-weight: 100;
+    font-size: 40px;
 `;
 
 const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+    width: 50%;
+    margin: 30px 0px;
+    display: flex;
+    justify-content: space-between;
 `;
 
 const Filter = styled.div`
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 `;
 
 const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
+    font-size: 20px;
+    font-weight: 200;
 `;
 
 const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: ${(props) => props.color};
+    margin: 0px 5px;
+    cursor: pointer;
+    border: ${(props) => (props.selected ? "2px solid teal" : "1px solid black")}; /* Highlight selected color */
 `;
 
 const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
+    margin-left: 10px;
+    padding: 5px;
 `;
 
 const FilterSizeOption = styled.option``;
 
 const AddContainer = styled.div`
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
-const ActionButtons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+const AmountContainer = styled.div`
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+`;
+
+const Amount = styled.span`
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid teal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 5px;
 `;
 
 const Button = styled.button`
-  width: 200px;
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 500;
+    padding: 15px;
+    border: 2px solid teal;
+    background-color: white;
+    cursor: pointer;
+    font-weight: 500;
 
-  &:hover {
-    background-color: #f8f4f4;
-  }
-`;
-
-const ProductDetails = styled.div`
-  width: 320px;
-  margin-block-start: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
-
-const ProductDetailTitle = styled.h2`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const DetailContainer = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const ProductDetailInfo = styled.p`
-  width: 50%;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
+    &:hover{
+        background-color: #f8f4f4;
+    }
 `;
