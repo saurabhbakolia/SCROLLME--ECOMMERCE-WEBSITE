@@ -4,13 +4,16 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
-
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { allProducts } from '../data';
+import { addToCart, removeFromCart } from '../store/Slices/CartSlice';
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  margin-top: 100px;
 `;
 
 const Title = styled.h1`
@@ -148,6 +151,28 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart); // Get cart items from cartSlice
+  const cartProducts = allProducts.filter((product) =>
+    cartItems.find((item) => item.id === product.id)
+  ); // Get products from data.js that match cartItems
+
+  const handleAddClick = (id) => {
+    dispatch(addToCart(id)); // Dispatch the addToCart action
+  };
+
+  const handleRemoveClick = (id) => {
+    dispatch(removeFromCart(id)); // Dispatch the removeFromCart action
+  };
+
+  const getTotalPrice = () => {
+    return cartProducts.reduce((total, product) => {
+      const cartItem = cartItems.find((item) => item.id === product.id);
+      const price = parseFloat(product.price.slice(1)); // Convert product.price to a number
+      return total + price * (cartItem ? cartItem.quantity : 0);
+    }, 0);
+  };
+
   return (
     <Container>
       <Navbar />
@@ -159,84 +184,64 @@ const Cart = () => {
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag ({cartItems.length})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> JESSIE THUNDER SHOES
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddIcon />
-                  <ProductAmount>2</ProductAmount>
-                  <RemoveIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> HAKURA T-SHIRT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddIcon />
-                  <ProductAmount>1</ProductAmount>
-                  <RemoveIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 20</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cartProducts.map((product) => {
+              const cartItem = cartItems.find((item) => item.id === product.id);
+              return (
+                <Product key={product.id}>
+                  <ProductDetail>
+                    <Image src={product.img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {product.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID:</b> {product.id}
+                      </ProductId>
+                      <ProductColor color="black" />
+                      <ProductSize>
+                        <b>Size:</b> {'M'}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <RemoveIcon
+                        onClick={() => handleRemoveClick(product.id)}
+                      />
+                      <ProductAmount>{cartItem.quantity}</ProductAmount>
+                      <AddIcon onClick={() => handleAddClick(product.id)} />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      ${parseFloat(product.price.slice(1)) * cartItem.quantity}
+                    </ProductPrice>
+                  </PriceDetail>
+                </Product>
+              );
+            })}
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>${getTotalPrice().toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Tax</SummaryItemText>
+              <SummaryItemPrice>$ 30</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Delivery Charges</SummaryItemText>
+              <SummaryItemPrice>$ 20</SummaryItemPrice>
             </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
-            </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            {/* Other SummaryItems... */}
+            <Button>CHECKOUT NOW $ {(50 + getTotalPrice()).toFixed(2)}</Button>
           </Summary>
         </Bottom>
       </Wrapper>
