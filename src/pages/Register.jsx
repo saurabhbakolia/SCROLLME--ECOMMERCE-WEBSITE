@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { UserRegistrationAPI } from "../services/userAPI/registerationAPI";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Triangle } from "react-loader-spinner";
-import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Logo from "../components/Logo";
+import { mobile, tablet } from "../responsive";
+import { UserRegistrationAPI } from "../services/userAPI/registerationAPI";
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -77,7 +77,6 @@ const Agreement = styled.span`
 
 const Text = styled.p`
     font-size: 12px;
-
 `;
 
 const Link = styled.a`
@@ -106,11 +105,11 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const validateForm = (formData) => {
         const { firstName, lastName, username, password } = formData;
-
-        // Username, Firstname, Lastname Validation
         const namePattern = /^[a-zA-Z]+$/;
+
         if (firstName.length < 2 || !namePattern.test(firstName)) {
             alert("First name must be at least 2 characters long and contain only letters.");
             return false;
@@ -124,7 +123,6 @@ const Register = () => {
             return false;
         }
 
-        // Password Validation
         const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
         if (!passwordPattern.test(password)) {
             alert("Password must be at least 8 characters long, contain at least one digit and one special character.");
@@ -137,7 +135,6 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log("Inside the handleSubmit function");
         const formData = {
             firstName: e.target.firstName.value,
             lastName: e.target.lastName.value,
@@ -152,13 +149,12 @@ const Register = () => {
             setIsLoading(false);
             return;
         }
-        // Form validation
+
         if (!validateForm(formData)) {
             setIsLoading(false);
             return;
         }
 
-        setIsLoading(true);
         try {
             const response = await UserRegistrationAPI(formData);
             console.log(response.data);
@@ -190,6 +186,8 @@ const Register = () => {
             )}
             <Container>
                 <Wrapper>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}> <Logo /> </div>
+                    <br />
                     <Title>CREATE AN ACCOUNT</Title>
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <Input type="text" name="firstName" placeholder="first name" required />

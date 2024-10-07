@@ -6,10 +6,11 @@ import {
   LocalPhone,
   LocationOn,
 } from "@mui/icons-material";
-import styled from "styled-components";
-import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
 import XIcon from "@mui/icons-material/X";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import Logo from "../components/Logo";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   display: flex;
@@ -22,8 +23,6 @@ const Left = styled.div`
   flex-direction: column;
   padding: 20px;
 `;
-
-const Logo = styled.h1``;
 
 const Desc = styled.p`
   margin: 20px 0px;
@@ -89,9 +88,7 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>
-          SCROLL<span style={{ color: "teal" }}>ME</span>.
-        </Logo>
+        <Logo /> { /* Using Logo component directly */}
         <Desc>
           Welcome to{" "}
           <span style={{ color: "teal", fontWeight: 600 }}>ScrollMe</span> Web
