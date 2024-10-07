@@ -11,16 +11,11 @@ import ContactUsPage from "./pages/ContactUsPage";
 const LazyAllProducts = lazy(() => import("./pages/AllProducts"));
 const LazyCategoryProducts = lazy(() => import("./pages/CategoryProducts"));
 
+
 function App() {
 	return (
 		<div className="App">
 			<Routes>
-
-
-
-
-
-				
 				<Route path="/" element={<Home />} />
 				<Route
 					path="/cart"

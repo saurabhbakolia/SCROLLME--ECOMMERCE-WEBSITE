@@ -1,5 +1,5 @@
-import axios from "axios";
-import { AUTH_ENDPOINTS } from "../../api/endPoints";
+import axios from 'axios';
+import { AUTH_ENDPOINTS } from '../../api/endPoints';
 
 export const UserSignInAPI = async (loginData) => {
     const config = {
@@ -42,3 +42,4 @@ export const UserSignInAPI = async (loginData) => {
 //             })
 //     );
 // };
+
