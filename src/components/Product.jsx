@@ -32,6 +32,14 @@ const Container = styled.div`
     &:hover ${Info}{
         opacity:1;
     }
+
+     transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+
+  &:hover {
+   
+    transform: translateY(-10px) scale(1.05); /* Lift the container and scale it */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  }
 `;
 const Circle = styled.div`
     width: 200px;
