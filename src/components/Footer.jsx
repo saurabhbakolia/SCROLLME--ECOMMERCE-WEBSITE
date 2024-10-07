@@ -3,6 +3,7 @@ import {
   Facebook,
   Instagram,
   LinkedIn,
+  Twitter,
   LocalPhone,
   LocationOn,
 } from '@mui/icons-material';
@@ -23,10 +24,14 @@ const Left = styled.div`
   padding: 20px;
 `;
 
-const Logo = styled.h1``;
+const Logo = styled.h1`
+  font-size: 28px;
+`;
 
 const Desc = styled.p`
   margin: 20px 0px;
+  line-height: 1.6;
+  font-size: 14px;
 `;
 
 const SocialContainer = styled.div`
@@ -34,16 +39,22 @@ const SocialContainer = styled.div`
   ${mobile({ justifyContent: 'center' })}
 `;
 
-const SocialIcon = styled.div`
+const SocialIcon = styled.a`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  color: white;
   background-color: #${(props) => props.color};
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
+  color: white;
+  margin-right: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Center = styled.div`
@@ -53,6 +64,8 @@ const Center = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 30px;
+  font-size: 18px;
+  text-transform: uppercase;
 `;
 
 const List = styled.ul`
@@ -66,6 +79,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   width: 50%;
   margin-bottom: 10px;
+  font-size: 14px;
 `;
 
 const Right = styled.div`
@@ -82,7 +96,18 @@ const ContactItem = styled.div`
 `;
 
 const Payment = styled.img`
-  width: 50%;
+  width: 70%;
+  margin-top: 20px;
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  ${mobile({ flexDirection: "column", textAlign: "center" })}
 `;
 
 const Footer = () => {
