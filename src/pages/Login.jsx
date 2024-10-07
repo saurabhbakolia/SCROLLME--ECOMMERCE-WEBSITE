@@ -72,11 +72,11 @@ const Login = () => {
       password: e.target.password.value,
     };
     try {
-      const response = await UserSignInAPI(loginData);
+      const res = await UserSignInAPI(loginData);
       toast({
         title: 'Login Successful',
         description:
-          response.message || 'You have successfully logged in. Welcome back!',
+        res.message || 'You have successfully logged in. Welcome back!',
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -84,14 +84,14 @@ const Login = () => {
       dispatch(changeAuthenticated(true));
       navigate('/');
     } catch (error) {
+      console.error(error);
       toast({
         title: 'Login Failed!',
-        description: 'Invalid credentials, please try again.',
+        description: error || 'Invalid credentials, please try again.',
         status: 'error',
         duration: 5000,
         isClosable: true,
       });
-      console.log(error);
     }
   };
   return (

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Triangle } from 'react-loader-spinner';
 import { mobile, tablet } from '../responsive';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import { useToast } from '@chakra-ui/react';
 
 const LoaderOverlay = styled.div`
   position: absolute;
@@ -102,34 +103,61 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const toast = useToast();
   const validateForm = (formData) => {
     const { firstName, lastName, username, password } = formData;
-
-    // Username, Firstname, Lastname Validation
     const namePattern = /^[a-zA-Z]+$/;
     if (firstName.length < 2 || !namePattern.test(firstName)) {
-      alert(
-        'First name must be at least 2 characters long and contain only letters.'
-      );
+      // alert(
+      //   'First name must be at least 2 characters long and contain only letters.'
+      // );
+      toast({
+        title: 'Invalid First Name',
+        description: 'First name must be at least 2 characters long and contain only letters.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
       return false;
     }
     if (lastName.length < 2 || !namePattern.test(lastName)) {
-      alert(
-        'Last name must be at least 2 characters long and contain only letters.'
-      );
+      // alert(
+      //   'Last name must be at least 2 characters long and contain only letters.'
+      // );
+      toast({
+        title: 'Invalid Last Name',
+        description: 'Last name must be at least 2 characters long and contain only letters.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
       return false;
     }
     if (username.length < 2) {
-      alert('Username must be at least 2 characters long.');
+      // alert('Username must be at least 2 characters long.');
+      toast({
+        title: 'Invalid Username',
+        description: 'Username must be at least 2 characters long.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
       return false;
     }
 
     // Password Validation
     const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
     if (!passwordPattern.test(password)) {
-      alert(
-        'Password must be at least 8 characters long, contain at least one digit and one special character.'
-      );
+      // alert(
+      //   'Password must be at least 8 characters long, contain at least one digit and one special character.'
+      // );
+      toast({
+        title: 'Invalid Password',
+        description: 'Password must be at least 8 characters long, contain at least one digit and one special character.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
       return false;
     }
 
@@ -139,7 +167,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log('Inside the handleSubmit function');
     const formData = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
@@ -150,7 +177,13 @@ const Register = () => {
     };
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      toast({
+        title: 'Password Mismatch!',
+        description: 'Passwords do not match, change the password!.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
       setIsLoading(false);
       return;
     }
@@ -162,14 +195,26 @@ const Register = () => {
 
     setIsLoading(true);
     try {
-      const response = await UserRegistrationAPI(formData);
-      console.log(response.data);
+      const res = await UserRegistrationAPI(formData);
+      toast({
+        title: 'Registration Successful!',
+        description: res.message || 'You have successfully registered. Welcome!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error) {
-      console.log('Error: ', error);
+      console.error(error);
+      toast({
+        title: 'Registration Failed!',
+        description: error || 'An error occurred during registration.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-        navigate('/login');
       }, 500);
     }
   };
