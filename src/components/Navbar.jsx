@@ -1,16 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
-import SearchIcon from '@mui/icons-material/Search';
-import { ShoppingCartOutlined } from '@mui/icons-material';
-import { mobile } from '../responsive';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
+import React from "react";
+import styled from "styled-components";
+import SearchIcon from "@mui/icons-material/Search";
+import { ShoppingCartOutlined } from "@mui/icons-material";
+import { mobile } from "../responsive";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
+import { AUTH_ENDPOINTS } from "../api/endPoints";
+import axios from "axios";
+import { logOut } from "../store/Slices/UserSlice";
 
 const Container = styled.div`
   height: 60px;
   width: 100%;
+  position: fixed;
+  top: 30px;
+  left: 0;
+  z-index: 999;
   background-color: white;
-  ${mobile({ height: '120px;' })}
+  ${mobile({ height: "120px;" })}
 `;
 
 const Wrapper = styled.div`
@@ -19,11 +28,11 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   ${mobile({
-    height: '90px',
-    padding: '10px 10px', // Reduced padding for smaller screens
-    flexDirection: 'column', // Stack items vertically
-    justifyContent: 'space-evenly',
-    alignItems: 'center', // Align items to the start
+    height: "90px",
+    padding: "10px 10px", // Reduced padding for smaller screens
+    flexDirection: "column", // Stack items vertically
+    justifyContent: "space-evenly",
+    alignItems: "center", // Align items to the start
   })}
 `;
 
@@ -36,7 +45,7 @@ const Left = styled.div`
 const Language = styled.span`
   font-size: 14px;
   cursor: pointer;
-  ${mobile({ display: 'none;' })}
+  ${mobile({ display: "none;" })}
 `;
 
 const SearchContainer = styled.div`
@@ -49,7 +58,7 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
   border: none;
-  margin: 'auto' ${mobile({ width: '200px;', margin: '0 auto' })};
+  margin: "auto" ${mobile({ width: "200px;", margin: "0 auto" })};
 `;
 const Center = styled.div`
   flex: 1;
@@ -58,25 +67,56 @@ const Center = styled.div`
 
 const Logo = styled.h1`
   font-weight: bold;
-  ${mobile({ fontSize: '24px;' })}
+  ${mobile({ fontSize: "24px;" })}
 `;
 const Right = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  ${mobile({ flex: 2, justifyContent: 'center' })}
+  ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-inline-start: 25px;
-  ${mobile({ fontSize: '12px', marginInlineStart: '10px' })}
+  ${mobile({ fontSize: "12px", marginInlineStart: "10px" })}
 `;
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const token = useSelector((state) => state.user.token);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  // Helper function to delete a cookie
+  const deleteCookie = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  };
+
+  const handleLogout = async () => {
+    try {
+    const res = await axios.post(
+      `${AUTH_ENDPOINTS.LOGOUT}`,
+      {},
+      {
+        withCredentials: true, // Include cookies in the request
+      }
+    );
+
+    if (res.status === 200) {
+      alert("Logout successful!");
+      dispatch(logOut());
+      navigate("/"); // Redirect to home or login page after logout
+    }
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Optionally, show an error message to the user
+    }    
+  };    
 
   return (
     <Container>
@@ -84,18 +124,23 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
-            <SearchIcon style={{ color: 'gray', fontSize: 16 }} />
+            <Input /> 
+            <SearchIcon style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
           <Logo>
             <Link to="/">
-              SCROLL<span style={{ color: 'teal' }}>ME</span>
+              SCROLL<span style={{ color: "teal" }}>ME</span>
             </Link>
           </Logo>
         </Center>
         <Right>
+          <MenuItem>
+            <Link to="/contact-us">
+            CONTACT US
+            </Link>
+          </MenuItem>
           {!isAuthenticated && (
             <MenuItem>
               <Link to="/register">REGISTER</Link>
@@ -105,6 +150,9 @@ const Navbar = () => {
             <MenuItem>
               <Link to="/login">SIGN IN</Link>
             </MenuItem>
+          )}
+          {isAuthenticated && (
+            <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>
           )}
           <MenuItem>
             <Link to="/cart">
@@ -118,3 +166,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

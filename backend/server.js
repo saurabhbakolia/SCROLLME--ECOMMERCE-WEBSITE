@@ -1,14 +1,16 @@
 const express = require('express');
 const app = express();
-const dbConnect = require('./api/database/dbConnect');
-const authRoutes = require('./api/routes/authRoute');
-const cartRoute = require('./api/routes/cartRoute');
-const productRoute = require('./api/routes/productRoute');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const helmet = require('helmet');
-const authMiddleware = require('./api/middleware/authMiddleware');
-require('dotenv').config();
+const dbConnect = require("./api/database/dbConnect");
+const authRoutes = require("./api/routes/authRoute");
+const cartRoute = require("./api/routes/cartRoute");
+const productRoute = require("./api/routes/productRoute");
+const userRoute = require("./api/routes/userRoute")
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const authMiddleware = require("./api/middleware/authMiddleware");
+require("dotenv").config();
+
 
 // Connect to the database
 dbConnect();
@@ -29,9 +31,11 @@ app.use(
 app.use(cookieParser());
 app.use(helmet());
 
-app.use('/api/auth', authRoutes); // Authentication routes
-app.use('/api/cart', authMiddleware, cartRoute); // Cart routes
-app.use('/api/product', productRoute); // Product routes
+app.use("/api/auth", authRoutes); // Authentication routes
+app.use("/api/cart", authMiddleware, cartRoute); // Cart routes
+app.use("/api/product", productRoute); // Product routes
+app.use("/api/user", userRoute); // user routes
+
 
 // // Rate limiting middleware
 // const limiter = rateLimit({
