@@ -1,11 +1,10 @@
 import {
-  Email,
-  Facebook,
-  Instagram,
-  LinkedIn,
-  Twitter,
-  LocalPhone,
-  LocationOn,
+    Email,
+    Facebook,
+    Instagram,
+    LinkedIn,
+    LocalPhone,
+    LocationOn,
 } from '@mui/icons-material';
 import styled from 'styled-components';
 import { mobile } from '../responsive';
@@ -125,106 +124,106 @@ const BottomSection = styled.div`
 `;
 
 const Footer = () => {
-  return (
-    <Container>
-      <TopSection>
-        <Left>
-          <Logo>
-            SCROLL<span style={{ color: "teal" }}>ME</span>.
-          </Logo>
-          <Desc>
-            Welcome to{" "}
-            <span style={{ color: "teal", fontWeight: 600 }}>ScrollMe</span> Web
-            Store, your ultimate destination for trendy and fashionable clothing.
-            We pride ourselves on curating a diverse collection of high-quality
-            apparel that caters to your unique style and personality.
-          </Desc>
-          <SocialContainer>
-            <SocialIcon href="https://facebook.com" color="3B5999">
-              <Facebook />
-            </SocialIcon>
-            <SocialIcon href="https://instagram.com" color="E4405F">
-              <Instagram />
-            </SocialIcon>
-            <SocialIcon href="https://twitter.com" color="1DA1F2">
-              <Twitter />
-            </SocialIcon>
-            <SocialIcon href="https://linkedin.com" color="0A66C2">
-              <LinkedIn />
-            </SocialIcon>
-          </SocialContainer>
-        </Left>
-        <Center>
-          <Title>Useful Links</Title>
-          <List>
-            <ListItem>
-              <Link to="/">Home</Link>
-            </ListItem>
-            <ListItem>
-              <Link to="/cart">Cart</Link>
-            </ListItem>
-            <ListItem>Man Fashion</ListItem>
-            <ListItem>Woman Fashion</ListItem>
-            <ListItem>Accessories</ListItem>
-            <ListItem>My Account</ListItem>
-            <ListItem>Order Tracking</ListItem>
-            <ListItem>Wishlist</ListItem>
-            <ListItem>Terms & Conditions</ListItem>
-            <ListItem>Privacy Policy</ListItem>
-          </List>
-        </Center>
-        <Right>
-          <Title>Contact</Title>
-          <ContactItem>
-            <a
-              href="https://www.google.com/maps?q=622 Dixie Path, South Tobinchester 98336"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "inherit",
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <LocationOn style={{ marginRight: "10px" }} />
-              622 Dixie Path, South Tobinchester 98336
-            </a>
-          </ContactItem>
-          <ContactItem>
-            <a
-              href="tel:+12345678"
-              style={{
-                color: "inherit",
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <LocalPhone style={{ marginRight: "10px" }} />
-              +1 234 56 78
-            </a>
-          </ContactItem>
-          <ContactItem>
-            <Email style={{ marginRight: "10px" }} />
-            <a
-              href="mailto:contact@lama.dev"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              contact@lama.dev
-            </a>
-          </ContactItem>
-          <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-        </Right>
-      </TopSection>
-      <BottomSection>
-        <span>© 2024 ScrollMe. All Rights Reserved.</span>
-        <span>
-          Developed by <a href="https://lama.dev" style={{ color: "teal" }}>LamaDev</a>
-        </span>
-      </BottomSection>
-    </Container>
-  );
+    return (
+        <Container>
+            <TopSection>
+                <Left>
+                    <Logo>
+                        SCROLL<span style={{ color: "teal" }}>ME</span>.
+                    </Logo>
+                    <Desc>
+                        Welcome to{" "}
+                        <span style={{ color: "teal", fontWeight: 600 }}>ScrollMe</span> Web
+                        Store, your ultimate destination for trendy and fashionable clothing.
+                        We pride ourselves on curating a diverse collection of high-quality
+                        apparel that caters to your unique style and personality.
+                    </Desc>
+                    <SocialContainer>
+                        <SocialIcon href="https://facebook.com" color="3B5999">
+                            <Facebook />
+                        </SocialIcon>
+                        <SocialIcon href="https://instagram.com" color="E4405F">
+                            <Instagram />
+                        </SocialIcon>
+                        <SocialIcon href="https://twitter.com" color="1DA1F2">
+                            <XIcon />
+                        </SocialIcon>
+                        <SocialIcon href="https://linkedin.com" color="0A66C2">
+                            <LinkedIn />
+                        </SocialIcon>
+                    </SocialContainer>
+                </Left>
+                <Center>
+                    <Title>Useful Links</Title>
+                    <List>
+                        <ListItem>
+                            <Link to="/">Home</Link>
+                        </ListItem>
+                        <ListItem>
+                            <Link to="/cart">Cart</Link>
+                        </ListItem>
+                        <ListItem>Man Fashion</ListItem>
+                        <ListItem>Woman Fashion</ListItem>
+                        <ListItem>Accessories</ListItem>
+                        <ListItem>My Account</ListItem>
+                        <ListItem>Order Tracking</ListItem>
+                        <ListItem>Wishlist</ListItem>
+                        <ListItem>Terms & Conditions</ListItem>
+                        <ListItem>Privacy Policy</ListItem>
+                    </List>
+                </Center>
+                <Right>
+                    <Title>Contact</Title>
+                    <ContactItem>
+                        <a
+                            href="https://www.google.com/maps?q=622 Dixie Path, South Tobinchester 98336"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <LocationOn style={{ marginRight: "10px" }} />
+                            622 Dixie Path, South Tobinchester 98336
+                        </a>
+                    </ContactItem>
+                    <ContactItem>
+                        <a
+                            href="tel:+12345678"
+                            style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <LocalPhone style={{ marginRight: "10px" }} />
+                            +1 234 56 78
+                        </a>
+                    </ContactItem>
+                    <ContactItem>
+                        <Email style={{ marginRight: "10px" }} />
+                        <a
+                            href="mailto:contact@lama.dev"
+                            style={{ color: "inherit", textDecoration: "none" }}
+                        >
+                            contact@lama.dev
+                        </a>
+                    </ContactItem>
+                    <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+                </Right>
+            </TopSection>
+            <BottomSection>
+                <span>© 2024 ScrollMe. All Rights Reserved.</span>
+                <span>
+                    Developed by <a href="https://lama.dev" style={{ color: "teal" }}>LamaDev</a>
+                </span>
+            </BottomSection>
+        </Container>
+    );
 };
 
 export default Footer;
