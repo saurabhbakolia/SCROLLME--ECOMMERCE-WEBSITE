@@ -5,7 +5,8 @@ import { useDispatch } from "react-redux";
 import { changeAuthenticated } from "../store/Slices/UserSlice";
 import { mobile, tablet } from "../responsive";
 import { useToast } from "@chakra-ui/react";
-import { auth, GoogleAuthProvider, signInWithPopup } from "../context/Firebase"; // Update import
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Import user creation method
+import { auth } from "../context/Firebase"; // Update import
 import { FaGoogle } from 'react-icons/fa'; // Add this import
 
 
@@ -131,28 +132,28 @@ const Login = () => {
         }
     };
 
-    return (
-        <Container>
-            <Wrapper>
-                <Title>SIGN IN</Title>
-                <Form onSubmit={(e) => handleSubmit(e)}>
-                    <Input placeholder="username" name="username" type="text" required />
-                    <Input
-                        placeholder="password"
-                        name="password"
-                        type="password"
-                        required
-                    />
-                    <Button type="submit">LOGIN</Button>
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link href="/register">CREATE A NEW ACCOUNT</Link>
-                </Form>
-                <GoogleButton onClick={handleGoogleLogin}>
-                    <FaGoogle style={{ marginRight: '8px' }} /> Sign in with Google
-                </GoogleButton>
-            </Wrapper>
-        </Container>
-    );
+  return (
+    <Container>
+      <Wrapper>
+        <Title>SIGN IN</Title>
+        <Form onSubmit={(e) => handleSubmit(e)}>
+          <Input placeholder="username" name="username" type="text" required />
+          <Input
+            placeholder="password"
+            name="password"
+            type="password"
+            required
+          />
+          <Button type="submit">LOGIN</Button>
+          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link href="/register">CREATE A NEW ACCOUNT</Link>
+        </Form>
+        <GoogleButton onClick={handleGoogleLogin}>
+            <FaGoogle style={{ marginRight: '8px' }} /> Sign in with Google
+        </GoogleButton>
+      </Wrapper>
+    </Container>
+  );
 };
 
 export default Login;

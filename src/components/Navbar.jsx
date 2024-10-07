@@ -86,35 +86,40 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-  const token = useSelector((state) => state.user.token);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
 
-  // Helper function to delete a cookie
-  const deleteCookie = (name) => {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  };
-
   const handleLogout = async () => {
     try {
     const res = await axios.post(
       `${AUTH_ENDPOINTS.LOGOUT}`,
-      {},
       {
         withCredentials: true, // Include cookies in the request
       }
     );
 
     if (res.status === 200) {
-      alert("Logout successful!");
+      toast({
+        title: 'Logout Successfully!',
+        description: res.message || 'You have successfully logged out!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
       dispatch(logOut());
-      navigate("/"); // Redirect to home or login page after logout
+      navigate("/");
     }
     } catch (error) {
       console.error("Logout failed:", error);
-      // Optionally, show an error message to the user
+      toast({
+        title: 'Logout Failed!',
+        description: error || 'Something went wrong logging out!',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }    
   };    
 
