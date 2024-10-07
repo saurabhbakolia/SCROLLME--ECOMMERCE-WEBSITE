@@ -1,25 +1,19 @@
-import "./App.css";
-import Home from "./pages/Home";
-import Product from "./pages/Product";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Cart from "./pages/Cart";
-import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./utils/ProtectedRoute";
-import { lazy, Suspense } from "react";
-const LazyAllProducts = lazy(() => import("./pages/AllProducts"));
-const LazyCategoryProducts = lazy(() => import("./pages/CategoryProducts"));
+import './App.css';
+import Home from './pages/Home';
+import Product from './pages/Product';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Cart from './pages/Cart';
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './utils/ProtectedRoute';
+import { lazy, Suspense } from 'react';
+const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
+const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
 function App() {
 	return (
 		<div className="App">
 			<Routes>
-
-
-
-
-
-				
 				<Route path="/" element={<Home />} />
 				<Route
 					path="/cart"

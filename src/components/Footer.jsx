@@ -6,10 +6,11 @@ import {
   Twitter,
   LocalPhone,
   LocationOn,
-} from "@mui/icons-material";
-import styled from "styled-components";
-import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
+} from '@mui/icons-material';
+import styled from 'styled-components';
+import { mobile } from '../responsive';
+import { Link } from 'react-router-dom';
+import XIcon from '@mui/icons-material/X';
 
 const Container = styled.div`
   display: flex;
@@ -22,8 +23,14 @@ const Container = styled.div`
 
 const TopSection = styled.div`
   display: flex;
-  ${mobile({ flexDirection: "column" })}
+  flex-direction: column;
+  background-color: #1a1a1a;
+  color: #fff;
+  padding: 40px 20px;
+  ${mobile({ padding: "20px" })}
 `;
+
+
 
 const Left = styled.div`
   flex: 1;
