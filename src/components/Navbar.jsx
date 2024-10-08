@@ -14,10 +14,6 @@ import { logOut } from "../store/Slices/UserSlice";
 const Container = styled.div`
   height: 60px;
   width: 100%;
-  position: fixed;
-  top: 30px;
-  left: 0;
-  z-index: 999;
   background-color: white;
   ${mobile({ height: "120px;" })}
 `;
