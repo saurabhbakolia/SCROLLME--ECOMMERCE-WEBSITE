@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const ContainedButton = styled(Link)`
     border: none;
     padding: 10px;
-    background-color: ${(props) => props.backgroundColor || "white"};
+    background-color: ${(props) => props.backgroundcolor || "white"};
     color: gray;
     cursor: pointer;
     font-weight: 600;
@@ -15,7 +15,7 @@ const ContainedButton = styled(Link)`
 
 const CustomBackgroundButton = (props) => {
     return (
-        <ContainedButton to={props.link} backgroundColor={props.backgroundColor}>
+        <ContainedButton to={props.link} backgroundcolor={props.backgroundcolor}>
             {props.text}
         </ContainedButton>
     )
