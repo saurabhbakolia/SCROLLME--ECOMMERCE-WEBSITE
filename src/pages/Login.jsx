@@ -1,14 +1,11 @@
-import styled from "styled-components";
-import { UserSignInAPI } from "../services/userAPI/signInAPI"; // Ensure this is defined
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { changeAuthenticated } from "../store/Slices/UserSlice";
-import { mobile, tablet } from "../responsive";
 import { useToast } from "@chakra-ui/react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Import user creation method
-import { auth } from "../context/Firebase"; // Update import
-import { FaGoogle } from 'react-icons/fa'; // Add this import
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Logo from "../components/Logo";
+import { mobile, tablet } from "../responsive";
+import { UserSignInAPI } from "../services/userAPI/signInAPI";
+import { changeAuthenticated } from "../store/Slices/UserSlice";
 
 const Container = styled.div`
     width: 100vw;
@@ -67,16 +64,10 @@ const Link = styled.a`
     cursor: pointer;
 `;
 
-const GoogleButton = styled(Button)`
-    background-color: #4285f4; /* Google blue color */
-    width: 100%; /* Full width */
-`;
-
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const toast = useToast();
-    const googleProvider = new GoogleAuthProvider();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -85,10 +76,11 @@ const Login = () => {
             password: e.target.password.value,
         };
         try {
-            const response = await UserSignInAPI(loginData); // Ensure this is defined
+            const response = await UserSignInAPI(loginData);
             toast({
                 title: "Login Successful",
-                description: response.message || "You have successfully logged in. Welcome back!",
+                description:
+                    response.message || "You have successfully logged in. Welcome back!",
                 status: "success",
                 duration: 5000,
                 isClosable: true,
@@ -107,53 +99,27 @@ const Login = () => {
         }
     };
 
-    const handleGoogleLogin = async () => {
-        try {
-            const result = await signInWithPopup(auth, googleProvider); // Use auth from Firebase context
-            const user = result.user;
-            toast({
-                title: "Google Login Successful",
-                description: `Welcome ${user.displayName}!`,
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-            });
-            dispatch(changeAuthenticated(true));
-            navigate("/");
-        } catch (error) {
-            toast({
-                title: "Google Login Failed!",
-                description: "Please try again later.",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-            });
-            console.log(error);
-        }
-    };
-
-  return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form onSubmit={(e) => handleSubmit(e)}>
-          <Input placeholder="username" name="username" type="text" required />
-          <Input
-            placeholder="password"
-            name="password"
-            type="password"
-            required
-          />
-          <Button type="submit">LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link href="/register">CREATE A NEW ACCOUNT</Link>
-        </Form>
-        <GoogleButton onClick={handleGoogleLogin}>
-            <FaGoogle style={{ marginRight: '8px' }} /> Sign in with Google
-        </GoogleButton>
-      </Wrapper>
-    </Container>
-  );
+    return (
+        <Container>
+            <Wrapper>
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}> <Logo /> </div>
+				<br />
+                <Title>SIGN IN</Title>
+                <Form onSubmit={(e) => handleSubmit(e)}>
+                    <Input placeholder="username" name="username" type="text" required />
+                    <Input
+                        placeholder="password"
+                        name="password"
+                        type="password"
+                        required
+                    />
+                    <Button type="submit">LOGIN</Button>
+                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+                    <Link href="/register">CREATE A NEW ACCOUNT</Link>
+                </Form>
+            </Wrapper>
+        </Container>
+    );
 };
 
 export default Login;
