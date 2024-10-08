@@ -8,4 +8,7 @@ export default [
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
   { extends: ['airbnb', 'airbnb/hooks', 'prettier'] },
+  {
+    ignores: ["eslint.config.mjs", "**/*.css"]
+  }
 ];

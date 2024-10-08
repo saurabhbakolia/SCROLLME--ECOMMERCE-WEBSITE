@@ -3,17 +3,18 @@ import {
   Facebook,
   Instagram,
   LinkedIn,
+  Twitter,
   LocalPhone,
   LocationOn,
-} from "@mui/icons-material";
-import styled from "styled-components";
-import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
-import XIcon from "@mui/icons-material/X";
+} from '@mui/icons-material';
+import styled from 'styled-components';
+import { mobile } from '../responsive';
+import { Link } from 'react-router-dom';
+import XIcon from '@mui/icons-material/X';
 
 const Container = styled.div`
   display: flex;
-  ${mobile({ flexDirection: "column" })}
+  ${mobile({ flexDirection: 'column' })}
 `;
 
 const Left = styled.div`
@@ -23,27 +24,37 @@ const Left = styled.div`
   padding: 20px;
 `;
 
-const Logo = styled.h1``;
+const Logo = styled.h1`
+  font-size: 28px;
+`;
 
 const Desc = styled.p`
   margin: 20px 0px;
+  line-height: 1.6;
+  font-size: 14px;
 `;
 
 const SocialContainer = styled.div`
   display: flex;
-  ${mobile({ justifyContent: "center" })}
+  ${mobile({ justifyContent: 'center' })}
 `;
 
-const SocialIcon = styled.div`
+const SocialIcon = styled.a`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  color: white;
   background-color: #${(props) => props.color};
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
+  color: white;
+  margin-right: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Center = styled.div`
@@ -53,6 +64,8 @@ const Center = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 30px;
+  font-size: 18px;
+  text-transform: uppercase;
 `;
 
 const List = styled.ul`
@@ -66,23 +79,35 @@ const List = styled.ul`
 const ListItem = styled.li`
   width: 50%;
   margin-bottom: 10px;
+  font-size: 14px;
 `;
 
 const Right = styled.div`
   flex: 1;
   padding: 20px;
-  ${mobile({ backgroundColor: "#fff8f8" })}
+  ${mobile({ backgroundColor: '#fff8f8' })}
 `;
 
 const ContactItem = styled.div`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  ${mobile({ justifyContent: "center" })}
+  ${mobile({ justifyContent: 'center' })}
 `;
 
 const Payment = styled.img`
-  width: 50%;
+  width: 70%;
+  margin-top: 20px;
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+  margin-top: 20px;
+  font-size: 12px;
+  ${mobile({ flexDirection: "column", textAlign: "center" })}
 `;
 
 const Footer = () => {
@@ -90,11 +115,11 @@ const Footer = () => {
     <Container>
       <Left>
         <Logo>
-          SCROLL<span style={{ color: "teal" }}>ME</span>.
+          SCROLL<span style={{ color: 'teal' }}>ME</span>.
         </Logo>
         <Desc>
-          Welcome to{" "}
-          <span style={{ color: "teal", fontWeight: 600 }}>ScrollMe</span> Web
+          Welcome to{' '}
+          <span style={{ color: 'teal', fontWeight: 600 }}>ScrollMe</span> Web
           Store, your ultimate destination for trendy and fashionable clothing.
           We pride ourselves on curating a diverse collection of high-quality
           apparel that caters to your unique style and personality.
@@ -118,10 +143,10 @@ const Footer = () => {
         <Title>Useful Links</Title>
         <List>
           <ListItem>
-            <Link to={"/"}>Home</Link>
+            <Link to={'/'}>Home</Link>
           </ListItem>
           <ListItem>
-            <Link to={"/cart"}>Cart</Link>
+            <Link to={'/cart'}>Cart</Link>
           </ListItem>
           <ListItem>Man Fashion</ListItem>
           <ListItem>Woman Fashion</ListItem>
@@ -142,13 +167,13 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              color: "inherit",
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
+              color: 'inherit',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
-            <LocationOn style={{ marginRight: "10px" }} />
+            <LocationOn style={{ marginRight: '10px' }} />
             622 Dixie Path, South Tobinchester 98336
           </a>
         </ContactItem>
@@ -157,22 +182,22 @@ const Footer = () => {
           <a
             href="tel:+12345678"
             style={{
-              color: "inherit",
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
+              color: 'inherit',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
-            <LocalPhone style={{ marginRight: "10px" }} />
+            <LocalPhone style={{ marginRight: '10px' }} />
             +1 234 56 78
           </a>
         </ContactItem>
         {/* Email icon wrapped with mailto link to open the default email client */}
         <ContactItem>
-          <Email style={{ marginRight: "10px" }} />
+          <Email style={{ marginRight: '10px' }} />
           <a
             href="mailto:contact@lama.dev"
-            style={{ color: "inherit", textDecoration: "none" }}
+            style={{ color: 'inherit', textDecoration: 'none' }}
           >
             contact@lama.dev
           </a>

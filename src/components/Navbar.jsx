@@ -1,18 +1,19 @@
+
 import React from "react";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import { ShoppingCartOutlined } from "@mui/icons-material";
 import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
+import { AUTH_ENDPOINTS } from "../api/endPoints";
+import axios from "axios";
+import { logOut } from "../store/Slices/UserSlice";
 
 const Container = styled.div`
   height: 60px;
   width: 100%;
-  position: fixed;
-  top: 30px;
-  left: 0;
-  z-index: 999;
   background-color: white;
   ${mobile({ height: "120px;" })}
 `;
@@ -82,13 +83,49 @@ const MenuItem = styled.div`
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const handleLogout = async () => {
+    try {
+    const res = await axios.post(
+      `${AUTH_ENDPOINTS.LOGOUT}`,
+      {
+        withCredentials: true, // Include cookies in the request
+      }
+    );
+
+    if (res.status === 200) {
+      toast({
+        title: 'Logout Successfully!',
+        description: res.message || 'You have successfully logged out!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+      dispatch(logOut());
+      navigate("/");
+    }
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast({
+        title: 'Logout Failed!',
+        description: error || 'Something went wrong logging out!',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }    
+  };    
+
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
+            <Input /> 
             <SearchIcon style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
@@ -100,6 +137,11 @@ const Navbar = () => {
           </Logo>
         </Center>
         <Right>
+          <MenuItem>
+            <Link to="/contact-us">
+            CONTACT US
+            </Link>
+          </MenuItem>
           {!isAuthenticated && (
             <MenuItem>
               <Link to="/register">REGISTER</Link>
@@ -109,6 +151,9 @@ const Navbar = () => {
             <MenuItem>
               <Link to="/login">SIGN IN</Link>
             </MenuItem>
+          )}
+          {isAuthenticated && (
+            <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>
           )}
           <MenuItem>
             <Link to="/cart">
@@ -122,3 +167,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

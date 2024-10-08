@@ -4,23 +4,34 @@ import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { mobile, tablet } from '../responsive'
+import { mobile, tablet } from '../responsive';
 import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 
 const Product = () => {
-    const [product, setProduct] = useState();
+    const [product, setProduct] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(""); // Track selected color
+    const [displayedImage, setDisplayedImage] = useState(""); // Track displayed image
     const params = useParams();
 
     useEffect(() => {
-        console.log("product id: ", params.productId); // "product id:  1
+        // Fetch the product based on productId
         const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
-        setProduct(selectedProduct);
-        console.log("product: ", product);
-    }, [product, params.productId]);
+        if (selectedProduct) {
+            setProduct(selectedProduct);
+            // Default to the first color's image
+            setSelectedColor(selectedProduct.colors[0].color);
+            setDisplayedImage(selectedProduct.colors[0].img);
+        }
+    }, [params.productId]);
+
+    // Function to handle color change
+    const handleColorClick = (color, img) => {
+        setSelectedColor(color);
+        setDisplayedImage(img); // Update the displayed image when a color is clicked
+    };
 
     return (
         <Container>
@@ -28,20 +39,24 @@ const Product = () => {
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    {product && <Image src={product.img} />}
+                    {product && <Image src={displayedImage} alt={product.title} />} {/* Display selected color's image */}
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product?.title}</Title>
-                    <Desc>
-                        {product?.desc}
-                    </Desc>
+                    <Desc>{product?.desc}</Desc>
                     <Price>{product?.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
+                            {/* Loop through available colors and render each color option */}
+                            {product?.colors.map((colorOption, index) => (
+                                <FilterColor 
+                                    key={index} 
+                                    color={colorOption.color} 
+                                    onClick={() => handleColorClick(colorOption.color, colorOption.img)} // Update image on click
+                                    selected={colorOption.color === selectedColor} // Highlight selected color
+                                />
+                            ))}
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
@@ -72,9 +87,8 @@ const Product = () => {
 
 export default Product;
 
-
+// Styled components...
 const Container = styled.div``;
-
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
@@ -146,6 +160,7 @@ const FilterColor = styled.div`
     background-color: ${(props) => props.color};
     margin: 0px 5px;
     cursor: pointer;
+    border: ${(props) => (props.selected ? "2px solid teal" : "1px solid black")}; /* Highlight selected color */
 `;
 
 const FilterSize = styled.select`
