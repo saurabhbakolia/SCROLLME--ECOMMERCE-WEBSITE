@@ -2,10 +2,16 @@ import styled from 'styled-components';
 import { UserRegistrationAPI } from '../services/userAPI/registerationAPI';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { changeAuthenticated } from "../store/Slices/UserSlice";
 import { Triangle } from 'react-loader-spinner';
 import { mobile, tablet } from '../responsive';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useToast } from '@chakra-ui/react';
+
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Import user creation method
+import { auth } from "../context/Firebase"; // Update import
+import { FaGoogle } from 'react-icons/fa'; // Add this import
 
 const LoaderOverlay = styled.div`
   position: absolute;
@@ -98,12 +104,18 @@ const PasswordBox = styled.div`
   padding: 2px 4px;
   height: fit-content;
 `;
-
+const GoogleButton = styled(Button)`
+    background-color: #4285f4; /* Google blue color */
+    width: 40%; /* Full width */
+`;
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const toast = useToast();
+  const dispatch = useDispatch();
+  const googleProvider = new GoogleAuthProvider();
+
   const validateForm = (formData) => {
     const { firstName, lastName, username, password } = formData;
     const namePattern = /^[a-zA-Z]+$/;
@@ -163,6 +175,31 @@ const Register = () => {
 
     return true;
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider); // Use auth from Firebase context
+        const user = result.user;
+        toast({
+            title: "Google Registration Successful",
+            description: `Welcome ${user.displayName}!`,
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+        });
+        dispatch(changeAuthenticated(true));
+        navigate("/");
+    } catch (error) {
+        toast({
+            title: "Google Registration Failed!",
+            description: "Please try again later.",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+        });
+        console.log(error);
+    }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -285,6 +322,10 @@ const Register = () => {
             </Box>
             <Button type="submit">CREATE</Button>
           </Form>
+          <br></br>
+          <GoogleButton onClick={handleGoogleLogin}>
+            <FaGoogle style={{ marginRight: '8px' }} /> Sign in with Google
+          </GoogleButton>
         </Wrapper>
       </Container>
     </>
