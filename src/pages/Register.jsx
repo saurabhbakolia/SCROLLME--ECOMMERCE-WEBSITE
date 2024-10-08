@@ -321,10 +321,10 @@ const Register = () => {
               data in accordance with the <b>PRIVACY POLICY</b>.
             </Agreement>
             <Text>
-              Already have an account? <StyledLink href="/login">LOGIN</StyledLink>
+              Already have an account? <StyledLink href="/login">Login</StyledLink>
             </Text>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Creating Account..." : "CREATE ACCOUNT"}
+              CREATE
             </Button>
           </Form>
         </Wrapper>
