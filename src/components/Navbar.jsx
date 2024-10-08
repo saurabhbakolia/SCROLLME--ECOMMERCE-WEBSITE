@@ -1,10 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import SearchIcon from "@mui/icons-material/Search";
 import { ShoppingCartOutlined } from "@mui/icons-material";
-import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import Logo from "../components/Logo";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 60px;
@@ -55,15 +56,12 @@ const Input = styled.input`
   border: none;
   margin: "auto" ${mobile({ width: "200px;", margin: "0 auto" })};
 `;
+
 const Center = styled.div`
   flex: 1;
   text-align: center;
 `;
 
-const Logo = styled.h1`
-  font-weight: bold;
-  ${mobile({ fontSize: "24px;" })}
-`;
 const Right = styled.div`
   flex: 1;
   display: flex;
@@ -88,16 +86,12 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
+            <Input placeholder="Search" />
             <SearchIcon style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>
-            <Link to="/">
-              SCROLL<span style={{ color: "teal" }}>ME</span>
-            </Link>
-          </Logo>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}> <Logo /> </div>
         </Center>
         <Right>
           {!isAuthenticated && (
