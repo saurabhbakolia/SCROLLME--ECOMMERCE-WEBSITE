@@ -7,13 +7,14 @@ import { mobile, tablet } from "../responsive";
 import OutlinedButton from "./OutlinedButton";
 import LazyLoad from 'react-lazyload';
 
+
 const Container = styled.div`
     width: 100%;
     height: 70vh; 
     display: flex;
     position: relative;
     overflow: hidden;
-    ${mobile({ height: "55vh" })} 
+    ${mobile({ height: "60vh" })} 
 `;
 
 const Arrow = styled.div`
@@ -50,6 +51,7 @@ const Slide = styled.div`
     background-color: ${(props) => props.bg};
     position: relative; 
     ${tablet({ flexDirection: "column" })} 
+    ${mobile({flexDirection:"column"})}
 `;
 
 const ImgContainer = styled.div`
@@ -62,6 +64,7 @@ const Image = styled.img`
     height: 90%;
     width: 100%;
     object-fit: cover;
+    ${mobile({objectFit:"contain", height:"150px", marginTop:"132px"})}
 `;
 
 const InfoContainer = styled.div`
@@ -78,7 +81,7 @@ const InfoContainer = styled.div`
 const Title = styled.h1`
     font-size: 50px; 
     ${tablet({ fontSize: "40px" })} 
-    ${mobile({ fontSize: "25px" })} 
+    ${mobile({ fontSize: "15px", marginTop:"50px" })} 
 `;
 
 const Desc = styled.p`
@@ -87,7 +90,7 @@ const Desc = styled.p`
     font-weight: 500;
     letter-spacing: 2px; 
     ${tablet({ fontSize: "14px", margin: "10px 0" })} 
-    ${mobile({ fontSize: "12px", margin: "5px 0" })} 
+    ${mobile({ fontSize: "8px", margin: "5px 0" })} 
 `;
 
 const Placeholder = styled.div`
