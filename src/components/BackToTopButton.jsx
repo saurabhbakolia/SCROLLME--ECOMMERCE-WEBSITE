@@ -34,7 +34,7 @@ const BackToTopButton = () => {
           onClick={scrollToTop}
           className="fixed bottom-10 right-10 bg-gray-700 drop-shadow-2xl opacity-80 text-white p-3 rounded-full shadow-lg hover:bg-gray-900 transition z-50"
         >
-          <MdOutlineKeyboardArrowUp/>
+          <MdOutlineKeyboardArrowUp className='text-3xl'/>
         </button>
       )}
     </>
