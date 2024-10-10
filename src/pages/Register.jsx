@@ -6,6 +6,7 @@ import { Triangle } from "react-loader-spinner";
 import { mobile, tablet } from "../responsive";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { useToast } from "@chakra-ui/react";
+import { IoClose } from "react-icons/io5"; // Import a close icon from react-icons
 
 const LoaderOverlay = styled.div`
     position: absolute;
@@ -35,22 +36,33 @@ const Container = styled.div`
     justify-content: center;
 `;
 
-const Box = styled.div`
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 6px;
+const CloseButton = styled.button`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
 `;
 
 const Wrapper = styled.div`
+    position: relative;
     width: 40%;
     ${mobile({ width: "84%;" })}
     ${tablet({ width: "84%;" })}
     ${mobile({ maxWidth: "760px" })}
     padding: 20px;
     background-color: white;
+`;
+
+const Box = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 6px;
 `;
 
 const Title = styled.h1`
@@ -77,7 +89,6 @@ const Agreement = styled.span`
 
 const Text = styled.p`
     font-size: 12px;
-
 `;
 
 const Link = styled.a`
@@ -106,6 +117,8 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const toast = useToast();
+
     const validateForm = (formData) => {
         const { firstName, lastName, username, password } = formData;
 
@@ -137,7 +150,6 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log("Inside the handleSubmit function");
         const formData = {
             firstName: e.target.firstName.value,
             lastName: e.target.lastName.value,
@@ -158,11 +170,23 @@ const Register = () => {
             return;
         }
 
-        setIsLoading(true);
         try {
             const response = await UserRegistrationAPI(formData);
-            console.log(response.data);
+            toast({
+                title: "Registration Successful",
+                description: "Your account has been created successfully. Please log in.",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            });
         } catch (error) {
+            toast({
+                title: "Registration Failed!",
+                description: "Something went wrong. Please try again.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
             console.log("Error: ", error);
         } finally {
             setTimeout(() => {
@@ -190,6 +214,9 @@ const Register = () => {
             )}
             <Container>
                 <Wrapper>
+                    <CloseButton onClick={() => navigate(-1)}>
+                        <IoClose />
+                    </CloseButton>
                     <Title>CREATE AN ACCOUNT</Title>
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <Input type="text" name="firstName" placeholder="first name" required />
