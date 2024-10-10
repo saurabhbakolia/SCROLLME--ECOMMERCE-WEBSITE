@@ -79,6 +79,12 @@ export const allProducts = [
         id: 1,
         title: "Vintage Guitar Tee",
         desc: "Classic vintage-inspired t-shirt featuring a guitar design.",
+<<<<<<< HEAD
+        category: "Shirts",
+        rating: 4.8,
+        numRatings: 150,
+=======
+>>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
         price: "$29.99",
         colors: [
             { color: "#050503", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277172/Open%20Source%20assets/SCROLLME/rflmludj3blv5nndmcy8.png" },
@@ -90,6 +96,14 @@ export const allProducts = [
         id: 2,
         title: "Comfort Joggers",
         desc: "Stay comfortable and stylish with these versatile jogger pants.",
+<<<<<<< HEAD
+        category: "Pants",
+        rating: 4.5,
+        numRatings: 120,
+        price: "$39.99",
+        discount: "10% off",
+        update: "Last updated 1 week ago",
+=======
         price: "$29.99",
         colors: [
             { color: "#ebe4d3", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278381/Open%20Source%20assets/SCROLLME/qc4x9dmq4adalzj0guxi.png" },
@@ -97,11 +111,13 @@ export const allProducts = [
             { color: "#736467", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278399/Open%20Source%20assets/SCROLLME/gk3e3fcaumzoasw0u2zg.png" },
             { color: "#161929", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278405/Open%20Source%20assets/SCROLLME/xkzgdfbdd3gxmdwv3mvm.png" }
         ]
+>>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
     },
     {
         id: 3,
         title: "Luxury Leather Handbag",
         desc: "Elevate your style with this exquisite leather handbag from Prada.",
+        category: "Accessories",
         rating: 4.9,
         numRatings: 200,
         price: "$599.99",
@@ -129,6 +145,7 @@ export const allProducts = [
         ],
         title: "Cozy Sweatshirt",
         desc: "Perfect for chilly evenings, this cozy sweatshirt is a must-have.",
+        category: "Sweaters",
         rating: 4.7,
         numRatings: 180,
         price: "$49.99",
@@ -144,6 +161,7 @@ export const allProducts = [
         ],
         title: "Eco-Friendly Tote Bag",
         desc: "Make a statement with this eco-friendly and stylish tote bag.",
+        category: "Accessories",
         rating: 4.6,
         numRatings: 160,
         price: "$19.99",
@@ -162,6 +180,7 @@ export const allProducts = [
         ],
         title: "Vintage Chill Cap",
         desc: "Top off your look with this cool vintage-inspired chill cap.",
+        category: "Accessories",
         rating: 4.8,
         numRatings: 170,
         price: "$24.99",
@@ -177,6 +196,7 @@ export const allProducts = [
         ],
         title: "Short Sleeve Shirt",
         desc: "Stay casual and comfortable with this stylish short sleeve shirt.",
+        category: "Shirts",
         rating: 4.5,
         numRatings: 140,
         price: "$34.99",
@@ -192,10 +212,35 @@ export const allProducts = [
         ],
         title: "Fashionable Women's Jacket",
         desc: "Step out in style with this fashionable women's jacket.",
+        category: "Jackets",
         rating: 4.9,
         numRatings: 190,
         price: "$79.99",
         discount: "Free shipping",
         update: "Last updated 1 day ago",
+<<<<<<< HEAD
+    },
+    {
+        id: 9,
+        img: "https://www.pngitem.com/pimgs/m/166-1667033_mens-png-hd-men-png-transparent-png.png",
+        title: "Casual Men's Shirt",
+        desc: "Upgrade your wardrobe with this comfortable and trendy men's shirt.",
+        category: "Shirts",
+        rating: 4.6,
+        numRatings: 130,
+        price: "$44.99",
+        discount: "20% off",
+        update: "Last updated 5 days ago",
+    },
+=======
     }
+>>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
+]
+
+export const productCategories = [
+    "Shirts",
+    "Pants",
+    "Accessories",
+    "Sweaters",
+    "Jackets"
 ]
