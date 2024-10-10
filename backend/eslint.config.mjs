@@ -14,6 +14,7 @@ export default [
     },
   },
   pluginJs.configs.recommended,
+  'plugin:prettier/recommended',
   {
     rules: {
       'no-unused-vars': 'error',
@@ -21,6 +22,11 @@ export default [
       'no-unused-expressions': 'error',
       'arrow-body-style': ['error', 'always'],
       curly: ['error', 'multi', 'consistent'],
+      'indent': ['error', 'tab', { SwitchCase: 1}], 
+      'prettier/prettier': 'error',
     },
   },
+  {
+    ignores: ["eslint.config.mjs"]
+  }
 ];

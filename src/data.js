@@ -41,35 +41,35 @@ export const categories = [
 export const popularProducts = [
     {
         id: 1,
-        img: "https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277172/Open%20Source%20assets/SCROLLME/rflmludj3blv5nndmcy8.png",
     },
     {
         id: 2,
-        img: "/Images/joggers.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278381/Open%20Source%20assets/SCROLLME/qc4x9dmq4adalzj0guxi.png",
     },
     {
         id: 3,
-        img: "https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS319/1YOTF010O/UCS319_1YOT_F010O_S_182_SLF.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281397/Open%20Source%20assets/SCROLLME/wg4yk9cv6xbeffbcf9gc.png",
     },
     {
         id: 4,
-        img: "/Images/sweat_shirt.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281764/Open%20Source%20assets/SCROLLME/v8hjwotmxs6a1y6kcfmw.png",
     },
     {
         id: 5,
-        img: "https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282159/Open%20Source%20assets/SCROLLME/hbgrx1qxx2zw03mjjsqq.png",
     },
     {
         id: 6,
-        img: "https://d3o2e4jr3mxnm3.cloudfront.net/Rocket-Vintage-Chill-Cap_66374_1_lg.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282694/Open%20Source%20assets/SCROLLME/rasvrtbz0qba8byyrpop.png",
     },
     {
         id: 7,
-        img: "/Images/short_shirt.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283401/Open%20Source%20assets/SCROLLME/bilungwnoeaxcbs3f4py.png",
     },
     {
         id: 8,
-        img: "https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png",
+        img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283881/Open%20Source%20assets/SCROLLME/wae0spbvqlefbbg7vke9.png",
     },
 ]
 
@@ -77,43 +77,72 @@ export const popularProducts = [
 export const allProducts = [
     {
         id: 1,
-        img: "https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
         title: "Vintage Guitar Tee",
         desc: "Classic vintage-inspired t-shirt featuring a guitar design.",
+<<<<<<< HEAD
         category: "Shirts",
         rating: 4.8,
         numRatings: 150,
+=======
+>>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
         price: "$29.99",
-        discount: "15% off",
-        update: "Last updated 3 days ago",
+        colors: [
+            { color: "#050503", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277172/Open%20Source%20assets/SCROLLME/rflmludj3blv5nndmcy8.png" },
+            { color: "#f5f7fa", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277224/Open%20Source%20assets/SCROLLME/ubxo8q8biicopd7r7zy0.png" },
+            { color: "#cdcadb", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277215/Open%20Source%20assets/SCROLLME/brzmyoxp4x1n1mpptsnv.png" }
+        ]
     },
     {
         id: 2,
-        img: "/Images/joggers.png",
         title: "Comfort Joggers",
         desc: "Stay comfortable and stylish with these versatile jogger pants.",
+<<<<<<< HEAD
         category: "Pants",
         rating: 4.5,
         numRatings: 120,
         price: "$39.99",
         discount: "10% off",
         update: "Last updated 1 week ago",
+=======
+        price: "$29.99",
+        colors: [
+            { color: "#ebe4d3", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278381/Open%20Source%20assets/SCROLLME/qc4x9dmq4adalzj0guxi.png" },
+            { color: "#1c181f", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278391/Open%20Source%20assets/SCROLLME/rcdop2ulpck4g4pccys2.png" },
+            { color: "#736467", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278399/Open%20Source%20assets/SCROLLME/gk3e3fcaumzoasw0u2zg.png" },
+            { color: "#161929", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278405/Open%20Source%20assets/SCROLLME/xkzgdfbdd3gxmdwv3mvm.png" }
+        ]
+>>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
     },
     {
         id: 3,
-        img: "https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS319/1YOTF010O/UCS319_1YOT_F010O_S_182_SLF.png",
         title: "Luxury Leather Handbag",
         desc: "Elevate your style with this exquisite leather handbag from Prada.",
         category: "Accessories",
         rating: 4.9,
         numRatings: 200,
         price: "$599.99",
-        discount: "Free shipping",
-        update: "Last updated 2 days ago",
+        colors: [
+            { color: "#918369", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281397/Open%20Source%20assets/SCROLLME/wg4yk9cv6xbeffbcf9gc.png" },
+            { color: "#afc7c3", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281397/Open%20Source%20assets/SCROLLME/pqlahatxuh287lq1897l.png" },
+            { color: "#e8c8cc", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281398/Open%20Source%20assets/SCROLLME/zph5momr7kgsimpm4jj9.png" },
+            { color: "#753740", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281398/Open%20Source%20assets/SCROLLME/mfuvwdzqqz2yxcxvzckz.png" }
+        ]
+    },
+    {
+        colors: [
+            { color: "#ebe4d3", img: "" },
+            { color: "#1c181f", img: "" },
+            { color: "#736467", img: "" },
+            { color: "#161929", img: "" }
+        ],
     },
     {
         id: 4,
-        img: "/Images/sweat_shirt.png",
+        colors: [
+            { color: "#291d1d", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281764/Open%20Source%20assets/SCROLLME/v8hjwotmxs6a1y6kcfmw.png" },
+            { color: "#1c181f", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281765/Open%20Source%20assets/SCROLLME/fpbzyytoizcicdmq7apd.png" },
+            { color: "#e6e0cc", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728281764/Open%20Source%20assets/SCROLLME/wr8poapwymgfiyqxmwft.png" },
+        ],
         title: "Cozy Sweatshirt",
         desc: "Perfect for chilly evenings, this cozy sweatshirt is a must-have.",
         category: "Sweaters",
@@ -125,7 +154,11 @@ export const allProducts = [
     },
     {
         id: 5,
-        img: "https://images.ctfassets.net/5gvckmvm9289/3BlDoZxSSjqAvv1jBJP7TH/65f9a95484117730ace42abf64e89572/Noissue-x-Creatsy-Tote-Bag-Mockup-Bundle-_4_-2.png",
+        colors: [
+            { color: "#c0bfde", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282159/Open%20Source%20assets/SCROLLME/hbgrx1qxx2zw03mjjsqq.png" },
+            { color: "#68b5d4", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282157/Open%20Source%20assets/SCROLLME/djayphgosm6pjq3r7rbi.png" },
+            { color: "#428f7d", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282156/Open%20Source%20assets/SCROLLME/pd3ss1554gep4lkjbuuu.png" },
+        ],
         title: "Eco-Friendly Tote Bag",
         desc: "Make a statement with this eco-friendly and stylish tote bag.",
         category: "Accessories",
@@ -137,7 +170,14 @@ export const allProducts = [
     },
     {
         id: 6,
-        img: "https://d3o2e4jr3mxnm3.cloudfront.net/Rocket-Vintage-Chill-Cap_66374_1_lg.png",
+        colors: [
+            { color: "#cfd1ba", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282694/Open%20Source%20assets/SCROLLME/rasvrtbz0qba8byyrpop.png" },
+            { color: "#1f1f21", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282693/Open%20Source%20assets/SCROLLME/t4tnhtrp2jpmi1icoyej.png" },
+            { color: "#c3c0c4", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282694/Open%20Source%20assets/SCROLLME/n8dmvkkn2rwrinl820gv.png" },
+            { color: "#66666e", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282694/Open%20Source%20assets/SCROLLME/wg6cy1qfasfn9u9ruh2s.png" },
+            { color: "#828999", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282695/Open%20Source%20assets/SCROLLME/f75btoqjmsjl1ubkxi7x.png" },
+            { color: "#a3815d", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728282696/Open%20Source%20assets/SCROLLME/v993dyww51afqs40ttqd.png" }
+        ],
         title: "Vintage Chill Cap",
         desc: "Top off your look with this cool vintage-inspired chill cap.",
         category: "Accessories",
@@ -149,7 +189,11 @@ export const allProducts = [
     },
     {
         id: 7,
-        img: "/Images/short_shirt.png",
+        colors: [
+            { color: "#9fadbd", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283401/Open%20Source%20assets/SCROLLME/bilungwnoeaxcbs3f4py.png" },
+            { color: "#918076", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283401/Open%20Source%20assets/SCROLLME/fl3wnko3q7mllkq9ense.png" },
+            { color: "#1a1617", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283402/Open%20Source%20assets/SCROLLME/wwlw5cg1rivw7lj6lwtk.png" },
+        ],
         title: "Short Sleeve Shirt",
         desc: "Stay casual and comfortable with this stylish short sleeve shirt.",
         category: "Shirts",
@@ -161,7 +205,11 @@ export const allProducts = [
     },
     {
         id: 8,
-        img: "https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png",
+        colors: [
+            { color: "#c7c0b1", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283881/Open%20Source%20assets/SCROLLME/wae0spbvqlefbbg7vke9.png" },
+            { color: "#dedcce", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728283875/Open%20Source%20assets/SCROLLME/ipuvtesmqpzymjsjmmct.png" },
+            { color: "#bfa58c", img: "https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png" },
+        ],
         title: "Fashionable Women's Jacket",
         desc: "Step out in style with this fashionable women's jacket.",
         category: "Jackets",
@@ -170,6 +218,7 @@ export const allProducts = [
         price: "$79.99",
         discount: "Free shipping",
         update: "Last updated 1 day ago",
+<<<<<<< HEAD
     },
     {
         id: 9,
@@ -183,6 +232,9 @@ export const allProducts = [
         discount: "20% off",
         update: "Last updated 5 days ago",
     },
+=======
+    }
+>>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
 ]
 
 export const productCategories = [
