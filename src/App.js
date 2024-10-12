@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import ContributorsPage from "./pages/ContributorsPage";
 import { lazy, Suspense } from "react";
 import ContactUsPage from "./pages/ContactUsPage";
 const LazyAllProducts = lazy(() => import("./pages/AllProducts"));
@@ -41,6 +42,7 @@ function App() {
 						</Suspense>
 					}
 				/>
+				<Route path="/contributors" element={<ContributorsPage />} />
 				<Route path="/:categorySlug/:productId" element={<Product />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />

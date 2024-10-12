@@ -79,12 +79,6 @@ export const allProducts = [
         id: 1,
         title: "Vintage Guitar Tee",
         desc: "Classic vintage-inspired t-shirt featuring a guitar design.",
-<<<<<<< HEAD
-        category: "Shirts",
-        rating: 4.8,
-        numRatings: 150,
-=======
->>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
         price: "$29.99",
         colors: [
             { color: "#050503", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728277172/Open%20Source%20assets/SCROLLME/rflmludj3blv5nndmcy8.png" },
@@ -96,14 +90,6 @@ export const allProducts = [
         id: 2,
         title: "Comfort Joggers",
         desc: "Stay comfortable and stylish with these versatile jogger pants.",
-<<<<<<< HEAD
-        category: "Pants",
-        rating: 4.5,
-        numRatings: 120,
-        price: "$39.99",
-        discount: "10% off",
-        update: "Last updated 1 week ago",
-=======
         price: "$29.99",
         colors: [
             { color: "#ebe4d3", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278381/Open%20Source%20assets/SCROLLME/qc4x9dmq4adalzj0guxi.png" },
@@ -111,7 +97,6 @@ export const allProducts = [
             { color: "#736467", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278399/Open%20Source%20assets/SCROLLME/gk3e3fcaumzoasw0u2zg.png" },
             { color: "#161929", img: "https://res.cloudinary.com/dbnticsz8/image/upload/v1728278405/Open%20Source%20assets/SCROLLME/xkzgdfbdd3gxmdwv3mvm.png" }
         ]
->>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
     },
     {
         id: 3,
@@ -218,7 +203,6 @@ export const allProducts = [
         price: "$79.99",
         discount: "Free shipping",
         update: "Last updated 1 day ago",
-<<<<<<< HEAD
     },
     {
         id: 9,
@@ -232,9 +216,6 @@ export const allProducts = [
         discount: "20% off",
         update: "Last updated 5 days ago",
     },
-=======
-    }
->>>>>>> 4c1e8470e1be82066fd0c6b64977ac62146ada7a
 ]
 
 export const productCategories = [
