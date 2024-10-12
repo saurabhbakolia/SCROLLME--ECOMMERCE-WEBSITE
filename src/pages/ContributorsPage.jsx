@@ -3,8 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const ContributorCard = ({ login, avatar_url, html_url, contributions, type }) => (
-  <motion.div
+const ContributorCard = ({ login, avatar_url, html_url, contributions, type: initialType }) => {
+  const [type, setType] = useState(initialType);
+
+  useEffect(() => {
+    if (login === 'saurabhbakolia') {
+      setType('Admin');
+    } else if (login === 'thakuratul2') {
+      setType('Mentor');
+    } else {
+      setType(initialType);
+    }
+  }, [login, initialType]);
+
+  return (
+    <motion.div
     whileHover={{ y: -5, boxShadow: '0 10px 30px -15px rgba(0, 0, 0, 0.3)' }}
     transition={{ type: 'spring', stiffness: 300 }}
     className="overflow-hidden bg-white rounded-lg shadow-lg"
@@ -35,8 +48,8 @@ const ContributorCard = ({ login, avatar_url, html_url, contributions, type }) =
       </svg>
     </div>
   </motion.div>
-);
-
+  )
+};
 
 
 const StatCard = ({ label, value, icon }) => (
