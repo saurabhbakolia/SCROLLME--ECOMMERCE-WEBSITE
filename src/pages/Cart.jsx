@@ -1,16 +1,24 @@
 import styled from 'styled-components';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
-
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { Text } from '../styles/Text';
+import { LeftDivider } from '../styles/Divider';
+import { useDispatch } from 'react-redux';
+import { useToast } from '@chakra-ui/react';
+import { deleteCartItem, viewCart } from '../store/slices/cartSlice';
+
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 `;
 
 const Title = styled.h1`
@@ -19,6 +27,8 @@ const Title = styled.h1`
 `;
 
 const Top = styled.div`
+  width: 76%;
+  margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,12 +40,15 @@ const TopButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   border: ${(props) => props.type === 'filled' && 'none'};
-  background-color: ${(props) =>
-    props.type === 'filled' ? 'black' : 'transparent'};
+  background-color: ${(props) => (props.type === 'filled' ? 'black' : 'transparent')};
   color: ${(props) => props.type === 'filled' && 'white'};
 `;
 
-const TopTexts = styled.div``;
+const TopTexts = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
@@ -43,65 +56,95 @@ const TopText = styled.span`
 `;
 
 const Bottom = styled.div`
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  margin-inline: auto;
+  gap: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    width: 90%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 74%;
+  }
 `;
 
 const Info = styled.div`
   flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 14px;
 `;
 
 const Product = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+  padding: 6px;
+  border-radius: 2px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Image = styled.img`
-  width: 200px;
+  width: 150px;
+  @media (max-width: 768px) {
+    width: 150px;
+  }
 `;
 
 const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
+  gap: 3px;
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 `;
 
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
+const ProductName = styled.p`
+  font-size: 14px;
+  font-weight: 400;
+  margin-block-end: 20px;
 `;
-
-const ProductSize = styled.span``;
+const ProductBrand = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+`;
 
 const PriceDetail = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-`;
+  justify-content: flex-start;
+  gap: 10px;
 
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
 `;
 
 const ProductPrice = styled.div`
@@ -113,14 +156,21 @@ const Hr = styled.hr`
   background-color: #eee;
   border: none;
   height: 1px;
+  margin: 10px 0;
 `;
 
 const Summary = styled.div`
-  flex: 1;
+  flex: 2;
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
   height: 50vh;
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-top: 40px;
+  }
 `;
 
 const SummaryTitle = styled.h1`
@@ -148,6 +198,61 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const toast = useToast();
+  const dispatch = useDispatch();
+
+  console.log("cartItems: ", cartItems);
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const cartData = await viewCart();
+        console.log("cartData", cartData);
+        // setCartItems(cartData);
+        // setLoading(false);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+        // setLoading(false);
+      }
+    };
+    fetchCartItems();
+  }, []);
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    console.log(`Updated product ${productId} to quantity ${newQuantity}`);
+    // Add logic to update the product quantity in the store
+  };
+  const handleRemoveFromCart = (productId) => {
+    console.log(`Removing ${productId} from cart`);
+    dispatch(deleteCartItem(productId))
+      .unwrap()
+      .then(() => {
+        toast({
+          title: 'Product removed from cart.',
+          description: 'The item has been successfully removed from your cart.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error removing product.',
+          description: 'There was an issue removing the item from your cart.',
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+        console.error(error);
+      });
+  };
+
+  const handleSaveForLater = (productId) => {
+    console.log(`Saved product ${productId} for later`);
+  };
+
   return (
     <Container>
       <Navbar />
@@ -155,74 +260,46 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <Link to="/">
+          <Link to='/'>
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({cartItems.length})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton type='filled'>CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> JESSIE THUNDER SHOES
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddIcon />
-                  <ProductAmount>2</ProductAmount>
-                  <RemoveIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cartItems.map((item) => (
+              <Product key={item.productId}>
+                <ProductDetail>
+                  <Image src={item.image} />
+                  <Details>
+                    <ProductBrand>{item.brand}</ProductBrand>
+                    <ProductName>{item.name}</ProductName>
+                    <CartItemActions
+                      initialQuantity={item.quantity}
+                      onChange={(newQuantity) => handleQuantityChange(item.productId, newQuantity)}
+                      onRemove={() => handleRemoveFromCart(item.productId)}
+                      onSaveForLater={() => handleSaveForLater(item.productId)}
+                    />
+                  </Details>
+
+                </ProductDetail>
+                <PriceDetail>
+
+                  <ProductPrice>$ {item.price}</ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
             <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> HAKURA T-SHIRT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <AddIcon />
-                  <ProductAmount>1</ProductAmount>
-                  <RemoveIcon />
-                </ProductAmountContainer>
-                <ProductPrice>$ 20</ProductPrice>
-              </PriceDetail>
-            </Product>
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -232,9 +309,9 @@ const Cart = () => {
               <SummaryItemText>Shipping Discount</SummaryItemText>
               <SummaryItemPrice>$ -5.90</SummaryItemPrice>
             </SummaryItem>
-            <SummaryItem type="total">
+            <SummaryItem type='total'>
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <Button>CHECKOUT NOW</Button>
           </Summary>
@@ -246,3 +323,82 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
+const ContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+`;
+
+const Controls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  color: #333;
+
+  &:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+const Actions = styled.div`
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #007bff;
+  cursor: pointer;
+
+  span {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const CartItemActions = ({ initialQuantity, onChange, onRemove, onSaveForLater }) => {
+  const [quantity, setQuantity] = useState(initialQuantity || 1);
+
+  const handleIncrement = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    onChange(newQuantity);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      onChange(newQuantity);
+    }
+  };
+
+  return (
+    <ContainerWrapper>
+      <Controls>
+        <IconButton onClick={handleDecrement} disabled={quantity <= 1}>
+          –
+        </IconButton>
+        <Text>{quantity}</Text>
+        <IconButton onClick={handleIncrement}>
+          +
+        </IconButton>
+      </Controls>
+      <Actions>
+        <span onClick={onRemove}>Remove</span>
+        <LeftDivider />
+        <span onClick={onSaveForLater}>Save for Later</span>
+      </Actions>
+    </ContainerWrapper>
+  );
+};
