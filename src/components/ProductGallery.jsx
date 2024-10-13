@@ -9,6 +9,7 @@ const ProductGalleryContainer = styled.div`
     grid-template-columns: repeat(5, 1fr);
     gap: 16px;
     padding: 16px;
+    margin-top: 90px;
     justify-items: center;
     align-items: center;
     background-color: #f5fafd;
@@ -21,14 +22,12 @@ const ProductGalleryContainer = styled.div`
     @media only screen and (max-width: 480px) {
         grid-template-columns: repeat(1, 1fr);
     }
-
 `;
 
 
 const ProductGallery = () => {
     return (
         <React.Fragment>
-            <h2>Products Gallery</h2>
             <ProductGalleryContainer>
                 {allProducts.map((product) => (
                     <ProductCard product={product} key={product.id} />
