@@ -21,6 +21,7 @@ const ProductGalleryContainer = styled.div`
     }
     @media only screen and (max-width: 480px) {
         grid-template-columns: repeat(1, 1fr);
+        margin-top: 150px;
     }
 `;
 
