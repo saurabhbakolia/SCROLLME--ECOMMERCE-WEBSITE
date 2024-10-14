@@ -1,6 +1,6 @@
 import { Email, Facebook, Instagram, LinkedIn, LocalPhone, LocationOn, Twitter } from "@mui/icons-material";
-import styled from "styled-components"
-import { mobile } from '../responsive'
+import styled from "styled-components";
+import { mobile } from '../responsive';
 import { Link } from "react-router-dom";
 
 

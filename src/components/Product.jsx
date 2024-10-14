@@ -1,8 +1,4 @@
-import {
-  FavoriteBorderOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from '@mui/icons-material';
+import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
@@ -103,7 +99,7 @@ const Product = ({ item }) => {
       </ImageContainer>
       <Info>
         <Icon>
-          <Link to="/cart">
+          <Link to='/cart'>
             <ShoppingCartOutlined />
           </Link>
         </Icon>

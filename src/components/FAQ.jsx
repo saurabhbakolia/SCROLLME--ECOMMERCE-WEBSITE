@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 // FAQ Data Example
 const faqData = [
   {
-    question: "What is ScrollMe?",
+    question: 'What is ScrollMe?',
     answer:
-      "ScrollMe is a dynamic e-commerce platform offering a wide range of products to cater to your shopping needs, all from the comfort of your home.",
+      'ScrollMe is a dynamic e-commerce platform offering a wide range of products to cater to your shopping needs, all from the comfort of your home.'
   },
   {
-    question: "How do I track my order?",
+    question: 'How do I track my order?',
     answer:
-      "You can track your order by logging into your account and visiting the 'My Orders' section. There, you'll find real-time updates on your order status.",
+      "You can track your order by logging into your account and visiting the 'My Orders' section. There, you'll find real-time updates on your order status."
   },
   {
-    question: "What payment methods are accepted?",
+    question: 'What payment methods are accepted?',
     answer:
-      "We accept various payment methods, including credit/debit cards, PayPal, and popular UPI services for seamless and secure transactions.",
+      'We accept various payment methods, including credit/debit cards, PayPal, and popular UPI services for seamless and secure transactions.'
   },
   {
-    question: "What is your return policy?",
+    question: 'What is your return policy?',
     answer:
-      "Our return policy allows you to return items within 30 days of delivery, provided they are in original condition. Visit the 'Returns & Refunds' section for more details.",
-  },
+      "Our return policy allows you to return items within 30 days of delivery, provided they are in original condition. Visit the 'Returns & Refunds' section for more details."
+  }
 ];
 
 // Styled components

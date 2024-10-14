@@ -16,7 +16,7 @@ const initialState = {
   isFetching: false,
   error: null,
   theme: 'light',
-  lastLogin: null,
+  lastLogin: null
 };
 const userSlice = createSlice({
   name: 'user',
@@ -55,17 +55,10 @@ const userSlice = createSlice({
     },
     changeAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
-    },
-  },
+    }
+  }
 });
 
-export const {
-  loginSuccess,
-  logOut,
-  updateProfile,
-  setFetching,
-  setError,
-  changeAuthenticated,
-} = userSlice.actions;
+export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = userSlice.actions;
 
 export default userSlice.reducer;

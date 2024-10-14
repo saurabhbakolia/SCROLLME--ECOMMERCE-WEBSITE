@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { UserRegistrationAPI } from '../services/userAPI/registerationAPI';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { changeAuthenticated } from "../store/Slices/UserSlice";
+import { useDispatch } from 'react-redux';
+import { changeAuthenticated } from '../store/slices/userSlice';
 import { Triangle } from 'react-loader-spinner';
 import { mobile, tablet } from '../responsive';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useToast } from '@chakra-ui/react';
 
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Import user creation method
-import { auth } from "../context/Firebase"; // Update import
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; // Import user creation method
+import { auth } from '../context/Firebase'; // Update import
 import { FaGoogle } from 'react-icons/fa'; // Add this import
 
 const LoaderOverlay = styled.div`
@@ -31,8 +31,7 @@ const Container = styled.div`
   height: 100vh;
   background:
     linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url('https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-      center;
+    url('https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -105,8 +104,8 @@ const PasswordBox = styled.div`
   height: fit-content;
 `;
 const GoogleButton = styled(Button)`
-    background-color: #4285f4; /* Google blue color */
-    width: 40%; /* Full width */
+  background-color: #4285f4; /* Google blue color */
+  width: 40%; /* Full width */
 `;
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -128,7 +127,7 @@ const Register = () => {
         description: 'First name must be at least 2 characters long and contain only letters.',
         status: 'warning',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
       return false;
     }
@@ -141,7 +140,7 @@ const Register = () => {
         description: 'Last name must be at least 2 characters long and contain only letters.',
         status: 'warning',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
       return false;
     }
@@ -152,7 +151,7 @@ const Register = () => {
         description: 'Username must be at least 2 characters long.',
         status: 'warning',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
       return false;
     }
@@ -168,7 +167,7 @@ const Register = () => {
         description: 'Password must be at least 8 characters long, contain at least one digit and one special character.',
         status: 'warning',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
       return false;
     }
@@ -178,28 +177,28 @@ const Register = () => {
 
   const handleGoogleLogin = async () => {
     try {
-        const result = await signInWithPopup(auth, googleProvider); // Use auth from Firebase context
-        const user = result.user;
-        toast({
-            title: "Google Registration Successful",
-            description: `Welcome ${user.displayName}!`,
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-        });
-        dispatch(changeAuthenticated(true));
-        navigate("/");
+      const result = await signInWithPopup(auth, googleProvider); // Use auth from Firebase context
+      const user = result.user;
+      toast({
+        title: 'Google Registration Successful',
+        description: `Welcome ${user.displayName}!`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+      dispatch(changeAuthenticated(true));
+      navigate('/');
     } catch (error) {
-        toast({
-            title: "Google Registration Failed!",
-            description: "Please try again later.",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-        });
-        console.log(error);
+      toast({
+        title: 'Google Registration Failed!',
+        description: 'Please try again later.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+      console.log(error);
     }
-};
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -210,7 +209,7 @@ const Register = () => {
       username: e.target.username.value,
       email: e.target.email.value,
       password: e.target.password.value,
-      confirmPassword: e.target.confirmPassword.value,
+      confirmPassword: e.target.confirmPassword.value
     };
 
     if (formData.password !== formData.confirmPassword) {
@@ -219,7 +218,7 @@ const Register = () => {
         description: 'Passwords do not match, change the password!.',
         status: 'warning',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
       setIsLoading(false);
       return;
@@ -238,7 +237,7 @@ const Register = () => {
         description: res.message || 'You have successfully registered. Welcome!',
         status: 'success',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
     } catch (error) {
       console.error(error);
@@ -247,7 +246,7 @@ const Register = () => {
         description: error || 'An error occurred during registration.',
         status: 'error',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
     } finally {
       setTimeout(() => {
@@ -264,63 +263,31 @@ const Register = () => {
     <>
       {isLoading && (
         <LoaderOverlay>
-          <Triangle
-            color="teal"
-            height={80}
-            width={80}
-            ariaLabel="triangle-loading"
-          />
+          <Triangle color='teal' height={80} width={80} ariaLabel='triangle-loading' />
         </LoaderOverlay>
       )}
       <Container>
         <Wrapper>
           <Title>CREATE AN ACCOUNT</Title>
           <Form onSubmit={(e) => handleSubmit(e)}>
-            <Input
-              type="text"
-              name="firstName"
-              placeholder="first name"
-              required
-            />
-            <Input
-              type="text"
-              name="lastName"
-              placeholder="last name"
-              required
-            />
-            <Input
-              type="text"
-              name="username"
-              placeholder="username"
-              required
-            />
-            <Input type="email" name="email" placeholder="email" required />
-            <Input
-              type="password"
-              name="password"
-              placeholder="password"
-              required
-              onChange={(e) => handlePassword(e)}
-            />
-            <Input
-              type="password"
-              name="confirmPassword"
-              placeholder="confirm password"
-              required
-            />
+            <Input type='text' name='firstName' placeholder='first name' required />
+            <Input type='text' name='lastName' placeholder='last name' required />
+            <Input type='text' name='username' placeholder='username' required />
+            <Input type='email' name='email' placeholder='email' required />
+            <Input type='password' name='password' placeholder='password' required onChange={(e) => handlePassword(e)} />
+            <Input type='password' name='confirmPassword' placeholder='confirm password' required />
             <PasswordBox>
               <PasswordStrengthBar password={password} />
             </PasswordBox>
             <Box>
               <Agreement>
-                By creating an account, I consent to the processing of my
-                personal data in accordance with the <b>PRIVACY POLICY</b>
+                By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
               </Agreement>
               <Text>
-                Already have an account? <Link href="/login">LOGIN</Link>
+                Already have an account? <Link href='/login'>LOGIN</Link>
               </Text>
             </Box>
-            <Button type="submit">CREATE</Button>
+            <Button type='submit'>CREATE</Button>
           </Form>
           <br></br>
           <GoogleButton onClick={handleGoogleLogin}>
