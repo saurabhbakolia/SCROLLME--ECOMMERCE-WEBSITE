@@ -39,7 +39,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*[js,mjs,cjs,jsx]",
     "lint-fix": "eslint src/**/*[js,mjs,cjs,jsx] --fix",
-    "format": "prettier --write src/**/*[js,mjs,cjs,jsx]"
+    "lint-format": "prettier 'src/**/*.{js,mjs,cjs,jsx}' --write --config ./.prettierrc.cjs"
   },
   "eslintConfig": {
     "extends": [
@@ -70,8 +70,8 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^6.6.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "globals": "^15.10.0",
     "prettier": "^3.3.3",
     "react-router-dom": "^6.26.2",

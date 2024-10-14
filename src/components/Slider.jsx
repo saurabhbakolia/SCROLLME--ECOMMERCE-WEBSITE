@@ -73,7 +73,7 @@ const InfoContainer = styled.div`
   ${tablet({
     padding: '10px',
     textAlign: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   })}
   ${mobile({ padding: '5px', justifyContent: 'flex-start' })}
 `;
@@ -107,7 +107,7 @@ const ButtonContainer = styled.div`
   ${mobile({
     position: 'absolute',
     top: '20px',
-    right: '20px',
+    right: '20px'
   })}
 `;
 
@@ -132,19 +132,14 @@ const Slider = () => {
 
   return (
     <Container>
-      <Arrow direction="left" onClick={() => handleClick('left')}>
+      <Arrow direction='left' onClick={() => handleClick('left')}>
         <ArrowLeftOutlined />
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
         {slideItems.map((item) => (
           <Slide bg={item.bg} key={item.id}>
             <ImgContainer>
-              <LazyLoad
-                height={100}
-                offset={40}
-                once
-                placeholder={<Placeholder />}
-              >
+              <LazyLoad height={100} offset={40} once placeholder={<Placeholder />}>
                 <Image src={process.env.PUBLIC_URL + item.img} />
               </LazyLoad>
             </ImgContainer>
@@ -158,7 +153,7 @@ const Slider = () => {
           </Slide>
         ))}
       </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick('right')}>
+      <Arrow direction='right' onClick={() => handleClick('right')}>
         <ArrowRightOutlined />
       </Arrow>
     </Container>
