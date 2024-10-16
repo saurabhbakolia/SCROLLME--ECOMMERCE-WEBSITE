@@ -13,7 +13,7 @@ module.exports = {
   proseWrap: 'preserve',
   quoteProps: 'as-needed',
   requirePragma: false,
-  semi: false,
+  semi: true,
   singleQuote: true,
   trailingComma: 'none',
   useTabs: false,

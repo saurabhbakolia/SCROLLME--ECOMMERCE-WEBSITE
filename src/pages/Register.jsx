@@ -8,10 +8,10 @@ import { Triangle } from 'react-loader-spinner';
 import { mobile, tablet } from '../responsive';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useToast } from '@chakra-ui/react';
-
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; // Import user creation method
-import { auth } from '../context/Firebase'; // Update import
-import { FaGoogle } from 'react-icons/fa'; // Add this import
+import Logo from '../components/Logo';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../context/Firebase';
+import { FaGoogle } from 'react-icons/fa';
 
 const LoaderOverlay = styled.div`
   position: absolute;
@@ -268,6 +268,11 @@ const Register = () => {
       )}
       <Container>
         <Wrapper>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+            {' '}
+            <Logo />{' '}
+          </div>
+          <br />
           <Title>CREATE AN ACCOUNT</Title>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Input type='text' name='firstName' placeholder='first name' required />

@@ -13,13 +13,13 @@ const useAuthCheck = () => {
     const checkAuthStatus = async () => {
       try {
         const response = await checkAuthStatusAPI();
-        console.log("auth status response", response);
+        console.log('auth status response', response);
         let isAuthenticated = false;
-        if(response.status === 200 && response.data.message === "Authenticated"){
+        if (response.status === 200 && response.data.message === 'Authenticated') {
           // User is authenticated, do nothing.
           return;
-        }else {
-          if(isAuthenticated){
+        } else {
+          if (isAuthenticated) {
             dispatch(changeAuthenticated(false));
             navigate('/login');
           }

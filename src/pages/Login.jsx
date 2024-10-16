@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { changeAuthenticated, userSignIn } from '../store/slices/userSlice';
 import { mobile, tablet } from '../responsive';
 import { useToast } from '@chakra-ui/react';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; // Import user creation method
-import { auth } from '../context/Firebase'; // Update import
-import { FaGoogle } from 'react-icons/fa'; // Add this import
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../context/Firebase';
+import { FaGoogle } from 'react-icons/fa';
+import Logo from '../components/Logo';
 
 const Container = styled.div`
   width: 100vw;
@@ -91,7 +92,7 @@ const Login = () => {
           isClosable: true
         });
         dispatch(changeAuthenticated(true));
-        console.log("Redirecting to /");
+        console.log('Redirecting to /');
         navigate('/');
       })
       .catch((error) => {
@@ -134,6 +135,11 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+          {' '}
+          <Logo />{' '}
+        </div>
+        <br />
         <Title>SIGN IN</Title>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Input placeholder='username' name='username' type='text' required />

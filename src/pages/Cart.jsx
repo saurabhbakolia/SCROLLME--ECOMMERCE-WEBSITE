@@ -4,13 +4,12 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useState } from "react";
+import { useState } from 'react';
 import { Text } from '../styles/Text';
 import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
 import { deleteCartItem, updateCartItem } from '../store/slices/cartSlice';
-
 
 const Container = styled.div``;
 
@@ -204,14 +203,16 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const handleQuantityChange = (productId, quantity) => {
-    dispatch(updateCartItem({productId, quantity}))
+    dispatch(updateCartItem({ productId, quantity }))
       .unwrap()
       .then(() => {
         toast({
           position: 'bottom-right',
           render: () => (
-            <Box color='white' p={1} bg='teal.500' borderRadius="xs">Quantity updated!</Box>
-          ),
+            <Box color='white' p={1} bg='teal.500' borderRadius='xs'>
+              Quantity updated!
+            </Box>
+          )
         });
       })
       .catch((error) => {
@@ -220,8 +221,10 @@ const Cart = () => {
           position: 'bottom-right',
           status: 'error',
           render: () => (
-            <Box color='white' p={3} bg='red.500'>Error while updated quantity!</Box>
-          ),
+            <Box color='white' p={3} bg='red.500'>
+              Error while updated quantity!
+            </Box>
+          )
         });
       });
   };
@@ -235,7 +238,7 @@ const Cart = () => {
           description: 'The item has been successfully removed from your cart.',
           status: 'success',
           duration: 3000,
-          isClosable: true,
+          isClosable: true
         });
       })
       .catch((error) => {
@@ -244,7 +247,7 @@ const Cart = () => {
           description: 'There was an issue removing the item from your cart.',
           status: 'error',
           duration: 3000,
-          isClosable: true,
+          isClosable: true
         });
         console.error(error);
       });
@@ -286,10 +289,8 @@ const Cart = () => {
                       onSaveForLater={() => handleSaveForLater(item.productId)}
                     />
                   </Details>
-
                 </ProductDetail>
                 <PriceDetail>
-
                   <ProductPrice>$ {item.price}</ProductPrice>
                 </PriceDetail>
               </Product>
@@ -324,7 +325,6 @@ const Cart = () => {
 };
 
 export default Cart;
-
 
 const ContainerWrapper = styled.div`
   display: flex;
@@ -391,9 +391,7 @@ const CartItemActions = ({ initialQuantity, onChange, onRemove, onSaveForLater }
           –
         </IconButton>
         <Text>{quantity}</Text>
-        <IconButton onClick={handleIncrement}>
-          +
-        </IconButton>
+        <IconButton onClick={handleIncrement}>+</IconButton>
       </Controls>
       <Actions>
         <span onClick={onRemove}>Remove</span>
