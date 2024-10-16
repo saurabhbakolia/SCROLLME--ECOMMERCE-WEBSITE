@@ -7,17 +7,10 @@ const initialState = {
   lastName: '',
   email: '',
   name: '',
-  avatar: '',
-  bio: '',
   isAuthenticated: false,
   roles: [],
-  token: '',
-  sessionExpiry: null,
-  refreshToken: '',
   isFetching: false,
   error: null,
-  theme: 'light',
-  lastLogin: null
 };
 
 // Thunk for userSignIn
@@ -80,21 +73,28 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(userSignIn.fulfilled, (state, action) => {
-        const { user, token, refreshToken } = action.payload;
-        // state.id = user.id;
-        // state.firstName = user.firstName;
-        // state.lastName = user.lastName;
-        // state.email = user.email;
-        // state.name = user.name;
-        // state.token = token;
-        // state.refreshToken = refreshToken;
-        // state.lastLogin = new Date().toISOString();
-        // state.isAuthenticated = true; // Set authenticated state
-        // state.isFetching = false; // Clear loading state
+        const payload = action.payload;
+        state.id = payload.user.id;
+        const firstName = payload.user.firstName;
+        const lastName = payload.user.lastName;
+        state.firstName = firstName;
+        state.lastName = lastName;
+        state.email = payload.user.email;
+        state.name = `${firstName} ${lastName}`;
+        state.roles = payload.user.roles;
+        state.isAuthenticated = true;
+        state.isFetching = false;
       })
       .addCase(userSignIn.rejected, (state, action) => {
-        state.isFetching = false; // Clear loading state
-        state.error = action.payload; // Set error message
+        state.isFetching = false;
+        state.isAuthenticated = false;
+        state.id = null;
+        state.firstName = '';
+        state.lastName = '';
+        state.email = '';
+        state.name = '';
+        state.roles = [];
+        state.error = action.payload;
       });
   }
 });

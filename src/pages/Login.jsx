@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { UserSignInAPI } from '../services/userAPI/signInAPI'; // Ensure this is defined
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { changeAuthenticated } from '../store/slices/userSlice';
+import { changeAuthenticated, userSignIn } from '../store/slices/userSlice';
 import { mobile, tablet } from '../responsive';
 import { useToast } from '@chakra-ui/react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; // Import user creation method
@@ -80,27 +79,31 @@ const Login = () => {
       username: e.target.username.value,
       password: e.target.password.value
     };
-    try {
-      const response = await UserSignInAPI(loginData);
-      toast({
-        title: 'Login Successful',
-        description: response.message || 'You have successfully logged in. Welcome back!',
-        status: 'success',
-        duration: 5000,
-        isClosable: true
+    // const response = await UserSignInAPI(loginData);
+    dispatch(userSignIn(loginData))
+      .unwrap()
+      .then((response) => {
+        toast({
+          title: 'Login Successful',
+          description: response.message || 'You have successfully logged in. Welcome back!',
+          status: 'success',
+          duration: 5000,
+          isClosable: true
+        });
+        dispatch(changeAuthenticated(true));
+        console.log("Redirecting to /");
+        navigate('/');
+      })
+      .catch((error) => {
+        toast({
+          title: 'Login Failed!',
+          description: 'Invalid credentials, please try again.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true
+        });
+        console.log(error);
       });
-      dispatch(changeAuthenticated(true));
-      navigate('/');
-    } catch (error) {
-      toast({
-        title: 'Login Failed!',
-        description: 'Invalid credentials, please try again.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      });
-      console.log(error);
-    }
   };
 
   const handleGoogleLogin = async () => {

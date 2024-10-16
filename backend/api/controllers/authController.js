@@ -96,7 +96,17 @@ exports.login = async (req, res) => {
       sameSite: 'Strict',
     });
 
-    res.status(200).json({ message: 'Logged in successfully' });
+    res.status(200).json({
+      message: 'Logged in successfully',
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.roles,
+        username: user.username
+      }
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send('Server error');
@@ -160,9 +170,70 @@ exports.refreshToken = async (req, res) => {
   }
 };
 
+// exports.checkAuthStatus = async (req, res) => {
+//   try {
+//     const accessToken = req.cookies.accessToken;
+//     const refreshToken = req.cookies.refreshToken;
+
+//     if (!accessToken || !refreshToken) {
+//       return res.status(401).json({ message: 'Not authenticated' });
+//     }
+
+//     // Verify the access token
+//     jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decoded) => {
+//       if (err && err.name === 'TokenExpiredError') {
+//         try {
+//           const decodeData = jwt.verify(refreshToken, process.env.JWT_SECRET);
+//           const user = await User.findById(decodeData.id);
+
+//           if (!user) {
+//             return res.status(401).json({ message: 'Invalid refresh token' });
+//           }
+
+//           const newAccessToken = user.generateAuthToken();
+//           const newRefreshToken = user.generateRefreshToken();
+//           res.cookie('accessToken', newAccessToken, {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === 'production',
+//             sameSite: 'Strict',
+//           });
+//           res.cookie('refreshToken', newRefreshToken, {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === 'production',
+//             sameSite: 'Strict',
+//           });
+
+//           return res.status(200).json({
+//             message: 'New tokens issued!',
+//             user: {
+//               id: user._id,
+//               username: user.username,
+//               email: user.email
+//             }
+//           });
+//         } catch (refreshError) {
+//           console.error('Refresh token error:', refreshError);
+//           return res.status(401).json({ message: 'Invalid or expired refresh token' });
+//         }
+//       } else if (err) {
+//         return res.status(401).json({ message: 'Invalid access token' });
+//       } else {
+//         const user = await User.findById(decoded.id);
+//         if (!user) {
+//           return res.status(401).json({ message: 'User not found' });
+//         }
+//         return res.status(200).json({ message: 'Authenticated', user: { id: user._id, username: user.username, email: user.email } });
+//       }
+//     });
+//   } catch (error) {
+//     console.error('Auth status error:', error);
+//     return res.status(500).json({ message: 'Internal server error', error: error.message });
+//   }
+// };
+
+
 exports.checkAuthStatus = async (req, res) => {
   try {
-    // Extract tokens from cookies
     const accessToken = req.cookies.accessToken;
     const refreshToken = req.cookies.refreshToken;
 
@@ -172,48 +243,64 @@ exports.checkAuthStatus = async (req, res) => {
 
     // Verify the access token
     jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decoded) => {
-      if (err && err.name === 'TokenExpiredError') {
-        // Access token has expired, verify the refresh token
-        try {
-          const refreshDecoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
-          const user = await User.findById(refreshDecoded.id);
+      if (err) {
+        // Handle token expiration or invalid token case
+        if (err.name === 'TokenExpiredError') {
+          try {
+            const decodeData = jwt.verify(refreshToken, process.env.JWT_SECRET);
+            const user = await User.findById(decodeData.id);
 
-          if (!user) {
-            return res.status(401).json({ message: 'Invalid refresh token' });
+            if (!user) {
+              return res.status(401).json({ message: 'Invalid refresh token' });
+            }
+
+            // Generate new tokens
+            const newAccessToken = user.generateAuthToken();
+            const newRefreshToken = user.generateRefreshToken();
+
+            // Set new tokens in cookies
+            res.cookie('accessToken', newAccessToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'Strict',
+            });
+            res.cookie('refreshToken', newRefreshToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'Strict',
+            });
+
+            return res.status(200).json({
+              message: 'New tokens issued!',
+              user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+              },
+            });
+          } catch (refreshError) {
+            console.error('Refresh token error:', refreshError);
+            return res.status(401).json({ message: 'Invalid or expired refresh token' });
           }
-
-          // Generate new access and refresh tokens
-          const newAccessToken = user.generateAuthToken();
-          const newRefreshToken = user.generateRefreshToken();
-
-          // Set new tokens in cookies
-          res.cookie('accessToken', newAccessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
-          });
-          res.cookie('refreshToken', newRefreshToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'Strict',
-          });
-
-          return res.status(200).json({ message: 'New tokens issued', user: { id: user._id, username: user.username, email: user.email } });
-        } catch (refreshError) {
-          console.error('Refresh token error:', refreshError);
-          return res.status(401).json({ message: 'Invalid or expired refresh token' });
+        } else {
+          return res.status(401).json({ message: 'Invalid access token' });
         }
-      } else if (err) {
-        return res.status(401).json({ message: 'Invalid access token' });
-      } else {
-        // If access token is valid, proceed
-        const user = await User.findById(decoded.id);
-        if (!user) {
-          return res.status(401).json({ message: 'User not found' });
-        }
-
-        return res.status(200).json({ message: 'Authenticated', user: { id: user._id, username: user.username, email: user.email } });
       }
+
+      // If access token is valid, proceed to get user details
+      const user = await User.findById(decoded.id);
+      if (!user) {
+        return res.status(401).json({ message: 'User not found' });
+      }
+
+      return res.status(200).json({
+        message: 'Authenticated',
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email
+        }
+      });
     });
   } catch (error) {
     console.error('Auth status error:', error);

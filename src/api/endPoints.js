@@ -21,3 +21,7 @@ export const CART_ENDPOINTS = {
   DELETE_CART_ITEM: `${API_BASE_URL}/cart/delete`,
   CLEAR_CART: `${API_BASE_URL}/cart/clear`
 };
+
+export const AUTH_STATUS = {
+  AUTH_STATUS: `${API_BASE_URL}/auth/status`,
+};

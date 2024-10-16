@@ -13,7 +13,6 @@ export const addToCartAPI = async (cartData) => {
   return await axios
     .post(CART_ENDPOINTS.ADD_TO_CART, cartData, config)
     .then((response) => {
-      console.log("response", response);
       return Promise.resolve(response.data);
     })
     .catch((error) => {
