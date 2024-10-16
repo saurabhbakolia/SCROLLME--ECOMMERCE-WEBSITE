@@ -103,6 +103,28 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.logOut = async (req, res) => {
+  try {
+    res.cookie("accessToken", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: "strict",
+    });
+    res.cookie("refreshToken", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Error during logout:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 exports.refreshToken = async (req, res) => {
   try {
     const { refreshToken } = req.body;
@@ -154,7 +176,6 @@ exports.checkAuthStatus = async (req, res) => {
         // Access token has expired, verify the refresh token
         try {
           const refreshDecoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
-          console.log(refreshDecoded);
           const user = await User.findById(refreshDecoded.id);
 
           if (!user) {

@@ -57,8 +57,6 @@ exports.sign_in = async function (req, res) {
         req.body.password,
         user.password
       );
-      console.log(verifyPassword);
-      console.log(user);
       if (!verifyPassword) {
         return res.status(401).json({
           message: 'Authentication failed. Invalid username or password!',
@@ -68,19 +66,26 @@ exports.sign_in = async function (req, res) {
       const { accessToken, refreshToken } = await generateTokens(user);
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
-        secure: true, // set to true if using https
-        sameSite: 'none', // adjust according to your needs
-        maxAge: 15 * 60 * 1000, // token expiration time in milliseconds
+        secure: true,
+        sameSite: 'none',
+        maxAge: 15 * 60 * 1000,
       });
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: true, // set to true if using https
-        sameSite: 'none', // adjust according to your needs
-        maxAge: 7 * 24 * 60 * 60 * 1000, // token expiration time in milliseconds
+        secure: true,
+        sameSite: 'none',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       });
+
       return res.status(200).json({
         status: 'success',
         message: 'Logged in successfully!',
+        data: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          username: user.username,
+        }
       });
     })
     .catch(function (err) {
@@ -160,30 +165,26 @@ exports.profile = function (req, res) {
   }
 };
 
-exports.logOut =
+exports.logOut = ("/", async (req, res) => {
+    try {
+      res.cookie("accessToken", "", {
+        maxAge: 0,
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
+      res.cookie("refreshToken", "", {
+        maxAge: 0,
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
 
-	("/",
-	async (req, res) => {
-			try {
-			  // Clear the accessToken and refreshToken cookies by setting their expiration dates to the past
-			  res.cookie("accessToken", "", {
-				maxAge: 0,
-				httpOnly: true,
-				secure: true,
-				sameSite: "strict",
-			  });
-			  res.cookie("refreshToken", "", {
-				maxAge: 0,
-				httpOnly: true,
-				secure: true,
-				sameSite: "strict",
-			  });
-		  
-			  return res.status(200).json({ message: "Logged out successfully" });
-			} catch (error) {
-			  console.error("Error during logout:", error);
-			  return res.status(500).json({ message: "Internal Server Error" });
-			}
+      return res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+      console.error("Error during logout:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
 });
 
 

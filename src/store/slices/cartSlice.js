@@ -39,10 +39,11 @@ export const viewCart = createAsyncThunk(
 // Thunk for updating cart item quantity
 export const updateCartItem = createAsyncThunk(
     'cart/updateCartItem',
-    async (cartItemData, { rejectWithValue }) => {
+    async (cartData, { rejectWithValue }) => {
         try {
-            const response = await updateCartItemAPI(cartItemData);
-            return response;
+            const { productId, quantity } = cartData;
+            const response = await updateCartItemAPI({ productId, quantity });
+            return {productId, quantity, response};
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -52,10 +53,11 @@ export const updateCartItem = createAsyncThunk(
 // Thunk for deleting an item from the cart
 export const deleteCartItem = createAsyncThunk(
     'cart/deleteCartItem',
-    async (cartItemId, { rejectWithValue }) => {
+    async (productId, { rejectWithValue }) => {
         try {
-            const response = await deleteCartItemAPI({ productId: cartItemId });
-            return { cartItemId, response };
+            console.log("deleteCartItem", productId);
+            const response = await deleteCartItemAPI({productId});
+            return {productId, response};
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -89,7 +91,7 @@ const cartSlice = createSlice({
                 const { cartData } = action.payload;
                 const { productId, name, price, quantity, image, brand, category } = cartData;
 
-                const existingItem = state.items.find(item => item.id === productId);
+                const existingItem = state.items.find(item => item.productId === productId);
 
                 if (existingItem) {
                     existingItem.quantity += quantity;
@@ -107,9 +109,8 @@ const cartSlice = createSlice({
             })
 
             // Handle viewCart thunk
+            // TODO: Need to handle view cart logic correctly
             .addCase(viewCart.fulfilled, (state, action) => {
-                console.log("items", action.payload.items);
-                console.log("status", action.payload.status);
                 state.items = action.payload.items;
                 state.totalQuantity = action.payload.totalQuantity;
                 state.totalPrice = action.payload.totalPrice;
@@ -120,13 +121,14 @@ const cartSlice = createSlice({
 
             // Handle updateCartItem thunk
             .addCase(updateCartItem.fulfilled, (state, action) => {
-                const updatedItem = action.payload;
-                const existingItem = state.items.find((item) => item.id === updatedItem.id);
+                const {productId, quantity} = action.payload;
+                const existingItem = state.items.find((item) => item.productId === productId);
 
                 if (existingItem) {
-                    state.totalQuantity += updatedItem.quantity - existingItem.quantity;
-                    state.totalPrice += updatedItem.price * updatedItem.quantity - existingItem.price * existingItem.quantity;
-                    existingItem.quantity = updatedItem.quantity;
+                    const quantityDifference = quantity - existingItem.quantity;
+                    state.totalQuantity += quantityDifference;
+                    state.totalPrice += quantityDifference * existingItem.price;
+                    existingItem.quantity = quantity;
                 }
             })
             .addCase(updateCartItem.rejected, (state, action) => {
@@ -138,8 +140,9 @@ const cartSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(deleteCartItem.fulfilled, (state, action) => {
-                const { cartItemId } = action.payload;
-                const itemIndex = state.items.findIndex((item) => item.id === cartItemId);
+                console.log("Reducer triggered:", action.payload);
+                const { productId } = action.payload;
+                const itemIndex = state.items.findIndex((item) => item.productId === productId);
                 if (itemIndex !== -1) {
                     const removedItem = state.items[itemIndex];
                     state.totalQuantity -= removedItem.quantity;

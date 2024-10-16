@@ -81,7 +81,7 @@ const Login = () => {
       password: e.target.password.value
     };
     try {
-      const response = await UserSignInAPI(loginData); // Ensure this is defined
+      const response = await UserSignInAPI(loginData);
       toast({
         title: 'Login Successful',
         description: response.message || 'You have successfully logged in. Welcome back!',
