@@ -4,7 +4,7 @@ import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { mobile, tablet } from '../responsive'
+import { mobile, tablet } from '../responsive';
 import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
 import { useEffect } from "react";
@@ -13,14 +13,23 @@ import Footer from "../components/Footer";
 
 const Product = () => {
     const [product, setProduct] = useState();
+    const [modalOpen, setModalOpen] = useState(false); // State for modal visibility
     const params = useParams();
 
     useEffect(() => {
-        console.log("product id: ", params.productId); // "product id:  1
+        console.log("product id: ", params.productId);
         const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
         setProduct(selectedProduct);
         console.log("product: ", product);
     }, [product, params.productId]);
+
+    const handleImageClick = () => {
+        setModalOpen(true); // Open modal on image click
+    };
+
+    const closeModal = () => {
+        setModalOpen(false); // Close modal
+    };
 
     return (
         <Container>
@@ -28,7 +37,7 @@ const Product = () => {
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    {product && <Image src={product.img} />}
+                    {product && <Image src={product.img} onClick={handleImageClick} />} {/* Add click handler */}
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product?.title}</Title>
@@ -66,12 +75,21 @@ const Product = () => {
             </Wrapper>
             <Newsletter />
             <Footer />
+
+            {/* Modal for enlarged image */}
+            {modalOpen && (
+                <Modal>
+                    <ModalContent>
+                        <CloseButton onClick={closeModal}>X</CloseButton>
+                        <ModalImage src={product.img} />
+                    </ModalContent>
+                </Modal>
+            )}
         </Container>
     );
 };
 
 export default Product;
-
 
 const Container = styled.div``;
 
@@ -80,24 +98,25 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    ${mobile({ flexDirection: "column;" })}
-    ${mobile({ padding: "10px;" })}
-    ${tablet({ padding: "10px;" })}
+    ${mobile({ flexDirection: "column;" })} 
+    ${mobile({ padding: "10px;" })} 
+    ${tablet({ padding: "10px;" })} 
 `;
 
 const ImgContainer = styled.div`
     flex: 1;
+    position: relative; 
+    overflow: hidden; 
 `;
 
 const Image = styled.img`
     width: 100%;
     height: 64vh;
     object-fit: contain;
-    ${mobile({ height: "40vh;" })}
-    ${mobile({ width: "100%;" })}
-    ${tablet({ height: "40vh;" })}
-    ${tablet({ width: "100%;" })}
     object-position: center;
+    cursor: pointer; /* Change cursor to indicate clickable image */
+    ${mobile({ height: "40vh;" })} 
+    ${tablet({ height: "40vh;" })} 
 `;
 
 const InfoContainer = styled.div`
@@ -105,7 +124,7 @@ const InfoContainer = styled.div`
     padding: 0px 50px;
     justify-content: flex-start;
     align-items: flex-start;
-    ${mobile({ padding: "4px;" })}
+    ${mobile({ padding: "4px;" })} 
     text-align: left;
 `;
 
@@ -186,7 +205,45 @@ const Button = styled.button`
     cursor: pointer;
     font-weight: 500;
 
-    &:hover{
+    &:hover {
         background-color: #f8f4f4;
     }
 `;
+
+// Modal Styles
+const Modal = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Bring modal to front */
+`;
+
+const ModalContent = styled.div`
+    position: relative;
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Maximum width for the modal */
+`;
+
+const CloseButton = styled.button`
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+`;
+
+const ModalImage = styled.img`
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+`;
+
