@@ -210,7 +210,7 @@ const Cart = () => {
         toast({
           position: 'bottom-right',
           render: () => (
-            <Box color='white' p={1} bg='teal.500'>Quantity updated!</Box>
+            <Box color='white' p={1} bg='teal.500' borderRadius="xs">Quantity updated!</Box>
           ),
         });
       })
