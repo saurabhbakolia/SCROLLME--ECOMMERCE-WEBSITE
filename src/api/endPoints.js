@@ -23,5 +23,5 @@ export const CART_ENDPOINTS = {
 };
 
 export const AUTH_STATUS = {
-  AUTH_STATUS: `${API_BASE_URL}/auth/status`,
+  AUTH_STATUS: `${API_BASE_URL}/auth/status`
 };

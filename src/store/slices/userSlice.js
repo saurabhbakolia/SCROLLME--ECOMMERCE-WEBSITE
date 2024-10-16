@@ -10,22 +10,18 @@ const initialState = {
   isAuthenticated: false,
   roles: [],
   isFetching: false,
-  error: null,
+  error: null
 };
 
 // Thunk for userSignIn
-export const userSignIn = createAsyncThunk(
-  'user/signIn',
-  async (loginData, { rejectWithValue }) => {
-    try {
-      const response = await UserSignInAPI(loginData);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
+export const userSignIn = createAsyncThunk('user/signIn', async (loginData, { rejectWithValue }) => {
+  try {
+    const response = await UserSignInAPI(loginData);
+    return response;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
-
+});
 
 const userSlice = createSlice({
   name: 'user',

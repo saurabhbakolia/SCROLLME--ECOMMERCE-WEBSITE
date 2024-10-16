@@ -42,4 +42,3 @@ export const HorizontalDivider = styled(Divider)`
   width: ${({ width }) => width || '100%'}; // Dynamic width
   margin: 10px 0; // Optional spacing
 `;
-

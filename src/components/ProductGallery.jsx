@@ -4,7 +4,6 @@ import { listProductsAPI } from '../services/products/productService';
 import { Box } from '@mui/material';
 import { Button, Heading, HStack, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
 
-
 const ProductGallery = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -23,7 +23,7 @@ const Product = () => {
   const toast = useToast();
   const dispatch = useDispatch();
 
-  console.log("product", product);
+  console.log('product', product);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -42,7 +42,7 @@ const Product = () => {
 
   const handleAddToCart = async () => {
     try {
-      console.log("product", product);
+      console.log('product', product);
       const itemToAdd = {
         productId: product._id,
         name: product.name,
@@ -50,7 +50,7 @@ const Product = () => {
         image: product.imageUrl,
         brand: product.brand,
         category: product.category,
-        quantity: 1,
+        quantity: 1
       };
       const result = await dispatch(addToCart(itemToAdd)).unwrap();
       if (result.response) {

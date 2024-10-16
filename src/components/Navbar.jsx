@@ -9,6 +9,7 @@ import { AUTH_ENDPOINTS } from '../api/endPoints';
 import axios from 'axios';
 import { logOut } from '../store/slices/userSlice';
 import { Badge } from '@chakra-ui/react';
+import Logo from '../components/Logo';
 
 const Container = styled.div`
   height: 60px;
@@ -60,10 +61,6 @@ const Center = styled.div`
   text-align: center;
 `;
 
-const Logo = styled.h1`
-  font-weight: bold;
-  ${mobile({ fontSize: '24px;' })}
-`;
 const Right = styled.div`
   flex: 1;
   display: flex;
@@ -122,16 +119,15 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
+            <Input placeholder='Search' />
             <SearchIcon style={{ color: 'gray', fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>
-            <Link to='/'>
-              SCROLL<span style={{ color: 'teal' }}>ME</span>
-            </Link>
-          </Logo>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+            {' '}
+            <Logo />{' '}
+          </div>
         </Center>
         <Right>
           <MenuItem>
@@ -150,17 +146,10 @@ const Navbar = () => {
           {isAuthenticated && <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>}
           <MenuItem>
             <Link to='/cart'>
-                <Box position="relative">
+              <Box position='relative'>
                 <ShoppingCartOutlined />
                 {totalQuantity > 0 && (
-                  <Badge
-                    colorScheme="teal"
-                    borderRadius="full"
-                    position="absolute"
-                    top="-5px"  
-                    right="-10px"
-                    fontSize="0.8em"
-                  >
+                  <Badge colorScheme='teal' borderRadius='full' position='absolute' top='-5px' right='-10px' fontSize='0.8em'>
                     {totalQuantity}
                   </Badge>
                 )}

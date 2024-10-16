@@ -1,8 +1,9 @@
 import { Email, Facebook, Instagram, LinkedIn, LocalPhone, LocationOn } from '@mui/icons-material';
-import styled from 'styled-components';
-import { mobile } from '../responsive';
-import { Link } from 'react-router-dom';
 import XIcon from '@mui/icons-material/X';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Logo from '../components/Logo';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
   display: flex;
@@ -14,10 +15,6 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-`;
-
-const Logo = styled.h1`
-  font-size: 28px;
 `;
 
 const Desc = styled.p`
@@ -96,9 +93,7 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>
-          SCROLL<span style={{ color: 'teal' }}>ME</span>.
-        </Logo>
+        <Logo /> {/* Using Logo component directly */}
         <Desc>
           Welcome to <span style={{ color: 'teal', fontWeight: 600 }}>ScrollMe</span> Web Store, your ultimate destination for trendy and
           fashionable clothing. We pride ourselves on curating a diverse collection of high-quality apparel that caters to your unique style
@@ -140,7 +135,6 @@ const Footer = () => {
       </Center>
       <Right>
         <Title>Contact</Title>
-        {/* Implimented LocationOn icon wrapped with link to open Google Maps pointing to the store's location */}
         <ContactItem>
           <a
             href='https://www.google.com/maps?q=622 Dixie Path, South Tobinchester 98336'
@@ -157,7 +151,6 @@ const Footer = () => {
             622 Dixie Path, South Tobinchester 98336
           </a>
         </ContactItem>
-        {/* LocalPhone icon wrapped with link to open phone dialer with the phone number */}
         <ContactItem>
           <a
             href='tel:+12345678'
@@ -172,7 +165,6 @@ const Footer = () => {
             +1 234 56 78
           </a>
         </ContactItem>
-        {/* Email icon wrapped with mailto link to open the default email client */}
         <ContactItem>
           <Email style={{ marginRight: '10px' }} />
           <a href='mailto:contact@lama.dev' style={{ color: 'inherit', textDecoration: 'none' }}>
