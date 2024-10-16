@@ -246,4 +246,3 @@ const ModalImage = styled.img`
     height: auto;
     object-fit: contain;
 `;
-
