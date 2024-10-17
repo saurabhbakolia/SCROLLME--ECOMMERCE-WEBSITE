@@ -3,7 +3,7 @@ import { UserRegistrationAPI } from '../services/userAPI/registerationAPI';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeAuthenticated } from '../store/slices/userSlice';
+import { changeAuthenticated } from '../store/Slices/UserSlice';
 import { Triangle } from 'react-loader-spinner';
 import { mobile, tablet } from '../responsive';
 import PasswordStrengthBar from 'react-password-strength-bar';

@@ -12,7 +12,7 @@ import { Text } from '../styles/Text';
 import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
-import { deleteCartItem, updateCartItem } from '../store/Slices/CartSlicee';
+import { deleteCartItem, updateCartItem } from '../store/Slices/CartSlice';
 
 const Container = styled.div``;
 

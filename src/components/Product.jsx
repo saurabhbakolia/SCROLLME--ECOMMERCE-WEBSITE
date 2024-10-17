@@ -1,6 +1,6 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 // import { addToCart } from '../store/Slices/cartsSlice';
 import { useDispatch } from 'react-redux';
@@ -93,10 +93,10 @@ const Product = ({ item }) => {
     navigate(`/product/${id}`);
   };
 
-  const handleAddToCart = (id) => {
-    dispatch(addToCart(id)); // Dispatch the addToCart action
-    alert('product added to cart successfully');
-  };
+  // const handleAddToCart = (id) => {
+  //   dispatch(addToCart(id)); // Dispatch the addToCart action
+  //   alert('product added to cart successfully');
+  // };
 
   const handleAddToWishlist = (id) => {
     dispatch(addToWishlist(id)); // Dispatch the addToWishlist action
@@ -112,9 +112,12 @@ const Product = ({ item }) => {
         </LazyLoad>
       </ImageContainer>
       <Info>
-        <Icon onClick={() => handleAddToCart(item.id)}>
-          <ShoppingCartOutlined />
-        </Icon>
+        <Link to='/cart'>
+          <Icon>
+            <ShoppingCartOutlined />
+          </Icon>
+        </Link>
+
         <Icon onClick={() => handleProductSearch(item.id)}>
           <SearchOutlined />
         </Icon>

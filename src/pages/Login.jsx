@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { changeAuthenticated, userSignIn } from '../store/slices/UserSlice';
+import { changeAuthenticated, userSignIn } from '../store/Slices/UserSlice';
 import { mobile, tablet } from '../responsive';
 import { useToast } from '@chakra-ui/react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';

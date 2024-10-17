@@ -28,7 +28,7 @@ function App() {
           }
         />
         <Route
-          path="/wishlist"
+          path='/wishlist'
           element={
             <ProtectedRoute>
               <Wishlist />
@@ -36,9 +36,9 @@ function App() {
           }
         />
         <Route
-          path="/products"
+          path='/products'
           element={
-            <Suspense fallback="Loading...">
+            <Suspense fallback='Loading...'>
               <LazyAllProducts />
             </Suspense>
           }

@@ -26,6 +26,7 @@ const ProductCard = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #fff;
+  position: relative;
 `;
 
 const Image = styled.img`
@@ -46,14 +47,29 @@ const Price = styled.p`
 `;
 
 const RemoveButton = styled.button`
-  padding: 10px 15px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
   border: none;
-  background-color: red;
-  color: white;
-  border-radius: 5px;
+  color: red;
+  font-size: 20px;
   cursor: pointer;
   &:hover {
-    background-color: darkred;
+    color: darkred;
+  }
+`;
+
+const MoveToBagButton = styled.button`
+  padding: 10px 15px;
+  border: 1px solid red;
+  background-color: white;
+  color: red;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: auto;
+  &:hover {
+    background-color: #f5f5f5;
   }
 `;
 
@@ -67,9 +83,7 @@ const Wishlist = () => {
   const wishlist = useSelector((state) => state.wishlist); // Access wishlist from state
 
   // Filter products based on wishlist IDs
-  const wishlistItems = allProducts.filter((product) =>
-    wishlist.includes(product.id)
-  );
+  const wishlistItems = allProducts.filter((product) => wishlist.includes(product.id));
 
   const handleRemoveFromWishlist = (id) => {
     dispatch(removeFromWishlist(id)); // Dispatch action to remove from wishlist
@@ -83,14 +97,11 @@ const Wishlist = () => {
         {wishlistItems.length > 0 ? (
           wishlistItems.map((product) => (
             <ProductCard key={product.id}>
+              <RemoveButton onClick={() => handleRemoveFromWishlist(product.id)}>X</RemoveButton>
               <Image src={product.colors[0].img} alt={product.title} />
               <Title>{product.title}</Title>
               <Price>{product.price}</Price>
-              <RemoveButton
-                onClick={() => handleRemoveFromWishlist(product.id)}
-              >
-                Remove from Wishlist
-              </RemoveButton>
+              <MoveToBagButton>Move to Cart</MoveToBagButton>
             </ProductCard>
           ))
         ) : (
