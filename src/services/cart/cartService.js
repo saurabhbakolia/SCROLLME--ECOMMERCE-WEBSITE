@@ -1,15 +1,17 @@
 import axios from 'axios';
-import { PRODUCT_ENDPOINTS } from '../../api/endPoints'; // Adjust the path as needed
+import { CART_ENDPOINTS } from '../../api/endPoints';
+import { createFetchOptions, HttpMethod } from '../../utils/apiConfig';
 
-// Function to add a new product
-export const addProductAPI = async (productData) => {
+// Function to add an item to the cart
+export const addToCartAPI = async (cartData) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true
   };
   return await axios
-    .post(PRODUCT_ENDPOINTS.ADD_PRODUCT, productData, config)
+    .post(CART_ENDPOINTS.ADD_TO_CART, cartData, config)
     .then((response) => {
       return Promise.resolve(response.data);
     })
@@ -19,12 +21,10 @@ export const addProductAPI = async (productData) => {
     });
 };
 
-// Function to list all products with pagination
-export const listProductsAPI = async (page = 1, limit = 40) => {
+// Function to view the user's cart
+export const viewCartAPI = async () => {
   return await axios
-    .get(PRODUCT_ENDPOINTS.LIST_PRODUCTS, {
-      params: { page, limit }
-    })
+    .get(CART_ENDPOINTS.VIEW_CART)
     .then((response) => {
       return Promise.resolve(response.data);
     })
@@ -34,10 +34,11 @@ export const listProductsAPI = async (page = 1, limit = 40) => {
     });
 };
 
-// Function to get product details by ID
-export const getProductByIdAPI = async (productId) => {
+// Function to update an item quantity in the cart
+export const updateCartItemAPI = async (data) => {
+  const config = createFetchOptions(HttpMethod.PUT, true);
   return await axios
-    .get(PRODUCT_ENDPOINTS.GET_PRODUCT_BY_ID(productId))
+    .put(CART_ENDPOINTS.UPDATE_CART_ITEM, data, config)
     .then((response) => {
       return Promise.resolve(response.data);
     })
@@ -47,15 +48,12 @@ export const getProductByIdAPI = async (productId) => {
     });
 };
 
-// Function to update a product by ID
-export const updateProductAPI = async (productId, productData) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
+// Function to delete an item from the cart
+export const deleteCartItemAPI = async (data) => {
+  const config = createFetchOptions(HttpMethod.DELETE, true);
+  config.data = data;
   return await axios
-    .put(PRODUCT_ENDPOINTS.UPDATE_PRODUCT(productId), productData, config)
+    .delete(CART_ENDPOINTS.DELETE_CART_ITEM, config)
     .then((response) => {
       return Promise.resolve(response.data);
     })
@@ -65,10 +63,10 @@ export const updateProductAPI = async (productId, productData) => {
     });
 };
 
-// Function to delete a product by ID
-export const deleteProductAPI = async (productId) => {
+// Function to clear the cart
+export const clearCartAPI = async () => {
   return await axios
-    .delete(PRODUCT_ENDPOINTS.DELETE_PRODUCT(productId))
+    .delete(CART_ENDPOINTS.CLEAR_CART)
     .then((response) => {
       return Promise.resolve(response.data);
     })

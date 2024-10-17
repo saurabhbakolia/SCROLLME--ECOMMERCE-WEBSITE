@@ -1,16 +1,9 @@
-import {
-  Email,
-  Facebook,
-  Instagram,
-  LinkedIn,
-  Twitter,
-  LocalPhone,
-  LocationOn,
-} from '@mui/icons-material';
-import styled from 'styled-components';
-import { mobile } from '../responsive';
-import { Link } from 'react-router-dom';
+import { Email, Facebook, Instagram, LinkedIn, LocalPhone, LocationOn } from '@mui/icons-material';
 import XIcon from '@mui/icons-material/X';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Logo from '../components/Logo';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
   display: flex;
@@ -22,10 +15,6 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-`;
-
-const Logo = styled.h1`
-  font-size: 28px;
 `;
 
 const Desc = styled.p`
@@ -100,41 +89,27 @@ const Payment = styled.img`
   margin-top: 20px;
 `;
 
-const BottomSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid #444;
-  padding-top: 10px;
-  margin-top: 20px;
-  font-size: 12px;
-  ${mobile({ flexDirection: "column", textAlign: "center" })}
-`;
-
 const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>
-          SCROLL<span style={{ color: 'teal' }}>ME</span>.
-        </Logo>
+        <Logo /> {/* Using Logo component directly */}
         <Desc>
-          Welcome to{' '}
-          <span style={{ color: 'teal', fontWeight: 600 }}>ScrollMe</span> Web
-          Store, your ultimate destination for trendy and fashionable clothing.
-          We pride ourselves on curating a diverse collection of high-quality
-          apparel that caters to your unique style and personality.
+          Welcome to <span style={{ color: 'teal', fontWeight: 600 }}>ScrollMe</span> Web Store, your ultimate destination for trendy and
+          fashionable clothing. We pride ourselves on curating a diverse collection of high-quality apparel that caters to your unique style
+          and personality.
         </Desc>
         <SocialContainer>
-          <SocialIcon color="3B5999">
+          <SocialIcon color='3B5999'>
             <Facebook />
           </SocialIcon>
-          <SocialIcon color="E4405F">
+          <SocialIcon color='E4405F'>
             <Instagram />
           </SocialIcon>
-          <SocialIcon color="000000">
+          <SocialIcon color='000000'>
             <XIcon />
           </SocialIcon>
-          <SocialIcon color="E60023">
+          <SocialIcon color='E60023'>
             <LinkedIn />
           </SocialIcon>
         </SocialContainer>
@@ -160,50 +135,44 @@ const Footer = () => {
       </Center>
       <Right>
         <Title>Contact</Title>
-        {/* Implimented LocationOn icon wrapped with link to open Google Maps pointing to the store's location */}
         <ContactItem>
           <a
-            href="https://www.google.com/maps?q=622 Dixie Path, South Tobinchester 98336"
-            target="_blank"
-            rel="noopener noreferrer"
+            href='https://www.google.com/maps?q=622 Dixie Path, South Tobinchester 98336'
+            target='_blank'
+            rel='noopener noreferrer'
             style={{
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
             <LocationOn style={{ marginRight: '10px' }} />
             622 Dixie Path, South Tobinchester 98336
           </a>
         </ContactItem>
-        {/* LocalPhone icon wrapped with link to open phone dialer with the phone number */}
         <ContactItem>
           <a
-            href="tel:+12345678"
+            href='tel:+12345678'
             style={{
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
             <LocalPhone style={{ marginRight: '10px' }} />
             +1 234 56 78
           </a>
         </ContactItem>
-        {/* Email icon wrapped with mailto link to open the default email client */}
         <ContactItem>
           <Email style={{ marginRight: '10px' }} />
-          <a
-            href="mailto:contact@lama.dev"
-            style={{ color: 'inherit', textDecoration: 'none' }}
-          >
+          <a href='mailto:contact@lama.dev' style={{ color: 'inherit', textDecoration: 'none' }}>
             contact@lama.dev
           </a>
         </ContactItem>
 
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+        <Payment src='https://i.ibb.co/Qfvn4z6/payment.png' />
       </Right>
     </Container>
   );

@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-import {
-  FavoriteBorderOutlined,
-  ShoppingCartOutlined,
-} from '@mui/icons-material';
+import { FavoriteBorderOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,7 +31,7 @@ const Wrapper = styled.div`
     padding: '10px 10px', // Reduced padding for smaller screens
     flexDirection: 'column', // Stack items vertically
     justifyContent: 'space-evenly',
-    alignItems: 'center', // Align items to the start
+    alignItems: 'center' // Align items to the start
   })}
 `;
 
@@ -96,7 +93,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
-        withCredentials: true, // Include cookies in the request
+        withCredentials: true // Include cookies in the request
       });
 
       if (res.status === 200) {
@@ -105,7 +102,7 @@ const Navbar = () => {
           description: res.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
-          isClosable: true,
+          isClosable: true
         });
         dispatch(logOut());
         navigate('/');
@@ -117,7 +114,7 @@ const Navbar = () => {
         description: error || 'Something went wrong logging out!',
         status: 'error',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
     }
   };
@@ -134,35 +131,33 @@ const Navbar = () => {
         </Left>
         <Center>
           <Logo>
-            <Link to="/">
+            <Link to='/'>
               SCROLL<span style={{ color: 'teal' }}>ME</span>
             </Link>
           </Logo>
         </Center>
         <Right>
           <MenuItem>
-            <Link to="/contact-us">CONTACT US</Link>
+            <Link to='/contact-us'>CONTACT US</Link>
           </MenuItem>
           {!isAuthenticated && (
             <MenuItem>
-              <Link to="/register">REGISTER</Link>
+              <Link to='/register'>REGISTER</Link>
             </MenuItem>
           )}
           {!isAuthenticated && (
             <MenuItem>
-              <Link to="/login">SIGN IN</Link>
+              <Link to='/login'>SIGN IN</Link>
             </MenuItem>
           )}
-          {isAuthenticated && (
-            <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>
-          )}
+          {isAuthenticated && <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>}
           <MenuItem>
-            <Link to="/cart">
+            <Link to='/cart'>
               <ShoppingCartOutlined />
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/wishlist">
+            <Link to='/wishlist'>
               <FavoriteBorderOutlined />
             </Link>
           </MenuItem>

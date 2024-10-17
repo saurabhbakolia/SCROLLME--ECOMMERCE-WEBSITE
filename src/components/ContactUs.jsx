@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useState } from 'react';
+import styled from 'styled-components';
 
 // Styled components
 const Container = styled.div`
@@ -88,9 +88,9 @@ const ResponsiveContainer = styled.div`
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+    name: '',
+    email: '',
+    message: ''
   });
 
   const handleChange = (e) => {
@@ -100,7 +100,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Received your response. We will reach back to you soon.")
+    alert('Received your response. We will reach back to you soon.');
     console.log(formData);
   };
 
@@ -109,38 +109,30 @@ const ContactUs = () => {
       <Container>
         <Heading>Contact Us</Heading>
         <Form onSubmit={handleSubmit}>
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor='name'>Name</Label>
+          <Input type='text' id='name' name='name' value={formData.name} onChange={handleChange} placeholder='Enter your name' required />
+          <Label htmlFor='email'>Email</Label>
           <Input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-            required
-          />
-          <Label htmlFor="email">Email</Label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
+            type='email'
+            id='email'
+            name='email'
             value={formData.email}
             onChange={handleChange}
-            placeholder="Enter your email"
+            placeholder='Enter your email'
             required
           />
-          <Label htmlFor="message">Message</Label>
+          <Label htmlFor='message'>Message</Label>
           <TextArea
-            id="message"
-            name="message"
+            id='message'
+            name='message'
             value={formData.message}
             onChange={handleChange}
-            placeholder="Your message"
-            rows="5"
+            placeholder='Your message'
+            rows='5'
             required
           />
           <ButtonContainer>
-            <Button type="submit">Send Message</Button>
+            <Button type='submit'>Send Message</Button>
           </ButtonContainer>
         </Form>
       </Container>

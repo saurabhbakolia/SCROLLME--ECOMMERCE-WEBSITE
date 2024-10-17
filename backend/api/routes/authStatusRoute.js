@@ -3,6 +3,6 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 
 // Define routes
-router.get('/check', authController.checkAuthStatus);
+router.get('/status', authController.checkAuthStatus);
 
 module.exports = router;

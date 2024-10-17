@@ -9,16 +9,18 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
 import Wishlist from './pages/Wishlist';
+import useAuthCheck from './hooks/useAuthCheck.js';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
 function App() {
+  useAuthCheck();
   return (
-    <div className="App">
+    <div className='App'>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route
-          path="/cart"
+          path='/cart'
           element={
             <ProtectedRoute>
               <Cart />
@@ -42,18 +44,18 @@ function App() {
           }
         />
         <Route
-          path="/:categorySlug"
+          path='/:categorySlug'
           element={
-            <Suspense fallback="Loading...">
+            <Suspense fallback='Loading...'>
               <LazyCategoryProducts />
             </Suspense>
           }
         />
-        <Route path="/:categorySlug/:productId" element={<Product />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path='/:categorySlug/:productId' element={<Product />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/contact-us' element={<ContactUsPage />} />
+        <Route path='*' element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>
   );

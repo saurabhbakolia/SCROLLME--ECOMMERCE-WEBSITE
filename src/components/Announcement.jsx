@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -18,9 +17,7 @@ const Container = styled.div`
 `;
 
 const Announcement = () => {
-  return (
-    <Container>Super deal hour started. Buy your favorite products!.</Container>
-  );
+  return <Container>Super deal hour started. Buy your favorite products!.</Container>;
 };
 
 export default Announcement;

@@ -1,8 +1,4 @@
-import {
-  FavoriteBorderOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from '@mui/icons-material';
+import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';

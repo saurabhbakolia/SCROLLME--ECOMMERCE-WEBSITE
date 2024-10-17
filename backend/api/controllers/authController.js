@@ -96,10 +96,42 @@ exports.login = async (req, res) => {
       sameSite: 'Strict',
     });
 
-    res.status(200).json({ message: 'Logged in successfully' });
+    res.status(200).json({
+      message: 'Logged in successfully',
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.roles,
+        username: user.username
+      }
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send('Server error');
+  }
+};
+
+exports.logOut = async (req, res) => {
+  try {
+    res.cookie("accessToken", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: "strict",
+    });
+    res.cookie("refreshToken", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Error during logout:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -138,115 +170,140 @@ exports.refreshToken = async (req, res) => {
   }
 };
 
-// const jwt = require("jsonwebtoken");
-// const UserToken = require("../models/userToken");
-// const verifyAccessToken = require("../utils/verifyAccessToken");
-// const verifyRefreshToken = require("../utils/verifyRefreshToken");
-
 // exports.checkAuthStatus = async (req, res) => {
-//     try {
-//         // Assuming the token is sent as an HTTP-only cookie named 'accessToken'
-//         const accessToken = req.cookies.accessToken;
-//         const refreshToken = req.cookies.refreshToken;
+//   try {
+//     const accessToken = req.cookies.accessToken;
+//     const refreshToken = req.cookies.refreshToken;
 
-//         // If there's no token, the user is not logged in
-//         if (!accessToken && refreshToken) {
-//             verifyRefreshToken(refreshToken)
-//                 .then(async ({ user }) => {
-//                     if (!user) {
-//                         return res.status(401).json({
-//                             status: 'fail',
-//                             message: 'You are not logged in!',
-//                             data: {
-//                                 isAuthenticated: false
-//                             }
-//                         });
-//                     };
-//                     const payload = { _id: user._id, roles: user.roles };
-//                     const accessToken = jwt.sign(
-//                         payload,
-//                         'SCROLLME_SECRET',
-//                         { expiresIn: '15m' }
-//                     );
-//                     await UserToken.findOneAndUpdate(
-//                         { userId: user._id },
-//                         { accessToken: accessToken },
-//                     );
-//                     res.cookie('accessToken', accessToken, {
-//                         httpOnly: true,
-//                         secure: true,
-//                         sameSite: 'none',
-//                         maxAge: 15 * 60 * 1000, // token expiration time in milliseconds
-//                     });
-//                     res.status(200).json({
-//                         status: 'success',
-//                         message: 'New access token generated successfully!',
-//                         data: {
-//                             isAuthenticated: true,
-//                             user: user
-//                         }
-//                     });
-//                 })
-//                 .catch(err => {
-//                     console.log("Error signing access token");
-//                     return res.status(401).json({
-//                         status: 'fail',
-//                         message: 'You are not logged in!',
-//                         data: {
-//                             isAuthenticated: false
-//                         }
-//                     });
-//                 })
-//         } else if (!accessToken && !refreshToken) {
-//             return res.status(401).json({
-//                 status: 'fail',
-//                 message: 'You are not logged in!',
-//                 data: {
-//                     isAuthenticated: false
-//                 }
-//             });
-//         } else {
-//             verifyAccessToken(accessToken)
-//                 .then(async ({ user }) => {
-//                     if (!user) {
-//                         return res.status(401).json({
-//                             status: 'fail',
-//                             message: 'You are not logged in!',
-//                             data: {
-//                                 isAuthenticated: false
-//                             }
-//                         });
-//                     };
-
-//                     return res.status(200).json({
-//                         status: 'success',
-//                         message: 'You are logged in!',
-//                         data: {
-//                             isAuthenticated: true,
-//                             user: user
-//                         }
-//                     });
-//                 })
-//                 .catch((err) => {
-//                     console.log("Error verifying access token");
-//                     return res.status(401).json({
-//                         status: 'fail',
-//                         message: 'You are not logged in!',
-//                         data: {
-//                             isAuthenticated: false
-//                         }
-//                     });
-//                 });
-//         }
-
-//     } catch (error) {
-//         console.error('Error in checkAuthStatus:', error);
-//         return res.status(500).json({
-//             status: 'error',
-//             message: 'Internal server error!',
-//             data: {
-//                 isAuthenticated: false
-//             }
-//         });
+//     if (!accessToken || !refreshToken) {
+//       return res.status(401).json({ message: 'Not authenticated' });
 //     }
+
+//     // Verify the access token
+//     jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decoded) => {
+//       if (err && err.name === 'TokenExpiredError') {
+//         try {
+//           const decodeData = jwt.verify(refreshToken, process.env.JWT_SECRET);
+//           const user = await User.findById(decodeData.id);
+
+//           if (!user) {
+//             return res.status(401).json({ message: 'Invalid refresh token' });
+//           }
+
+//           const newAccessToken = user.generateAuthToken();
+//           const newRefreshToken = user.generateRefreshToken();
+//           res.cookie('accessToken', newAccessToken, {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === 'production',
+//             sameSite: 'Strict',
+//           });
+//           res.cookie('refreshToken', newRefreshToken, {
+//             httpOnly: true,
+//             secure: process.env.NODE_ENV === 'production',
+//             sameSite: 'Strict',
+//           });
+
+//           return res.status(200).json({
+//             message: 'New tokens issued!',
+//             user: {
+//               id: user._id,
+//               username: user.username,
+//               email: user.email
+//             }
+//           });
+//         } catch (refreshError) {
+//           console.error('Refresh token error:', refreshError);
+//           return res.status(401).json({ message: 'Invalid or expired refresh token' });
+//         }
+//       } else if (err) {
+//         return res.status(401).json({ message: 'Invalid access token' });
+//       } else {
+//         const user = await User.findById(decoded.id);
+//         if (!user) {
+//           return res.status(401).json({ message: 'User not found' });
+//         }
+//         return res.status(200).json({ message: 'Authenticated', user: { id: user._id, username: user.username, email: user.email } });
+//       }
+//     });
+//   } catch (error) {
+//     console.error('Auth status error:', error);
+//     return res.status(500).json({ message: 'Internal server error', error: error.message });
+//   }
 // };
+
+
+exports.checkAuthStatus = async (req, res) => {
+  try {
+    const accessToken = req.cookies.accessToken;
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!accessToken || !refreshToken) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    // Verify the access token
+    jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decoded) => {
+      if (err) {
+        // Handle token expiration or invalid token case
+        if (err.name === 'TokenExpiredError') {
+          try {
+            const decodeData = jwt.verify(refreshToken, process.env.JWT_SECRET);
+            const user = await User.findById(decodeData.id);
+
+            if (!user) {
+              return res.status(401).json({ message: 'Invalid refresh token' });
+            }
+
+            // Generate new tokens
+            const newAccessToken = user.generateAuthToken();
+            const newRefreshToken = user.generateRefreshToken();
+
+            // Set new tokens in cookies
+            res.cookie('accessToken', newAccessToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'Strict',
+            });
+            res.cookie('refreshToken', newRefreshToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production',
+              sameSite: 'Strict',
+            });
+
+            return res.status(200).json({
+              message: 'New tokens issued!',
+              user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+              },
+            });
+          } catch (refreshError) {
+            console.error('Refresh token error:', refreshError);
+            return res.status(401).json({ message: 'Invalid or expired refresh token' });
+          }
+        } else {
+          return res.status(401).json({ message: 'Invalid access token' });
+        }
+      }
+
+      // If access token is valid, proceed to get user details
+      const user = await User.findById(decoded.id);
+      if (!user) {
+        return res.status(401).json({ message: 'User not found' });
+      }
+
+      return res.status(200).json({
+        message: 'Authenticated',
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Auth status error:', error);
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};

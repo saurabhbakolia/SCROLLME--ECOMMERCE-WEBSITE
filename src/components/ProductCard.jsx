@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
@@ -14,7 +13,7 @@ export const renderStars = (rating) => {
 
   // Half star
   if (hasHalfStar) {
-    stars.push(<Star key="half">&#9734;</Star>);
+    stars.push(<Star key='half'>&#9734;</Star>);
   }
 
   // Empty stars
@@ -42,9 +41,7 @@ const ProductCard = (props) => {
       <Info>
         <ProductBrand>{props.product.brand}</ProductBrand>
         <ProductTitle>{props.product.name}</ProductTitle>
-        <ProductDescription>
-          {props.product.description.substring(0, 100)}...
-        </ProductDescription>
+        <ProductDescription>{props.product.description.substring(0, 100)}...</ProductDescription>
         <ProductRating>
           <div>{renderStars(props.product.ratings.averageRating)}</div>
           <p>({props.product.ratings.numberOfReviews} reviews)</p>
@@ -53,9 +50,7 @@ const ProductCard = (props) => {
         {props.product.stock < 10 ? (
           <ProductStock>
             <ProductStockInfo stock={props.product.stock}>
-              {props.product.stock > 0
-                ? `Only ${props.product.stock} left in stock.`
-                : 'Out of Stock'}
+              {props.product.stock > 0 ? `Only ${props.product.stock} left in stock.` : 'Out of Stock'}
             </ProductStockInfo>
           </ProductStock>
         ) : null}
