@@ -2,7 +2,7 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@m
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
-import { addToCart } from '../store/Slices/CartSlice';
+// import { addToCart } from '../store/Slices/cartsSlice';
 import { useDispatch } from 'react-redux';
 import { addToWishlist } from '../store/Slices/WishlistSlice';
 
