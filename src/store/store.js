@@ -11,12 +11,12 @@ import { configureStore } from '@reduxjs/toolkit';
 // } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
 // import userReducer from './Slices/UserSlice';
-// import cartReducer from './Slices/cartsSlice';
+// import cartReducer from './Slices/CartSlice';
 import wishlistReducer from './Slices/WishlistSlice';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import userReducer from './slices/userSlice';
-import cartReducer from './Slices/cartsSlicee';
+import userReducer from './slices/UserSlice';
+import cartReducer from './Slices/CartSlicee';
 
 // persist configuration
 const persistConfig = {

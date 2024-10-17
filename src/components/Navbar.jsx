@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useToast } from '@chakra-ui/react';
 import { AUTH_ENDPOINTS } from '../api/endPoints';
 import axios from 'axios';
-import { logOut } from '../store/Slices/userSlice';
+import { logOut } from '../store/Slices/UserSlice';
 
 const Container = styled.div`
   height: 60px;

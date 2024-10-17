@@ -5,14 +5,14 @@ import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
 import { allProducts } from '../data';
-// import { addToCart, removeFromCart } from '../store/Slices/cartsSlice';
+// import { addToCart, removeFromCart } from '../store/Slices/CartSlice';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Text } from '../styles/Text';
 import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
-import { deleteCartItem, updateCartItem } from '../store/Slices/cartsSlicee';
+import { deleteCartItem, updateCartItem } from '../store/Slices/CartSlicee';
 
 const Container = styled.div``;
 
@@ -202,7 +202,7 @@ const Button = styled.button`
 
 const Cart = () => {
   // const dispatch = useDispatch();
-  // const cartItems = useSelector((state) => state.cart); // Get cart items from cartsSlice
+  // const cartItems = useSelector((state) => state.cart); // Get cart items from CartSlice
   // const cartProducts = allProducts.filter((product) =>
   //   cartItems.find((item) => item.id === product.id)
   // ); // Get products from data.js that match cartItems

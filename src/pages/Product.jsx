@@ -12,7 +12,7 @@ import { renderStars } from '../components/ProductCard';
 import { capitalizeFirstChar } from '../utils/stringUtils';
 import { Box, ButtonSpinner, Text } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
-import { addToCart } from '../store/Slices/cartsSlicee';
+import { addToCart } from '../store/Slices/CartSlicee';
 import { useDispatch } from 'react-redux';
 
 const Product = () => {

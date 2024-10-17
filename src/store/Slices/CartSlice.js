@@ -62,7 +62,7 @@ export const clearCart = createAsyncThunk('cart/clearCart', async (_, { rejectWi
   }
 });
 
-const cartsSlice = createSlice({
+const CartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {},
@@ -151,4 +151,4 @@ const cartsSlice = createSlice({
   }
 });
 
-export default cartsSlice.reducer;
+export default CartSlice.reducer;

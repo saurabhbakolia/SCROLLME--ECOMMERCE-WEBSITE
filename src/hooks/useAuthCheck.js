@@ -1,7 +1,7 @@
 // hooks/useAuthCheck.js
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeAuthenticated } from '../store/slices/userSlice';
+import { changeAuthenticated } from '../store/slices/UserSlice';
 import { useNavigate } from 'react-router-dom';
 import { checkAuthStatusAPI } from '../services/auth/authService';
 
