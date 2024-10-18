@@ -77,36 +77,36 @@ const EmptyWishlist = styled.p`
 `;
 
 const Wishlist = () => {
-    const dispatch = useDispatch();
-    const wishlist = useSelector((state) => state.wishlist?.items);
-    const wishlistItems = allProducts.filter((product) => wishlist.items?.includes(product.id));
+  const dispatch = useDispatch();
+  const wishlist = useSelector((state) => state.wishlist?.items);
+  const wishlistItems = allProducts.filter((product) => wishlist.items?.includes(product.id));
 
-    const handleRemoveFromWishlist = (id) => {
-        dispatch(removeFromWishlist(id));
-    };
+  const handleRemoveFromWishlist = (id) => {
+    dispatch(removeFromWishlist(id));
+  };
 
-    return (
-        <>
-            <Navbar />
-            <Announcement />
-            <Container>
-                {wishlistItems.length > 0 ? (
-                    wishlistItems.map((product) => (
-                        <ProductCard key={product.id}>
-                            <RemoveButton onClick={() => handleRemoveFromWishlist(product.id)}>X</RemoveButton>
-                            <Image src={product.colors[0].img} alt={product.title} />
-                            <Title>{product.title}</Title>
-                            <Price>{product.price}</Price>
-                            <MoveToBagButton>Move to Cart</MoveToBagButton>
-                        </ProductCard>
-                    ))
-                ) : (
-                    <EmptyWishlist>Your wishlist is empty.</EmptyWishlist>
-                )}
-            </Container>
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <Navbar />
+      <Announcement />
+      <Container>
+        {wishlistItems.length > 0 ? (
+          wishlistItems.map((product) => (
+            <ProductCard key={product.id}>
+              <RemoveButton onClick={() => handleRemoveFromWishlist(product.id)}>X</RemoveButton>
+              <Image src={product.colors[0].img} alt={product.title} />
+              <Title>{product.title}</Title>
+              <Price>{product.price}</Price>
+              <MoveToBagButton>Move to Cart</MoveToBagButton>
+            </ProductCard>
+          ))
+        ) : (
+          <EmptyWishlist>Your wishlist is empty.</EmptyWishlist>
+        )}
+      </Container>
+      <Footer />
+    </>
+  );
 };
 
 export default Wishlist;

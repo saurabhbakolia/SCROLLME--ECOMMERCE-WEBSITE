@@ -26,7 +26,7 @@ const Product = () => {
   const { productId } = useParams();
   const toast = useToast();
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist?.items);  
+  const wishlist = useSelector((state) => state.wishlist?.items);
   const isInWishlist = wishlist?.includes(product?._id);
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const Product = () => {
           <Flex>
             <Title>{product?.name}</Title>
             <HeartIcon isInWishlist={isInWishlist} onClick={handleWishlistToggle}>
-              {isInWishlist ? <FavoriteBorderIcon style={{color: 'teal'}}/> : <FavoriteIcon style={{color: 'teal'}}/>}
+              {isInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
             </HeartIcon>
           </Flex>
           <ProductRating>
@@ -369,7 +369,7 @@ const ProductDetailInfo = styled.p`
 `;
 
 const HeartIcon = styled.div`
-    cursor: pointer;
-    margin-left: 10px;
-    color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
+  cursor: pointer;
+  margin-left: 10px;
+  color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
 `;

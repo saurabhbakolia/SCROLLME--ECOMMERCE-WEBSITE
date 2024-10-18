@@ -38,7 +38,7 @@ function App() {
           path='/wishlist'
           element={
             <ProtectedRoute>
-              <Wishlist/>
+              <Wishlist />
             </ProtectedRoute>
           }
         />
