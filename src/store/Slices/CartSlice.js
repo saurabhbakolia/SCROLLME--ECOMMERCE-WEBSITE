@@ -6,7 +6,7 @@ const initialState = {
   totalQuantity: 0,
   totalPrice: 0,
   status: 'idle',
-  error: null
+  error: null,
 };
 
 // Thunk for adding to cart
@@ -148,7 +148,7 @@ const CartSlice = createSlice({
       .addCase(clearCart.rejected, (state, action) => {
         state.error = action.payload;
       });
-  }
+  },
 });
 
 export default CartSlice.reducer;

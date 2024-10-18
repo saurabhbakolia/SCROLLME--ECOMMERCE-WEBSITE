@@ -129,7 +129,9 @@ const Footer = () => {
           <ListItem>My Account</ListItem>
           <ListItem>Order Tracking</ListItem>
           <ListItem>Wishlist</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>
+            <Link to={'/contributors'}>Contributors</Link>
+          </ListItem>
           <ListItem>Terms</ListItem>
         </List>
       </Center>
@@ -144,7 +146,7 @@ const Footer = () => {
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <LocationOn style={{ marginRight: '10px' }} />
@@ -158,7 +160,7 @@ const Footer = () => {
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <LocalPhone style={{ marginRight: '10px' }} />

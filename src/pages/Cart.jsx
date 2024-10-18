@@ -237,7 +237,7 @@ const Cart = () => {
             <Box color='white' p={1} bg='teal.500' borderRadius='xs'>
               Quantity updated!
             </Box>
-          )
+          ),
         });
       })
       .catch((error) => {
@@ -249,7 +249,7 @@ const Cart = () => {
             <Box color='white' p={3} bg='red.500'>
               Error while updated quantity!
             </Box>
-          )
+          ),
         });
       });
   };
@@ -263,7 +263,7 @@ const Cart = () => {
           description: 'The item has been successfully removed from your cart.',
           status: 'success',
           duration: 3000,
-          isClosable: true
+          isClosable: true,
         });
       })
       .catch((error) => {
@@ -272,7 +272,7 @@ const Cart = () => {
           description: 'There was an issue removing the item from your cart.',
           status: 'error',
           duration: 3000,
-          isClosable: true
+          isClosable: true,
         });
         console.error(error);
       });
