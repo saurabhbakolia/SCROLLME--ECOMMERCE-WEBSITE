@@ -15,7 +15,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import wishlistReducer from './Slices/WishlistSlice';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import userReducer from './Slices/userSlice';
+import userReducer from './Slices/UserSlice';
 import cartReducer from './Slices/CartSlice';
 
 // persist configuration
