@@ -4,6 +4,7 @@ import Product from './pages/Product';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart from './pages/Cart';
+import Wishlist from './pages/Wishlist';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
 import ContributorsPage from './pages/ContributorsPage';
@@ -41,6 +42,14 @@ function App() {
             <Suspense fallback='Loading...'>
               <LazyAllProducts />
             </Suspense>
+          }
+        />
+        <Route
+          path='/wishlist'
+          element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
           }
         />
         <Route

@@ -1,13 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromWishlist } from '../store/Slices/WishlistSlice';
+import { removeFromWishlist } from '../store/slices/wishlistSlice';
 import { allProducts } from '../data'; // Import allProducts data
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 
-// Styled components for Wishlist UI
 const Container = styled.div`
   margin-top: 100px;
   padding: 20px;
@@ -80,13 +78,11 @@ const EmptyWishlist = styled.p`
 
 const Wishlist = () => {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist); // Access wishlist from state
-
-  // Filter products based on wishlist IDs
-  const wishlistItems = allProducts.filter((product) => wishlist.includes(product.id));
+  const wishlist = useSelector((state) => state.wishlist?.items);
+  const wishlistItems = allProducts.filter((product) => wishlist.items?.includes(product.id));
 
   const handleRemoveFromWishlist = (id) => {
-    dispatch(removeFromWishlist(id)); // Dispatch action to remove from wishlist
+    dispatch(removeFromWishlist(id));
   };
 
   return (

@@ -1,22 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import {
-//   persistStore,
-//   persistReducer,
-//   FLUSH,
-//   REHYDRATE,
-//   PAUSE,
-//   PERSIST,
-//   PURGE,
-//   REGISTER,
-// } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-// import userReducer from './Slices/UserSlice';
-// import cartReducer from './Slices/CartSlice';
-import wishlistReducer from './Slices/WishlistSlice';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import userReducer from './Slices/UserSlice';
-import cartReducer from './Slices/CartSlice';
+import userReducer from './slices/userSlice';
+import cartReducer from './slices/cartSlice';
+import wishlistReducer from './slices/wishlistSlice';
 
 // persist configuration
 const persistConfig = {
@@ -28,13 +15,13 @@ const persistConfig = {
 // Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, userReducer);
 const persistedCartReducer = persistReducer({ key: 'cart', storage }, cartReducer);
+const persistedWishlistReducer = persistReducer({ key: 'wishlist', storage }, wishlistReducer);
 
 export const store = configureStore({
   reducer: {
     user: persistedReducer,
-    // cart: cartReducer,
-    wishlist: wishlistReducer,
-    cart: persistedCartReducer
+    cart: persistedCartReducer,
+    wishlist: persistedWishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
