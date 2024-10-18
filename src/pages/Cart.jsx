@@ -3,18 +3,22 @@ import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+import { allProducts } from '../data';
+// import { addToCart, removeFromCart } from '../store/Slices/CartSlice';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Text } from '../styles/Text';
 import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
-import { deleteCartItem, updateCartItem } from '../store/slices/cartSlice';
+import { deleteCartItem, updateCartItem } from '../store/Slices/CartSlice';
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -197,6 +201,27 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  // const dispatch = useDispatch();
+  // const cartItems = useSelector((state) => state.cart); // Get cart items from CartSlice
+  // const cartProducts = allProducts.filter((product) =>
+  //   cartItems.find((item) => item.id === product.id)
+  // ); // Get products from data.js that match cartItems
+
+  // const handleAddClick = (id) => {
+  //   dispatch(addToCart(id)); // Dispatch the addToCart action
+  // };
+
+  // const handleRemoveClick = (id) => {
+  //   dispatch(removeFromCart(id)); // Dispatch the removeFromCart action
+  // };
+
+  // const getTotalPrice = () => {
+  //   return cartProducts.reduce((total, product) => {
+  //     const cartItem = cartItems.find((item) => item.id === product.id);
+  //     const price = parseFloat(product.price.slice(1)); // Convert product.price to a number
+  //     return total + price * (cartItem ? cartItem.quantity : 0);
+  //   }, 0);
+
   const cartItems = useSelector((state) => state.cart.items);
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const toast = useToast();
@@ -275,6 +300,40 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
+            {/* {cartProducts.map((product) => {
+              const cartItem = cartItems.find((item) => item.id === product.id);
+              return (
+                <Product key={product.id}>
+                  <ProductDetail>
+                    <Image src={product.colors[0].img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {product.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID:</b> {product.id}
+                      </ProductId>
+                      <ProductColor color="black" />
+                      <ProductSize>
+                        <b>Size:</b> {'M'}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <RemoveIcon
+                        onClick={() => handleRemoveClick(product.id)}
+                      />
+                      <ProductAmount>{cartItem.quantity}</ProductAmount>
+                      <AddIcon onClick={() => handleAddClick(product.id)} />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      ${parseFloat(product.price.slice(1)) * cartItem.quantity}
+                    </ProductPrice>
+                  </PriceDetail>
+                </Product>
+              );
+            })} */}
             {cartItems.map((item) => (
               <Product key={item.productId}>
                 <ProductDetail>
@@ -301,16 +360,19 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
+              {/* <SummaryItemPrice>${getTotalPrice().toFixed(2)}</SummaryItemPrice> */}
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Tax</SummaryItemText>
+              <SummaryItemPrice>$ 30</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Delivery Charges</SummaryItemText>
+              <SummaryItemPrice>$ 20</SummaryItemPrice>
             </SummaryItem>
+            {/* Other SummaryItems... */}
+            {/* <Button>CHECKOUT NOW $ {(50 + getTotalPrice()).toFixed(2)}</Button> */}
             <SummaryItem type='total'>
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>

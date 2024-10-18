@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-import { ShoppingCartOutlined } from '@mui/icons-material';
+import { ShoppingCartOutlined, FavoriteBorderOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
 import { AUTH_ENDPOINTS } from '../api/endPoints';
 import axios from 'axios';
-import { logOut } from '../store/slices/userSlice';
+import { logOut } from '../store/Slices/UserSlice';
 import { Badge } from '@chakra-ui/react';
 import Logo from '../components/Logo';
 
 const Container = styled.div`
+  position: fixed;
+  top: 30px;
+  z-index: 10001;
   height: 60px;
   width: 100%;
   background-color: white;
@@ -28,7 +31,7 @@ const Wrapper = styled.div`
     padding: '10px 10px',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    alignItems: 'center'
   })}
 `;
 
@@ -87,7 +90,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
-        withCredentials: true, // Include cookies in the request
+        withCredentials: true // Include cookies in the request
       });
 
       if (res.status === 200) {
@@ -96,7 +99,7 @@ const Navbar = () => {
           description: res.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
-          isClosable: true,
+          isClosable: true
         });
         dispatch(logOut());
         navigate('/');
@@ -108,7 +111,7 @@ const Navbar = () => {
         description: error || 'Something went wrong logging out!',
         status: 'error',
         duration: 5000,
-        isClosable: true,
+        isClosable: true
       });
     }
   };
@@ -154,6 +157,11 @@ const Navbar = () => {
                   </Badge>
                 )}
               </Box>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to='/wishlist'>
+              <FavoriteBorderOutlined />
             </Link>
           </MenuItem>
         </Right>
