@@ -286,23 +286,23 @@ const StatisticsGrid = ({ contributors, repoStats }) => {
     {
       label: 'Contributors',
       value: contributors.length,
-      icon: <ContributorIcon />
+      icon: <ContributorIcon />,
     },
     {
       label: 'Total Contributions',
       value: totalContributions,
-      icon: <TotalContributionsIcon />
+      icon: <TotalContributionsIcon />,
     },
     {
       label: 'GitHub Stars',
       value: repoStats.stars || 0,
-      icon: <GitHubStarsIcon />
+      icon: <GitHubStarsIcon />,
     },
     {
       label: 'Forks',
       value: repoStats.forks || 0,
-      icon: <ForksIcon />
-    }
+      icon: <ForksIcon />,
+    },
   ];
 
   return (

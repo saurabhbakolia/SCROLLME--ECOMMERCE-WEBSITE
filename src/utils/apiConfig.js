@@ -5,7 +5,7 @@ export const HttpMethod = Object.freeze({
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
-  DELETE: 'DELETE'
+  DELETE: 'DELETE',
 });
 
 /**
@@ -18,9 +18,9 @@ const createFetchOptions = (method, withCredentials = false) => {
   return {
     method,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    withCredentials: withCredentials
+    withCredentials: withCredentials,
   };
 };
 

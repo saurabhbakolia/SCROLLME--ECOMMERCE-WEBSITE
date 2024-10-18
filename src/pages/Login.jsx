@@ -78,7 +78,7 @@ const Login = () => {
     e.preventDefault();
     const loginData = {
       username: e.target.username.value,
-      password: e.target.password.value
+      password: e.target.password.value,
     };
     // const response = await UserSignInAPI(loginData);
     dispatch(userSignIn(loginData))
@@ -89,7 +89,7 @@ const Login = () => {
           description: response.message || 'You have successfully logged in. Welcome back!',
           status: 'success',
           duration: 5000,
-          isClosable: true
+          isClosable: true,
         });
         dispatch(changeAuthenticated(true));
         console.log('Redirecting to /');
@@ -101,7 +101,7 @@ const Login = () => {
           description: 'Invalid credentials, please try again.',
           status: 'error',
           duration: 5000,
-          isClosable: true
+          isClosable: true,
         });
         console.log(error);
       });
@@ -116,7 +116,7 @@ const Login = () => {
         description: `Welcome ${user.displayName}!`,
         status: 'success',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       dispatch(changeAuthenticated(true));
       navigate('/');
@@ -126,7 +126,7 @@ const Login = () => {
         description: 'Please try again later.',
         status: 'error',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       console.log(error);
     }

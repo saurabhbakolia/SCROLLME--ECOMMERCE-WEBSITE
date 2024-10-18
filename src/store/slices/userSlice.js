@@ -10,7 +10,7 @@ const initialState = {
   isAuthenticated: false,
   roles: [],
   isFetching: false,
-  error: null
+  error: null,
 };
 
 // Thunk for userSignIn
@@ -60,7 +60,7 @@ const userSlice = createSlice({
     },
     changeAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -92,7 +92,7 @@ const userSlice = createSlice({
         state.roles = [];
         state.error = action.payload;
       });
-  }
+  },
 });
 
 export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = userSlice.actions;

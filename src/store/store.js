@@ -8,7 +8,7 @@ import cartReducer from './slices/cartSlice';
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage
+  storage,
 };
 
 // Create a persisted reducer
@@ -18,14 +18,14 @@ const persistedCartReducer = persistReducer({ key: 'cart', storage }, cartReduce
 export const store = configureStore({
   reducer: {
     user: persistedReducer,
-    cart: persistedCartReducer
+    cart: persistedCartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    })
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export let persistor = persistStore(store);

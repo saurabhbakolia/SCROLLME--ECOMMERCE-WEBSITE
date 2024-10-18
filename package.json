@@ -39,7 +39,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*[js,mjs,cjs,jsx]",
     "lint-fix": "eslint src/**/*[js,mjs,cjs,jsx] --fix",
-    "lint-format": "prettier 'src/**/*.{js,mjs,cjs,jsx}' --write --config ./.prettierrc.cjs",
+    "lint-check": "prettier 'src/**/*.{js,mjs,cjs,jsx}' --check --config ./.prettierrc.cjs",
+    "lint-format": "prettier 'src/**/*.{js,jsx,mjs,cjs,json,css,scss,html,md,yml,yaml,ts,tsx}' --write --config ./.prettierrc.cjs",
     "prepare": "husky"
   },
   "eslintConfig": {

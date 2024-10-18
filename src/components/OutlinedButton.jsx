@@ -14,7 +14,7 @@ const Button = styled(Link)`
   /* Media query for small devices */
   ${mobile({
     padding: '8px 16px',
-    fontSize: '16px'
+    fontSize: '16px',
   })}
 `;
 

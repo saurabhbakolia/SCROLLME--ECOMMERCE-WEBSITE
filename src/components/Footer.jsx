@@ -146,7 +146,7 @@ const Footer = () => {
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <LocationOn style={{ marginRight: '10px' }} />
@@ -160,7 +160,7 @@ const Footer = () => {
               color: 'inherit',
               textDecoration: 'none',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <LocalPhone style={{ marginRight: '10px' }} />

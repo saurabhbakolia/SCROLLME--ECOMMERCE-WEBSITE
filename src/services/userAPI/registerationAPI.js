@@ -4,8 +4,8 @@ import { AUTH_ENDPOINTS } from '../../api/endPoints';
 export const UserRegistrationAPI = async (userData) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
   const data = userData;
   return await axios

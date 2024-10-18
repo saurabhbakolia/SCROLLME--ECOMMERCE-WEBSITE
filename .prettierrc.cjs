@@ -15,7 +15,7 @@ module.exports = {
   requirePragma: false,
   semi: true,
   singleQuote: true,
-  trailingComma: 'none',
+  trailingComma: 'es5',
   useTabs: false,
   vueIndentScriptAndStyle: false,
   printWidth: 140,

@@ -50,7 +50,7 @@ const Product = () => {
         image: product.imageUrl,
         brand: product.brand,
         category: product.category,
-        quantity: 1
+        quantity: 1,
       };
       const result = await dispatch(addToCart(itemToAdd)).unwrap();
       if (result.response) {
@@ -59,7 +59,7 @@ const Product = () => {
           description: 'You can view your cart to proceed.',
           status: 'success',
           duration: 3000,
-          isClosable: true
+          isClosable: true,
         });
       }
     } catch (err) {
@@ -68,7 +68,7 @@ const Product = () => {
         description: err.message || 'Something went wrong.',
         status: 'error',
         duration: 3000,
-        isClosable: true
+        isClosable: true,
       });
     }
   };

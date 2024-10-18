@@ -6,9 +6,9 @@ import { createFetchOptions, HttpMethod } from '../../utils/apiConfig';
 export const addToCartAPI = async (cartData) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    withCredentials: true
+    withCredentials: true,
   };
   return await axios
     .post(CART_ENDPOINTS.ADD_TO_CART, cartData, config)

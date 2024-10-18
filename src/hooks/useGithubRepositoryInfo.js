@@ -18,7 +18,7 @@ const useGithubRepositoryInfo = () => {
         setRepoStats({
           stars: repoResponse.data.stargazers_count,
           forks: repoResponse.data.forks_count,
-          openIssues: repoResponse.data.open_issues_count
+          openIssues: repoResponse.data.open_issues_count,
         });
       } catch (err) {
         setError(err);
