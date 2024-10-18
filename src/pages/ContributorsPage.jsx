@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import useGithubRepositoryInfo from '../hooks/useGithubRepositoryInfo';
 import ContributorCard from '../components/contributors/ContributorCard';
 import StatCard from '../components/contributors/StatCard';
@@ -154,7 +154,7 @@ const Input = styled.input`
   color: #2d3748;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
-  
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #38b2ac;
@@ -170,7 +170,7 @@ const Button = styled.button`
   border-radius: 9999px;
   transition: background-color 0.3s ease-in-out;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  
+
   &:hover {
     background-color: #edf2f7;
   }
@@ -190,11 +190,9 @@ const StatisticsGridContainer = styled.div`
   }
 `;
 
-
 const ContributorsPage = () => {
   const [email, setEmail] = useState('');
   const { contributors, repoStats, loading } = useGithubRepositoryInfo();
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -207,25 +205,17 @@ const ContributorsPage = () => {
       <MainContainer>
         <HeroSection>
           <HeroContent>
-            <Title
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+            <Title initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
               Our Amazing Contributors
             </Title>
-            <Subtitle
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            <Subtitle initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
               Shaping the future of ScrollMe, one commit at a time
             </Subtitle>
             <ContributeButton
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              href="#contribute"
+              href='#contribute'
             >
               Become a Contributor
             </ContributeButton>
@@ -245,16 +235,16 @@ const ContributorsPage = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center justify-center h-64"
+                className='flex items-center justify-center h-64'
               >
-                <div className="w-32 h-32 border-t-2 border-b-2 border-teal-500 rounded-full animate-spin"></div>
+                <div className='w-32 h-32 border-t-2 border-b-2 border-teal-500 rounded-full animate-spin'></div>
               </motion.div>
             ) : (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
               >
                 {contributors.map((contributor) => (
                   <ContributorCard key={contributor.id} {...contributor} />
@@ -264,25 +254,21 @@ const ContributorsPage = () => {
           </AnimatePresence>
         </ContributorsSection>
 
-        <ContributeSection id="contribute">
+        <ContributeSection id='contribute'>
           <ContributeTitle>Join Our Contributors</ContributeTitle>
           <ContributeText>
             Be a part of something great! Whether you're fixing bugs, adding features, or creating new ideas, your contributions matter.
           </ContributeText>
-          <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center space-y-4">
+          <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center space-y-4'>
             <Input
-              type="email"
+              type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full max-w-md px-4 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring focus:ring-teal-500"
+              placeholder='Enter your email'
+              className='w-full max-w-md px-4 py-2 text-gray-800 border border-gray-300 rounded-lg focus:ring focus:ring-teal-500'
               required
             />
-            <Button
-              type="submit"
-            >
-              Submit Email
-            </Button>
+            <Button type='submit'>Submit Email</Button>
           </form>
         </ContributeSection>
       </MainContainer>
@@ -300,23 +286,23 @@ const StatisticsGrid = ({ contributors, repoStats }) => {
     {
       label: 'Contributors',
       value: contributors.length,
-      icon: <ContributorIcon />,
+      icon: <ContributorIcon />
     },
     {
       label: 'Total Contributions',
       value: totalContributions,
-      icon: <TotalContributionsIcon />,
+      icon: <TotalContributionsIcon />
     },
     {
       label: 'GitHub Stars',
       value: repoStats.stars || 0,
-      icon: <GitHubStarsIcon />,
+      icon: <GitHubStarsIcon />
     },
     {
       label: 'Forks',
       value: repoStats.forks || 0,
-      icon: <ForksIcon />,
-    },
+      icon: <ForksIcon />
+    }
   ];
 
   return (
