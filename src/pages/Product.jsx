@@ -12,7 +12,7 @@ import { renderStars } from '../components/ProductCard';
 import { capitalizeFirstChar } from '../utils/stringUtils';
 import { Box, ButtonSpinner, Text } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
-import { addToCart } from '../store/Slices/CartSlice';
+import { addToCart } from '../store/slices/cartSlice';
 import { useDispatch } from 'react-redux';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';

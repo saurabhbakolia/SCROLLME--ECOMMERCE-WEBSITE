@@ -7,14 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
 import { AUTH_ENDPOINTS } from '../api/endPoints';
 import axios from 'axios';
-import { logOut } from '../store/Slices/UserSlice';
+import { logOut } from '../store/slices/userSlice';
 import { Badge } from '@chakra-ui/react';
 import Logo from '../components/Logo';
 
 const Container = styled.div`
-  position: fixed;
-  top: 30px;
-  z-index: 10001;
   height: 60px;
   width: 100%;
   background-color: white;

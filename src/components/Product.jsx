@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 // import { addToCart } from '../store/Slices/cartsSlice';
 import { useDispatch } from 'react-redux';
-import { addToWishlist } from '../store/Slices/WishlistSlice';
+import { addToWishlist } from '../store/slices/wishlistSlice';
 
 const Info = styled.div`
   opacity: 0;
