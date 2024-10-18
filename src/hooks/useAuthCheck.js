@@ -1,43 +1,44 @@
 // hooks/useAuthCheck.js
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
-import { changeAuthenticated } from '../store/Slices/UserSlice';
-import { API_BASE_URL } from '../common/constants/apiConstants';
+import { changeAuthenticated } from '../store/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { checkAuthStatusAPI } from '../services/auth/authService';
 
 const useAuthCheck = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const checkAuthStatus = async () => {
-            try {
-                const response = await axios.get(API_BASE_URL + '/api/auth/check', { withCredentials: true });
-                dispatch(changeAuthenticated(response.data.data.isAuthenticated));
-                console.log('response.data.isAuthenticated', response.data.data.isAuthenticated);
-                if (!response.data.data.isAuthenticated && response.data.data.isAuthenticated !== undefined) {
-                    navigate('/login');
-                }
-            } catch (error) {
-                console.error('Error checking auth status:', error);
-                dispatch(changeAuthenticated(false));
-            }
-        };
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const response = await checkAuthStatusAPI();
+        console.log('auth status response', response);
+        let isAuthenticated = false;
+        if (response.status === 200 && response.data.message === 'Authenticated') {
+          // User is authenticated, do nothing.
+          return;
+        } else {
+          if (isAuthenticated) {
+            dispatch(changeAuthenticated(false));
+            navigate('/login');
+          }
+        }
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+        if (error.response && error.response.status === 401) {
+          dispatch(changeAuthenticated(false));
+          navigate('/login');
+        } else {
+          dispatch(changeAuthenticated(false));
+        }
+      }
+    };
 
-        // Check auth status on component mount
-        checkAuthStatus();
-
-        // Set up an interval to check auth status every 2 minutes
-        const intervalId = setInterval(checkAuthStatus, 1000);
-
-        // Clear the interval when the component unmounts
-        return () => clearInterval(intervalId);
-    }, [dispatch, navigate]);
-
-    // Optionally, you can return the auth status if you need to use it directly in your components
-    // const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-    // return isAuthenticated;
+    checkAuthStatus();
+    const intervalId = setInterval(checkAuthStatus, 120000);
+    return () => clearInterval(intervalId);
+  }, [dispatch, navigate]);
 };
 
 export default useAuthCheck;

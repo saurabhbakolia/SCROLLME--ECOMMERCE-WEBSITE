@@ -1,11 +1,42 @@
-import globals from 'globals';
-import pluginJs from '@eslint/js';
-import pluginReact from 'eslint-plugin-react';
+import globals from 'globals'
+import react from 'eslint-plugin-react'
+import reactRecommended from 'eslint-plugin-react/configs/recommended.js'
+import prittier from 'eslint-config-prettier';
 
 export default [
-  { files: ['**/*.{js,mjs,cjs,jsx}'] },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  { extends: ['airbnb', 'airbnb/hooks', 'prettier'] },
-];
+  {
+    ignores: ['eslint.config.mjs', '**/*.css']
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,jsx}'],
+    ...reactRecommended,
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    },
+    languageOptions: {
+      ...reactRecommended.languageOptions,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser
+      }
+    },
+    plugins: {
+      react
+    },
+    rules: {
+      'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+      semi: ['error', 'always'],
+      'react/jsx-uses-vars': 'error',
+      'semi': ['error', 'always'],
+    }
+  }
+]
