@@ -9,7 +9,7 @@ import wishlistReducer from './slices/wishlistSlice';
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage
+  storage,
 };
 
 // Create a persisted reducer
@@ -26,9 +26,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    })
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export let persistor = persistStore(store);

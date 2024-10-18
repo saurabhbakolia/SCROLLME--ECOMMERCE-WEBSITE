@@ -28,7 +28,7 @@ const Wrapper = styled.div`
     padding: '10px 10px',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
   })}
 `;
 
@@ -87,7 +87,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
-        withCredentials: true // Include cookies in the request
+        withCredentials: true, // Include cookies in the request
       });
 
       if (res.status === 200) {
@@ -96,7 +96,7 @@ const Navbar = () => {
           description: res.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
-          isClosable: true
+          isClosable: true,
         });
         dispatch(logOut());
         navigate('/');
@@ -108,7 +108,7 @@ const Navbar = () => {
         description: error || 'Something went wrong logging out!',
         status: 'error',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
     }
   };
