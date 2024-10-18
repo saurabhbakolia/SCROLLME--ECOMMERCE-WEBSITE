@@ -128,7 +128,9 @@ const Footer = () => {
           <ListItem>Accessories</ListItem>
           <ListItem>My Account</ListItem>
           <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>
+            <Link to={'/wishlist'}>Wishlist</Link>
+          </ListItem>
           <ListItem>
             <Link to={'/contributors'}>Contributors</Link>
           </ListItem>
