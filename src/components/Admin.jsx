@@ -67,9 +67,14 @@ const Admin = () => {
     }
   };
 
+  const handleAddNewProduct = () => {
+    navigate(`/admin/product/add`);
+  };
+
   return (
     <Container>
       <h1>Admin Panel - Manage Products</h1>
+      <Button onClick={handleAddNewProduct}>Add New Product</Button>
       <Table>
         <thead>
           <tr>

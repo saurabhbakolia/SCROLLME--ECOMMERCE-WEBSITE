@@ -12,6 +12,7 @@ import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
 import Admin from './components/Admin';
 import UpdateProduct from './components/UpdateProduct'; // Import UpdateProduct
+import AddNewProduct from './components/AddNewProduct';
 
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
@@ -59,7 +60,10 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/admin/update/:id' element={<UpdateProduct />} /> {/* Add UpdateProduct route */}
+        <Route path='/admin/update/:id' element={<UpdateProduct />} />
+        <Route path='/admin/product/add' element={<AddNewProduct />} />
+
+
         <Route path='*' element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>

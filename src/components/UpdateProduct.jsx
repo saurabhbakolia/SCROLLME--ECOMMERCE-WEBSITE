@@ -12,7 +12,6 @@ const UpdateProduct = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
 
-  
   const initialProduct = {
     name: '',
     description: '',
@@ -53,7 +52,7 @@ const UpdateProduct = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    console.log("HELLO")
+    console.log('HELLO');
     await axios
       .put(`http://localhost:8080/api/product/update/${id}`, product)
       .then((response) => {

@@ -1,0 +1,73 @@
+body {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+      url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center;
+    background-size: cover;
+    background-color: #f0f2f5; /* Fallback background color */
+  }
+  
+  .AddNewProduct-form-container {
+    background: linear-gradient(to bottom right, #ffffff, #e7f1ff);
+    border-radius: 15px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: auto;
+    padding: 2rem;
+    transition: transform 0.3s;
+  }
+  
+  .AddNewProduct-form-container:hover {
+    transform: scale(1.02);
+  }
+  
+  .AddNewProduct-form-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .AddNewProduct-form-icon {
+    margin-right: 0.5rem;
+    color: #007bff;
+    vertical-align: middle;
+  }
+  
+  .AddNewProduct-form-control,
+  .AddNewProduct-textarea {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s;
+  }
+  
+  .AddNewProduct-form-control:focus,
+  .AddNewProduct-textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .AddNewProduct-btn {
+    background-color: #007bff;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-size: 16px;
+    transition:
+      background-color 0.3s,
+      transform 0.2s;
+  }
+  
+  .AddNewProduct-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .AddNewProduct-form-container {
+      padding: 1.5rem;
+    }
+  
+    .AddNewProduct-btn {
+      width: 100%;
+    }
+  }
+  
