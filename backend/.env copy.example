@@ -1,0 +1,6 @@
+MONGODB_DATABASE_NAME = scrollme
+MONGODB_URI = mongodb://localhost:27017/scrollme
+PRODUCTS_COLLECTION_NAME = products
+SALT = 10
+JWT_SECRET = someone
+UNSPLASH_ACCESS_KEY=API_KEY

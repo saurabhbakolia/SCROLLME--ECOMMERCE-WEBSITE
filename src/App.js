@@ -10,6 +10,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
+import Admin from './components/Admin';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
@@ -64,6 +65,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
         <Route path='*' element={<h1>404 Not Found</h1>} />
+        <Route path='/admin' element={<Admin />} />
       </Routes>
     </div>
   );
