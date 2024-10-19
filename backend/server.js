@@ -47,6 +47,7 @@ app.use("/api/product", productRoute); // Product routes
 app.use("/api/user", userRoute); // user routes
 
 
+
 // // Rate limiting middleware
 // const limiter = rateLimit({
 // 	windowMs: 15 * 60 * 1000, // 15 minutes

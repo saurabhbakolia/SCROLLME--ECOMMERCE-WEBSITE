@@ -1,5 +1,7 @@
-// import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 20px;
@@ -36,76 +38,34 @@ const Button = styled.button`
 `;
 
 const Admin = () => {
- 
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
-  const handleUpdate = (id) => {
-    console.log(`Update product with id: ${id}`);
-    // Add update logic here
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/product/list");
+        setProducts(response.data.products);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleUpdate = (product) => {
+    navigate(`/admin/update/${product._id}`, { state: { product } });
   };
 
-  const handleDelete = (id) => {
-    console.log(`Delete product with id: ${id}`);
-    // Add delete logic here
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/product/${id}`);
+      setProducts(products.filter((product) => product._id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
-
-  const products = [
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      quantity: 15,
-      price: "$120",
-      rating: "4.7",
-      material: "Plastic & Metal",
-      color: "Black",
-      brand: "AudioTech",
-      description: "High-quality wireless headphones with noise-canceling feature",
-    },
-    {
-      id: 2,
-      name: "Smartphone",
-      quantity: 8,
-      price: "$999",
-      rating: "4.8",
-      material: "Aluminum & Glass",
-      color: "Space Gray",
-      brand: "TechBrand",
-      description: "Latest model smartphone with 5G connectivity and powerful camera",
-    },
-    {
-      id: 3,
-      name: "Fitness Tracker",
-      quantity: 25,
-      price: "$80",
-      rating: "4.2",
-      material: "Silicone",
-      color: "Blue",
-      brand: "FitLife",
-      description: "Waterproof fitness tracker with heart rate monitoring",
-    },
-    {
-      id: 4,
-      name: "Laptop",
-      quantity: 5,
-      price: "$1200",
-      rating: "4.6",
-      material: "Aluminum",
-      color: "Silver",
-      brand: "ComputeMax",
-      description: "Powerful laptop with 16GB RAM and 512GB SSD",
-    },
-    {
-      id: 5,
-      name: "Running Shoes",
-      quantity: 20,
-      price: "$150",
-      rating: "4.3",
-      material: "Mesh & Rubber",
-      color: "Red",
-      brand: "SportX",
-      description: "Comfortable running shoes for long-distance running",
-    },
-  ];
-  
 
   return (
     <Container>
@@ -126,23 +86,29 @@ const Admin = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => (
-            <tr key={product.id}>
-              <Td>{index + 1}</Td>
-              <Td>{product.name}</Td>
-              <Td>{product.quantity}</Td>
-              <Td>{product.price}</Td>
-              <Td>{product.rating}</Td>
-              <Td>{product.material}</Td>
-              <Td>{product.color}</Td>
-              <Td>{product.brand}</Td>
-              <Td>{product.description}</Td>
-              <Td>
-                <Button onClick={() => handleUpdate(product.id)}>Update</Button>
-                <Button onClick={() => handleDelete(product.id)}>Delete</Button>
-              </Td>
+          {Array.isArray(products) && products.length > 0 ? (
+            products.map((item, index) => (
+              <tr key={item._id}>
+                <Td>{index + 1}</Td>
+                <Td>{item.name}</Td>
+                <Td>{item.stock}</Td>
+                <Td>${item.price}</Td>
+                <Td>{item.ratings.averageRating}</Td>
+                <Td>{item.material}</Td>
+                <Td>{item.color}</Td>
+                <Td>{item.brand}</Td>
+                <Td>{item.description}</Td>
+                <Td>
+                  <Button onClick={() => handleUpdate(item)}>Edit</Button>
+                  <Button onClick={() => handleDelete(item._id)}>Delete</Button>
+                </Td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <Td colSpan="10">No products available</Td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
     </Container>

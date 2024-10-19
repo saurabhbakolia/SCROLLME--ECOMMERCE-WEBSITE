@@ -134,8 +134,8 @@ const Navbar = () => {
             <Link to='/contact-us'>CONTACT US</Link>
           </MenuItem>
           <MenuItem>
-              <Link to='/admin'>ADMIN</Link>
-            </MenuItem>
+            <Link to='/admin'>ADMIN</Link>
+          </MenuItem>
           {!isAuthenticated && (
             <MenuItem>
               <Link to='/register'>REGISTER</Link>
