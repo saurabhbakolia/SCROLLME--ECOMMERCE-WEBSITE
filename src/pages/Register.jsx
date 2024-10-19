@@ -71,6 +71,10 @@ const Input = styled.input`
   min-width: 40%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const Agreement = styled.span`
@@ -96,6 +100,11 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const PasswordBox = styled.div`
@@ -106,6 +115,11 @@ const PasswordBox = styled.div`
 const GoogleButton = styled(Button)`
   background-color: #4285f4; /* Google blue color */
   width: 40%; /* Full width */
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
