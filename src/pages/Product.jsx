@@ -7,28 +7,51 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { mobile, tablet } from '../responsive';
 import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 
 const Product = () => {
     const [product, setProduct] = useState();
     const [modalOpen, setModalOpen] = useState(false); // State for modal visibility
+    const [isRotating, setIsRotating] = useState(false); // State for image rotation
+    const [rotation, setRotation] = useState(0); // State for rotation angle
+    const [imageSize, setImageSize] = useState({ width: 0, height: 0 }); // State for image size
     const params = useParams();
 
     useEffect(() => {
-        console.log("product id: ", params.productId);
         const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
         setProduct(selectedProduct);
-        console.log("product: ", product);
-    }, [product, params.productId]);
+    }, [params.productId]);
+
+    // Function to handle image load
+    const handleImageLoad = (event) => {
+        const { naturalWidth, naturalHeight } = event.target;
+        setImageSize({ width: naturalWidth, height: naturalHeight }); // Update image size
+    };
 
     const handleImageClick = () => {
         setModalOpen(true); // Open modal on image click
     };
 
+    const handleMouseMove = (event) => {
+        if (isRotating) {
+            const { clientX } = event;
+            const width = imageSize.width; // Get the width of the image
+            const center = width / 2;
+            const deltaX = clientX - center; // Distance from center
+            const rotationAngle = (deltaX / center) * 180; // Adjust the multiplier for sensitivity
+            setRotation(rotationAngle);
+        }
+    };
+
     const closeModal = () => {
         setModalOpen(false); // Close modal
+        setRotation(0); // Reset rotation when modal is closed
+    };
+
+    // Function to handle slider change
+    const handleSliderChange = (event) => {
+        setRotation(event.target.value); // Update rotation based on slider value
     };
 
     return (
@@ -37,13 +60,18 @@ const Product = () => {
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    {product && <Image src={product.img} onClick={handleImageClick} />} {/* Add click handler */}
+                    {product && (
+                        <Image
+                            src={product.img}
+                            onClick={handleImageClick}
+                            onLoad={handleImageLoad}
+                            style={{ transform: `rotateY(${rotation}deg)` }}
+                        />
+                    )}
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product?.title}</Title>
-                    <Desc>
-                        {product?.desc}
-                    </Desc>
+                    <Desc>{product?.desc}</Desc>
                     <Price>{product?.price}</Price>
                     <FilterContainer>
                         <Filter>
@@ -78,10 +106,21 @@ const Product = () => {
 
             {/* Modal for enlarged image */}
             {modalOpen && (
-                <Modal>
+                <Modal onMouseMove={handleMouseMove} onMouseLeave={() => setIsRotating(false)}>
                     <ModalContent>
-                        <CloseButton onClick={closeModal}>X</CloseButton>
-                        <ModalImage src={product.img} />
+                        <CloseButton onClick={closeModal}>✖</CloseButton>
+                        <ModalImage
+                            src={product.img}
+                            onMouseEnter={() => setIsRotating(true)} // Start rotation on mouse enter
+                            style={{ transform: `rotateY(${rotation}deg)` }}
+                        />
+                        <RotationSlider
+                            type="range"
+                            min="-180"
+                            max="180"
+                            value={rotation}
+                            onChange={handleSliderChange}
+                        />
                     </ModalContent>
                 </Modal>
             )}
@@ -91,6 +130,7 @@ const Product = () => {
 
 export default Product;
 
+// Styled Components
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -226,8 +266,11 @@ const Modal = styled.div`
 
 const ModalContent = styled.div`
     position: relative;
-    width: 80%; /* Adjust width as needed */
+    width: 90%; /* Adjust width as needed */
     max-width: 600px; /* Maximum width for the modal */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
 `;
 
 const CloseButton = styled.button`
@@ -239,10 +282,20 @@ const CloseButton = styled.button`
     color: white;
     font-size: 24px;
     cursor: pointer;
+    z-index: 1001; /* Ensure button is on top */
 `;
 
 const ModalImage = styled.img`
     width: 100%;
     height: auto;
+    max-height: 70vh; /* Maximum height for the image */
     object-fit: contain;
+    margin-bottom: 10px; /* Space between image and slider */
+`;
+
+// Rotation Slider
+const RotationSlider = styled.input`
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer; /* Change cursor for the slider */
 `;
