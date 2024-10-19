@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -44,10 +44,10 @@ const Admin = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/product/list");
+        const response = await axios.get('http://localhost:8080/api/product/list');
         setProducts(response.data.products);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -63,7 +63,7 @@ const Admin = () => {
       await axios.delete(`http://localhost:8080/api/product/${id}`);
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error('Error deleting product:', error);
     }
   };
 
@@ -106,7 +106,7 @@ const Admin = () => {
             ))
           ) : (
             <tr>
-              <Td colSpan="10">No products available</Td>
+              <Td colSpan='10'>No products available</Td>
             </tr>
           )}
         </tbody>

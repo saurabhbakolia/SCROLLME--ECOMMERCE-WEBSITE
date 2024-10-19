@@ -11,7 +11,7 @@ import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
 import Admin from './components/Admin';
-import UpdateProduct from './components/UpdateProduct';  // Import UpdateProduct
+import UpdateProduct from './components/UpdateProduct'; // Import UpdateProduct
 
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));

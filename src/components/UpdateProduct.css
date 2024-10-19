@@ -1,66 +1,68 @@
 body {
-    background-color: #f0f2f5; 
-  }
-  
+  background-color: #f0f2f5;
+}
+
+.form-container {
+  background: linear-gradient(to bottom right, #ffffff, #e7f1ff);
+  border-radius: 15px;
+  border: 1px solid #ced4da;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  transition: transform 0.3s;
+}
+
+.form-container:hover {
+  transform: scale(1.02);
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.form-icon {
+  margin-right: 0.5rem;
+  color: #007bff;
+  vertical-align: middle;
+}
+
+input.form-control,
+textarea.form-control {
+  border-radius: 10px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s;
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
   .form-container {
-    background: linear-gradient(to bottom right, #ffffff, #e7f1ff);
-    border-radius: 15px;
-    border: 1px solid #ced4da;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    max-width: 800px;
-    margin: auto;
-    padding: 2rem;
-    transition: transform 0.3s;
+    padding: 1.5rem;
   }
-  
-  .form-container:hover {
-    transform: scale(1.02); 
-  }
-  
-  .form-label {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .form-icon {
-    margin-right: 0.5rem; 
-    color: #007bff; 
-    vertical-align: middle; 
-  }
-  
-  input.form-control,
-  textarea.form-control {
-    border-radius: 10px;
-    border: 1px solid #ced4da;
-    transition: border-color 0.3s;
-  }
-  
-  input.form-control:focus,
-  textarea.form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-  
+
   .btn-primary {
-    background-color: #007bff;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 24px;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
   }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); 
-  }
-  
-  @media (max-width: 768px) {
-    .form-container {
-      padding: 1.5rem; 
-    }
-    
-    .btn-primary {
-      width: 100%; 
-    }
-  }
+}
