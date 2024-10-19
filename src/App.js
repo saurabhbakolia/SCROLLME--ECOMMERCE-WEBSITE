@@ -9,7 +9,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
-import ForgotPassword from './pages/ForgotPassword';  
+import ForgotPassword from './pages/ForgotPassword';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
