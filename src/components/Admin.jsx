@@ -58,12 +58,17 @@ const Admin = () => {
     navigate(`/admin/update/${product._id}`, { state: { product } });
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8080/api/product/${id}`);
-      setProducts(products.filter((product) => product._id !== id));
-    } catch (error) {
-      console.error('Error deleting product:', error);
+  const handleDelete = async (productId) => {
+    const confirmDelete = window.confirm('Do you really want to delete this product?');
+
+    if (confirmDelete) {
+      try {
+        await axios.delete(`http://localhost:8080/api/product/delete/${productId}`);
+
+        setProducts(products.filter((product) => product._id !== productId));
+      } catch (error) {
+        console.error('Error deleting product:', error);
+      }
     }
   };
 

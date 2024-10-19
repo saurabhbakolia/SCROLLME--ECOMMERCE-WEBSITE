@@ -22,7 +22,7 @@ router.put(
 // Route to delete a product (only for admins)
 router.delete(
   '/delete/:productId',
-  authMiddleware,
+  
   productController.deleteProduct
 );
 

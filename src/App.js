@@ -63,7 +63,6 @@ function App() {
         <Route path='/admin/update/:id' element={<UpdateProduct />} />
         <Route path='/admin/product/add' element={<AddNewProduct />} />
 
-
         <Route path='*' element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>
