@@ -3,8 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaTag, FaDollarSign, FaBoxOpen, FaPalette, FaPaintBrush, FaRegistered, FaEdit } from 'react-icons/fa';
-import './UpdateProduct.css';
+import './AddNewProduct.css';
 import toast from 'react-hot-toast';
+
+import Navbar from '../components/Navbar';
 
 const AddNewProduct = () => {
   const { id } = useParams();
@@ -32,6 +34,7 @@ const AddNewProduct = () => {
       numberOfReviews: 0,
     },
   };
+  const URI = "http://localhost:8080"; 
   const [product, setProduct] = useState(initialProduct);
 
   const inputChangeHandler = (e) => {
@@ -43,7 +46,7 @@ const AddNewProduct = () => {
     e.preventDefault();
     console.log('HELLO');
     await axios
-      .post(`http://localhost:8080/api/product/add`, product)
+      .post(`${URI}/api/product/add`, product)
       .then((response) => {
         toast.success(response.data.msg, { position: 'top-right' });
         navigate('/admin');
@@ -56,6 +59,11 @@ const AddNewProduct = () => {
 
   return (
     <div className='container mt-5'>
+       <Navbar  />
+
+       <br></br>
+       <br></br>
+        
       <div className='form-container shadow p-4'>
         <h1 className='text-center mb-4'>ADD NEW PRODUCT</h1>
         {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}

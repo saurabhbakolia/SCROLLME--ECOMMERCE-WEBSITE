@@ -6,6 +6,8 @@ import { FaTag, FaDollarSign, FaBoxOpen, FaPalette, FaPaintBrush, FaRegistered, 
 import './UpdateProduct.css';
 import toast from 'react-hot-toast';
 
+import Navbar from '../components/Navbar';
+
 const UpdateProduct = () => {
   const { id } = useParams();
   console.log(id);
@@ -52,9 +54,9 @@ const UpdateProduct = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    console.log('HELLO');
+    const URI = "http://localhost:8080"; 
     await axios
-      .put(`http://localhost:8080/api/product/update/${id}`, product)
+      .put(`${URI}/api/product/update/${id}`, product)
       .then((response) => {
         toast.success(response.data.msg, { position: 'top-right' });
         navigate('/admin');
@@ -67,6 +69,9 @@ const UpdateProduct = () => {
 
   return (
     <div className='container mt-5'>
+       <Navbar />
+      <br></br>
+      <br></br>
       <div className='form-container shadow p-4'>
         <h1 className='text-center mb-4'>Update Product</h1>
         {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}

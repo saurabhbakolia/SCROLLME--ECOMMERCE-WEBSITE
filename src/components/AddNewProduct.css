@@ -1,9 +1,11 @@
 body {
   background:
     linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center;
-  background-size: cover;
-  background-color: #f0f2f5; }
+    url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center !important;
+  background-size: cover !important;
+  background-color: #f0f2f5;
+}
+
 
 .AddNewProduct-form-container {
   background: linear-gradient(to bottom right, #ffffff, #e7f1ff);
@@ -69,3 +71,4 @@ body {
     width: 100%;
   }
 }
+
