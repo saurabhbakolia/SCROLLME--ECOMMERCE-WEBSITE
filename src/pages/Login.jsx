@@ -78,6 +78,10 @@ const Link = styled.a`
 const GoogleButton = styled(Button)`
   background-color: #4285f4; /* Google blue color */
   width: 100%; /* Full width */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
   transition: transform 0.3s ease;
 
   &:hover {
