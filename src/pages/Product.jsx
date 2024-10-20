@@ -232,23 +232,25 @@ const ModalContent = styled.div`
     max-height: 90vh; /* Limit max height to allow scrolling */
     overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
     overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 20px; /* Add some padding */
 `;
 
 const CloseButton = styled.button`
-    position: fixed;
-    top: 10px;
-    right: 10px;
+    position: fixed; /* Keep the button fixed */
+    top: 20px; /* Space from the top */
+    right: 20px; /* Space from the right */
     background-color: transparent;
     border: none;
     color: white;
     font-size: 24px;
     cursor: pointer;
+    z-index: 1001; /* Ensure it appears above the modal content */
 `;
 
 const ModalImage = styled.img`
     width: 100%; /* Set width to 100% to fit within the modal */
+    max-height: 90vh; /* Limit the max height to the viewport height */
     height: auto; /* Keep height auto to maintain aspect ratio */
-    max-height: none; /* Remove the restriction on max-height to allow full size */
     object-fit: contain; /* Maintain aspect ratio without distortion */
     transition: transform 0.3s ease; /* Smooth zoom transition */
     &:hover {
