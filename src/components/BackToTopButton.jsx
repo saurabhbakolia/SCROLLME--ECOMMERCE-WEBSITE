@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+import './components.css'
 const BackToTopButton = () => {
   const [showButton, setShowButton] = useState(false);
 
@@ -32,9 +33,9 @@ const BackToTopButton = () => {
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-10 right-10 bg-gray-700 drop-shadow-2xl opacity-80 text-white p-3 rounded-full shadow-lg hover:bg-gray-900 transition z-50"
+          className="fixed-bottom-right"
         >
-          <MdOutlineKeyboardArrowUp className='text-3xl'/>
+          <MdOutlineKeyboardArrowUp />
         </button>
       )}
     </>
