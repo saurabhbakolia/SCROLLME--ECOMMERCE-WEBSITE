@@ -90,12 +90,15 @@ const Navbar = () => {
                 <Right>
                     {!isAuthenticated && <MenuItem><Link to="/register">REGISTER</Link></MenuItem>}
                     {!isAuthenticated && <MenuItem><Link to="/login">SIGN IN</Link></MenuItem>}
+                  
+                    
                     <MenuItem>
                         <Link to="/cart">
                             <Badge badgecontent={4} color="primary">
                                 <ShoppingCartOutlined />
                             </Badge>
                         </Link>
+                       
                     </MenuItem>
                 </Right>
             </Wrapper>
