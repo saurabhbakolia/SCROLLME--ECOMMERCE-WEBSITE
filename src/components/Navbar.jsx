@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-import { ShoppingCartOutlined } from '@mui/icons-material';
+import { ShoppingCartOutlined, FavoriteBorderOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -154,6 +154,11 @@ const Navbar = () => {
                   </Badge>
                 )}
               </Box>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to='/wishlist'>
+              <FavoriteBorderOutlined />
             </Link>
           </MenuItem>
         </Right>

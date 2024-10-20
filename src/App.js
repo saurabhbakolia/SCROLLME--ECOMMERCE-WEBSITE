@@ -4,16 +4,20 @@ import Product from './pages/Product';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart from './pages/Cart';
+import Wishlist from './pages/Wishlist';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
 import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
-import ForgotPassword from './pages/ForgotPassword';
+import ForgotPassword from './pages/ForgotPassword'; // Import ForgotPassword component
+import useAuthCheck from './hooks/useAuthCheck'; // Import useAuthCheck hook
+
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
 function App() {
+  useAuthCheck();
   return (
     <div className='App'>
       <Routes>
@@ -23,6 +27,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/wishlist'
+          element={
+            <ProtectedRoute>
+              <Wishlist />
             </ProtectedRoute>
           }
         />

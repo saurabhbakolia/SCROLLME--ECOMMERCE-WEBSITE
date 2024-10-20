@@ -23,7 +23,7 @@ export const userSignIn = createAsyncThunk('user/signIn', async (loginData, { re
   }
 });
 
-const userSlice = createSlice({
+const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -95,6 +95,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = userSlice.actions;
+export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = UserSlice.actions;
 
-export default userSlice.reducer;
+export default UserSlice.reducer;

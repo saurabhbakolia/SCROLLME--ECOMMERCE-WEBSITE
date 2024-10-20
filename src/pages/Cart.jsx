@@ -15,6 +15,7 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -304,12 +305,12 @@ const Cart = () => {
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Tax</SummaryItemText>
+              <SummaryItemPrice>$ 30</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Delivery Charges</SummaryItemText>
+              <SummaryItemPrice>$ 20</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type='total'>
               <SummaryItemText>Total</SummaryItemText>
