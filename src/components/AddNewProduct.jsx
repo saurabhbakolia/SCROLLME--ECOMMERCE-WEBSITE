@@ -40,7 +40,11 @@ const AddNewProduct = () => {
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+    if(name === 'length'|| name === 'width' || name === 'height' ) {
+      setProduct({ ...product, 'dimensions': { [name]: value} });
+    } else {
+      setProduct({ ...product, [name]: value });
+    }
   };
 
   const submitForm = async (e) => {
@@ -183,8 +187,8 @@ const AddNewProduct = () => {
             </label>
             <input
               type='number'
-              name='stock'
-              id='stock'
+              name='length'
+              id='length'
               className='form-control'
               value={product.dimensions.length}
               onChange={inputChangeHandler}
@@ -197,8 +201,8 @@ const AddNewProduct = () => {
             </label>
             <input
               type='number'
-              name='stock'
-              id='stock'
+              name='height'
+              id='height'
               className='form-control'
               value={product.dimensions.height}
               onChange={inputChangeHandler}
@@ -211,8 +215,8 @@ const AddNewProduct = () => {
             </label>
             <input
               type='number'
-              name='stock'
-              id='stock'
+              name='width'
+              id='width'
               className='form-control'
               value={product.dimensions.width}
               onChange={inputChangeHandler}
@@ -225,8 +229,8 @@ const AddNewProduct = () => {
             </label>
             <input
               type='string'
-              name='stock'
-              id='stock'
+              name='imageUrl'
+              id='imageUrl'
               className='form-control'
               value={product.imageUrl}
               onChange={inputChangeHandler}
