@@ -14,10 +14,12 @@ import Admin from './components/Admin';
 import UpdateProduct from './components/UpdateProduct'; // Import UpdateProduct
 import AddNewProduct from './components/AddNewProduct';
 
+import useAuthCheck from './hooks/useAuthCheck';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
 function App() {
+  useAuthCheck();
   return (
     <div className='App'>
       <Routes>
