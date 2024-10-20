@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import Newsletter from '../components/Newsletter';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { mobile, tablet } from '../responsive';
+import Navbar from "../components/Navbar";
+import Announcement from "../components/Announcement";
+import Newsletter from "../components/Newsletter";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { mobile } from "../responsive";
 import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 
 const Product = () => {
@@ -17,11 +16,9 @@ const Product = () => {
     const params = useParams();
 
     useEffect(() => {
-        console.log("product id: ", params.productId);
         const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
         setProduct(selectedProduct);
-        console.log("product: ", product);
-    }, [product, params.productId]);
+    }, [params.productId]);
 
     const handleImageClick = () => {
         setModalOpen(true); // Open modal on image click
@@ -31,20 +28,33 @@ const Product = () => {
         setModalOpen(false); // Close modal
     };
 
+    // Prevent background scrolling when modal is open
+    useEffect(() => {
+        if (modalOpen) {
+            document.body.style.overflow = "hidden"; // Disable background scrolling
+        } else {
+            document.body.style.overflow = "auto"; // Enable scrolling again
+        }
+    }, [modalOpen]);
+
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
                 <ImgContainer>
-                    {product && <Image src={product.img} onClick={handleImageClick} />} {/* Add click handler */}
+                    {product && (
+                        <Image
+                            src={product.img}
+                            alt={product.title}
+                            onClick={handleImageClick}
+                        />
+                    )}
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product?.title}</Title>
-                    <Desc>
-                        {product?.desc}
-                    </Desc>
-                    <Price>{product?.price}</Price>
+                    <Desc>{product?.desc}</Desc>
+                    <Price>₹{product?.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
@@ -80,8 +90,8 @@ const Product = () => {
             {modalOpen && (
                 <Modal>
                     <ModalContent>
-                        <CloseButton onClick={closeModal}>X</CloseButton>
-                        <ModalImage src={product.img} />
+                        <CloseButton onClick={closeModal}>✖</CloseButton>
+                        <ModalImage src={product.img} alt={product.title} />
                     </ModalContent>
                 </Modal>
             )}
@@ -91,41 +101,31 @@ const Product = () => {
 
 export default Product;
 
+// Styled Components
 const Container = styled.div``;
 
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    ${mobile({ flexDirection: "column;" })} 
-    ${mobile({ padding: "10px;" })} 
-    ${tablet({ padding: "10px;" })} 
+    ${mobile({ flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
     flex: 1;
-    position: relative; 
-    overflow: hidden; 
 `;
 
 const Image = styled.img`
     width: 100%;
     height: 64vh;
     object-fit: contain;
-    object-position: center;
-    cursor: pointer; /* Change cursor to indicate clickable image */
-    ${mobile({ height: "40vh;" })} 
-    ${tablet({ height: "40vh;" })} 
+    cursor: pointer; /* Change cursor to indicate image is clickable */
+    ${mobile({ height: "40vh" })}
 `;
 
 const InfoContainer = styled.div`
     flex: 1;
     padding: 0px 50px;
-    justify-content: flex-start;
-    align-items: flex-start;
-    ${mobile({ padding: "4px;" })} 
-    text-align: left;
+    ${mobile({ padding: "10px" })}
 `;
 
 const Title = styled.h1`
@@ -215,35 +215,45 @@ const Modal = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%; /* Ensures the modal takes full height of the viewport */
     background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Bring modal to front */
+    z-index: 1000;
+    overflow: hidden; /* Prevents horizontal scrolling */
 `;
 
 const ModalContent = styled.div`
     position: relative;
-    width: 80%; /* Adjust width as needed */
-    max-width: 600px; /* Maximum width for the modal */
+    width: 90%;
+    max-width: 900px; /* Set max-width for the modal content */
+    max-height: 90vh; /* Limit max height to allow scrolling */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 20px; /* Add some padding */
 `;
 
 const CloseButton = styled.button`
-    position: absolute;
-    top: 10px;
-    right: 20px;
+    position: fixed; /* Keep the button fixed */
+    top: 20px; /* Space from the top */
+    right: 20px; /* Space from the right */
     background-color: transparent;
     border: none;
     color: white;
     font-size: 24px;
     cursor: pointer;
+    z-index: 1001; /* Ensure it appears above the modal content */
 `;
 
 const ModalImage = styled.img`
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    width: 100%; /* Set width to 100% to fit within the modal */
+    max-height: 90vh; /* Limit the max height to the viewport height */
+    height: auto; /* Keep height auto to maintain aspect ratio */
+    object-fit: contain; /* Maintain aspect ratio without distortion */
+    transition: transform 0.3s ease; /* Smooth zoom transition */
+    &:hover {
+        transform: scale(1.1); /* Zoom in effect on hover */
+    }
 `;
-
