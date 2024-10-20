@@ -1,0 +1,19 @@
+.fixed-bottom-right {
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+    background-color: #374151; /* Equivalent to bg-gray-700 */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* drop-shadow-2xl */
+    opacity: 0.8;
+    color: white;
+    padding: 1rem; /* Equivalent to p-3 */
+    border-radius: 9999px; /* Equivalent to rounded-full */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-lg */
+    transition: background-color 0.2s ease; /* Equivalent to transition */
+    z-index: 50;
+  }
+  
+  .fixed-bottom-right:hover {
+    background-color: #111827; /* Equivalent to hover:bg-gray-900 */
+  }
+  
