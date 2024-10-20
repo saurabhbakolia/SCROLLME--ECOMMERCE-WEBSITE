@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Announcement from './Announcement'; 
+
 
 const Container = styled.div`
   padding: 20px;
@@ -47,15 +49,15 @@ const Td = styled.td`
 
 const Tr = styled.tr`
   &:nth-child(even) {
-    background-color: #e0e0e0; 
+    background-color: #e0e0e0;
   }
 
   &:nth-child(odd) {
-    background-color: #f5f5f5; 
+    background-color: #f5f5f5;
   }
 
   &:hover {
-    background-color: #cccccc; 
+    background-color: #cccccc;
   }
 `;
 
@@ -86,14 +88,14 @@ const AddButton = styled(Button)`
 `;
 
 const Admin = () => {
-  const URI = "http://localhost:8080"; 
+  const URI = 'http://localhost:8080';
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${URI}/api/product/list`); 
+        const response = await axios.get(`${URI}/api/product/list`);
         setProducts(response.data.products);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -125,8 +127,12 @@ const Admin = () => {
   };
 
   return (
+    <>
+
+    <Announcement />
+    <Navbar />
     <Container>
-      <Navbar />
+     
       <br />
       <h1>Admin Panel - Manage Products</h1>
       <AddButton onClick={handleAddNewProduct}>Add New Product</AddButton>
@@ -172,6 +178,7 @@ const Admin = () => {
         </Table>
       </TableContainer>
     </Container>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import './UpdateProduct.css';
 import toast from 'react-hot-toast';
 
 import Navbar from '../components/Navbar';
+import Announcement from './Announcement'; 
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -54,7 +55,7 @@ const UpdateProduct = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    const URI = "http://localhost:8080"; 
+    const URI = 'http://localhost:8080';
     await axios
       .put(`${URI}/api/product/update/${id}`, product)
       .then((response) => {
@@ -68,8 +69,12 @@ const UpdateProduct = () => {
   };
 
   return (
+    <>
+
+    <Announcement />
+      <Navbar />
     <div className='container mt-5'>
-       <Navbar />
+      
       <br></br>
       <br></br>
       <div className='form-container shadow p-4'>
@@ -243,6 +248,7 @@ const UpdateProduct = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

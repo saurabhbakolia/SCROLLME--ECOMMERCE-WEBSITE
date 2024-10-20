@@ -7,6 +7,7 @@ import './AddNewProduct.css';
 import toast from 'react-hot-toast';
 
 import Navbar from '../components/Navbar';
+import Announcement from './Announcement'; 
 
 const AddNewProduct = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const AddNewProduct = () => {
       numberOfReviews: 0,
     },
   };
-  const URI = "http://localhost:8080"; 
+  const URI = 'http://localhost:8080';
   const [product, setProduct] = useState(initialProduct);
 
   const inputChangeHandler = (e) => {
@@ -58,12 +59,16 @@ const AddNewProduct = () => {
   };
 
   return (
-    <div className='container mt-5'>
-       <Navbar  />
+    <>
 
-       <br></br>
-       <br></br>
-        
+    <Announcement />
+      <Navbar />
+    <div className='container mt-5'>
+      
+
+      <br></br>
+      <br></br>
+
       <div className='form-container shadow p-4'>
         <h1 className='text-center mb-4'>ADD NEW PRODUCT</h1>
         {errorMessage && <div className='alert alert-danger'>{errorMessage}</div>}
@@ -235,6 +240,7 @@ const AddNewProduct = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

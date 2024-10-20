@@ -6,7 +6,6 @@ body {
   background-color: #f0f2f5;
 }
 
-
 .AddNewProduct-form-container {
   background: linear-gradient(to bottom right, #ffffff, #e7f1ff);
   border-radius: 15px;
@@ -71,4 +70,3 @@ body {
     width: 100%;
   }
 }
-
