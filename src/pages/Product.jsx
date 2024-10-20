@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import Newsletter from '../components/Newsletter';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { mobile, tablet } from '../responsive';
+import Navbar from "../components/Navbar";
+import Announcement from "../components/Announcement";
+import Newsletter from "../components/Newsletter";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { mobile } from "../responsive";
 import { useParams } from "react-router-dom";
 import { allProducts } from "../data";
 import { useEffect, useState } from "react";
@@ -13,9 +13,6 @@ import Footer from "../components/Footer";
 const Product = () => {
     const [product, setProduct] = useState();
     const [modalOpen, setModalOpen] = useState(false); // State for modal visibility
-    const [isRotating, setIsRotating] = useState(false); // State for image rotation
-    const [rotation, setRotation] = useState(0); // State for rotation angle
-    const [imageSize, setImageSize] = useState({ width: 0, height: 0 }); // State for image size
     const params = useParams();
 
     useEffect(() => {
@@ -23,36 +20,22 @@ const Product = () => {
         setProduct(selectedProduct);
     }, [params.productId]);
 
-    // Function to handle image load
-    const handleImageLoad = (event) => {
-        const { naturalWidth, naturalHeight } = event.target;
-        setImageSize({ width: naturalWidth, height: naturalHeight }); // Update image size
-    };
-
     const handleImageClick = () => {
         setModalOpen(true); // Open modal on image click
     };
 
-    const handleMouseMove = (event) => {
-        if (isRotating) {
-            const { clientX } = event;
-            const width = imageSize.width; // Get the width of the image
-            const center = width / 2;
-            const deltaX = clientX - center; // Distance from center
-            const rotationAngle = (deltaX / center) * 180; // Adjust the multiplier for sensitivity
-            setRotation(rotationAngle);
-        }
-    };
-
     const closeModal = () => {
         setModalOpen(false); // Close modal
-        setRotation(0); // Reset rotation when modal is closed
     };
 
-    // Function to handle slider change
-    const handleSliderChange = (event) => {
-        setRotation(event.target.value); // Update rotation based on slider value
-    };
+    // Prevent background scrolling when modal is open
+    useEffect(() => {
+        if (modalOpen) {
+            document.body.style.overflow = "hidden"; // Disable background scrolling
+        } else {
+            document.body.style.overflow = "auto"; // Enable scrolling again
+        }
+    }, [modalOpen]);
 
     return (
         <Container>
@@ -63,16 +46,15 @@ const Product = () => {
                     {product && (
                         <Image
                             src={product.img}
+                            alt={product.title}
                             onClick={handleImageClick}
-                            onLoad={handleImageLoad}
-                            style={{ transform: `rotateY(${rotation}deg)` }}
                         />
                     )}
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product?.title}</Title>
                     <Desc>{product?.desc}</Desc>
-                    <Price>{product?.price}</Price>
+                    <Price>₹{product?.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
@@ -106,21 +88,10 @@ const Product = () => {
 
             {/* Modal for enlarged image */}
             {modalOpen && (
-                <Modal onMouseMove={handleMouseMove} onMouseLeave={() => setIsRotating(false)}>
+                <Modal>
                     <ModalContent>
                         <CloseButton onClick={closeModal}>✖</CloseButton>
-                        <ModalImage
-                            src={product.img}
-                            onMouseEnter={() => setIsRotating(true)} // Start rotation on mouse enter
-                            style={{ transform: `rotateY(${rotation}deg)` }}
-                        />
-                        <RotationSlider
-                            type="range"
-                            min="-180"
-                            max="180"
-                            value={rotation}
-                            onChange={handleSliderChange}
-                        />
+                        <ModalImage src={product.img} alt={product.title} />
                     </ModalContent>
                 </Modal>
             )}
@@ -136,36 +107,25 @@ const Container = styled.div``;
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    ${mobile({ flexDirection: "column;" })} 
-    ${mobile({ padding: "10px;" })} 
-    ${tablet({ padding: "10px;" })} 
+    ${mobile({ flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
     flex: 1;
-    position: relative; 
-    overflow: hidden; 
 `;
 
 const Image = styled.img`
     width: 100%;
     height: 64vh;
     object-fit: contain;
-    object-position: center;
-    cursor: pointer; /* Change cursor to indicate clickable image */
-    ${mobile({ height: "40vh;" })} 
-    ${tablet({ height: "40vh;" })} 
+    cursor: pointer; /* Change cursor to indicate image is clickable */
+    ${mobile({ height: "40vh" })}
 `;
 
 const InfoContainer = styled.div`
     flex: 1;
     padding: 0px 50px;
-    justify-content: flex-start;
-    align-items: flex-start;
-    ${mobile({ padding: "4px;" })} 
-    text-align: left;
+    ${mobile({ padding: "10px" })}
 `;
 
 const Title = styled.h1`
@@ -255,47 +215,43 @@ const Modal = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%; /* Ensures the modal takes full height of the viewport */
     background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Bring modal to front */
+    z-index: 1000;
+    overflow: hidden; /* Prevents horizontal scrolling */
 `;
 
 const ModalContent = styled.div`
     position: relative;
-    width: 90%; /* Adjust width as needed */
-    max-width: 600px; /* Maximum width for the modal */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    width: 90%;
+    max-width: 900px; /* Set max-width for the modal content */
+    max-height: 90vh; /* Limit max height to allow scrolling */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 `;
 
 const CloseButton = styled.button`
-    position: absolute;
+    position: fixed;
     top: 10px;
-    right: 20px;
+    right: 10px;
     background-color: transparent;
     border: none;
     color: white;
     font-size: 24px;
     cursor: pointer;
-    z-index: 1001; /* Ensure button is on top */
 `;
 
 const ModalImage = styled.img`
-    width: 100%;
-    height: auto;
-    max-height: 70vh; /* Maximum height for the image */
-    object-fit: contain;
-    margin-bottom: 10px; /* Space between image and slider */
-`;
-
-// Rotation Slider
-const RotationSlider = styled.input`
-    width: 100%;
-    margin-top: 10px;
-    cursor: pointer; /* Change cursor for the slider */
+    width: 100%; /* Set width to 100% to fit within the modal */
+    height: auto; /* Keep height auto to maintain aspect ratio */
+    max-height: none; /* Remove the restriction on max-height to allow full size */
+    object-fit: contain; /* Maintain aspect ratio without distortion */
+    transition: transform 0.3s ease; /* Smooth zoom transition */
+    &:hover {
+        transform: scale(1.1); /* Zoom in effect on hover */
+    }
 `;
