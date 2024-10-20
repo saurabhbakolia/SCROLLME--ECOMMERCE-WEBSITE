@@ -6,14 +6,13 @@ import { createFetchOptions, HttpMethod } from '../../utils/apiConfig';
 export const addToCartAPI = async (cartData) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    withCredentials: true
+    withCredentials: true,
   };
   return await axios
     .post(CART_ENDPOINTS.ADD_TO_CART, cartData, config)
     .then((response) => {
-      console.log("response", response);
       return Promise.resolve(response.data);
     })
     .catch((error) => {
@@ -36,14 +35,10 @@ export const viewCartAPI = async () => {
 };
 
 // Function to update an item quantity in the cart
-export const updateCartItemAPI = async (cartItemData) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
+export const updateCartItemAPI = async (data) => {
+  const config = createFetchOptions(HttpMethod.PUT, true);
   return await axios
-    .put(CART_ENDPOINTS.UPDATE_CART_ITEM, cartItemData, config)
+    .put(CART_ENDPOINTS.UPDATE_CART_ITEM, data, config)
     .then((response) => {
       return Promise.resolve(response.data);
     })
@@ -57,7 +52,6 @@ export const updateCartItemAPI = async (cartItemData) => {
 export const deleteCartItemAPI = async (data) => {
   const config = createFetchOptions(HttpMethod.DELETE, true);
   config.data = data;
-  console.log("config", config);
   return await axios
     .delete(CART_ENDPOINTS.DELETE_CART_ITEM, config)
     .then((response) => {

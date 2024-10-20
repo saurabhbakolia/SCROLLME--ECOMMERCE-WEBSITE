@@ -5,8 +5,8 @@ import { PRODUCT_ENDPOINTS } from '../../api/endPoints'; // Adjust the path as n
 export const addProductAPI = async (productData) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
   return await axios
     .post(PRODUCT_ENDPOINTS.ADD_PRODUCT, productData, config)
@@ -23,7 +23,7 @@ export const addProductAPI = async (productData) => {
 export const listProductsAPI = async (page = 1, limit = 40) => {
   return await axios
     .get(PRODUCT_ENDPOINTS.LIST_PRODUCTS, {
-      params: { page, limit }
+      params: { page, limit },
     })
     .then((response) => {
       return Promise.resolve(response.data);
@@ -51,8 +51,8 @@ export const getProductByIdAPI = async (productId) => {
 export const updateProductAPI = async (productId, productData) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
   return await axios
     .put(PRODUCT_ENDPOINTS.UPDATE_PRODUCT(productId), productData, config)

@@ -1,14 +1,16 @@
 import './App.css';
-import Home from './pages/Home.jsx';
+import Home from './pages/Home';
 import Product from './pages/Product';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Cart from './pages/Cart';
+import Wishlist from './pages/Wishlist';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
+import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
-import useAuthCheck from './hooks/useAuthCheck.js';
+import useAuthCheck from './hooks/useAuthCheck';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
@@ -27,11 +29,27 @@ function App() {
           }
         />
         <Route
+          path='/wishlist'
+          element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path='/products'
           element={
             <Suspense fallback='Loading...'>
               <LazyAllProducts />
             </Suspense>
+          }
+        />
+        <Route
+          path='/wishlist'
+          element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
           }
         />
         <Route
@@ -42,6 +60,7 @@ function App() {
             </Suspense>
           }
         />
+        <Route path='/contributors' element={<ContributorsPage />} />
         <Route path='/:categorySlug/:productId' element={<Product />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />

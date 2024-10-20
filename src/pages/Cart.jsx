@@ -4,18 +4,18 @@ import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from "react";
+import { useState } from 'react';
 import { Text } from '../styles/Text';
 import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
-import { useToast } from '@chakra-ui/react';
-import { deleteCartItem, viewCart } from '../store/slices/cartSlice';
-
+import { Box, useToast } from '@chakra-ui/react';
+import { deleteCartItem, updateCartItem } from '../store/slices/cartSlice';
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -203,26 +203,31 @@ const Cart = () => {
   const toast = useToast();
   const dispatch = useDispatch();
 
-  console.log("cartItems: ", cartItems);
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const cartData = await viewCart();
-        console.log("cartData", cartData);
-        // setCartItems(cartData);
-        // setLoading(false);
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-        // setLoading(false);
-      }
-    };
-    fetchCartItems();
-  }, []);
-
-  const handleQuantityChange = (productId, newQuantity) => {
-    console.log(`Updated product ${productId} to quantity ${newQuantity}`);
-    // Add logic to update the product quantity in the store
+  const handleQuantityChange = (productId, quantity) => {
+    dispatch(updateCartItem({ productId, quantity }))
+      .unwrap()
+      .then(() => {
+        toast({
+          position: 'bottom-right',
+          render: () => (
+            <Box color='white' p={1} bg='teal.500' borderRadius='xs'>
+              Quantity updated!
+            </Box>
+          ),
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        toast({
+          position: 'bottom-right',
+          status: 'error',
+          render: () => (
+            <Box color='white' p={3} bg='red.500'>
+              Error while updated quantity!
+            </Box>
+          ),
+        });
+      });
   };
   const handleRemoveFromCart = (productId) => {
     console.log(`Removing ${productId} from cart`);
@@ -285,10 +290,8 @@ const Cart = () => {
                       onSaveForLater={() => handleSaveForLater(item.productId)}
                     />
                   </Details>
-
                 </ProductDetail>
                 <PriceDetail>
-
                   <ProductPrice>$ {item.price}</ProductPrice>
                 </PriceDetail>
               </Product>
@@ -302,12 +305,12 @@ const Cart = () => {
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Tax</SummaryItemText>
+              <SummaryItemPrice>$ 30</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Delivery Charges</SummaryItemText>
+              <SummaryItemPrice>$ 20</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type='total'>
               <SummaryItemText>Total</SummaryItemText>
@@ -323,7 +326,6 @@ const Cart = () => {
 };
 
 export default Cart;
-
 
 const ContainerWrapper = styled.div`
   display: flex;
@@ -390,9 +392,7 @@ const CartItemActions = ({ initialQuantity, onChange, onRemove, onSaveForLater }
           –
         </IconButton>
         <Text>{quantity}</Text>
-        <IconButton onClick={handleIncrement}>
-          +
-        </IconButton>
+        <IconButton onClick={handleIncrement}>+</IconButton>
       </Controls>
       <Actions>
         <span onClick={onRemove}>Remove</span>

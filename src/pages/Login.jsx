@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { UserSignInAPI } from '../services/userAPI/signInAPI'; // Ensure this is defined
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { changeAuthenticated } from '../store/slices/userSlice';
+import { changeAuthenticated, userSignIn } from '../store/slices/userSlice';
 import { mobile, tablet } from '../responsive';
 import { useToast } from '@chakra-ui/react';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; // Import user creation method
-import { auth } from '../context/Firebase'; // Update import
-import { FaGoogle } from 'react-icons/fa'; // Add this import
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../context/Firebase';
+import { FaGoogle } from 'react-icons/fa';
+import Logo from '../components/Logo';
 
 const Container = styled.div`
   width: 100vw;
@@ -78,29 +78,33 @@ const Login = () => {
     e.preventDefault();
     const loginData = {
       username: e.target.username.value,
-      password: e.target.password.value
+      password: e.target.password.value,
     };
-    try {
-      const response = await UserSignInAPI(loginData); // Ensure this is defined
-      toast({
-        title: 'Login Successful',
-        description: response.message || 'You have successfully logged in. Welcome back!',
-        status: 'success',
-        duration: 5000,
-        isClosable: true
+    // const response = await UserSignInAPI(loginData);
+    dispatch(userSignIn(loginData))
+      .unwrap()
+      .then((response) => {
+        toast({
+          title: 'Login Successful',
+          description: response.message || 'You have successfully logged in. Welcome back!',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        dispatch(changeAuthenticated(true));
+        console.log('Redirecting to /');
+        navigate('/');
+      })
+      .catch((error) => {
+        toast({
+          title: 'Login Failed!',
+          description: 'Invalid credentials, please try again.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+        console.log(error);
       });
-      dispatch(changeAuthenticated(true));
-      navigate('/');
-    } catch (error) {
-      toast({
-        title: 'Login Failed!',
-        description: 'Invalid credentials, please try again.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true
-      });
-      console.log(error);
-    }
   };
 
   const handleGoogleLogin = async () => {
@@ -112,7 +116,7 @@ const Login = () => {
         description: `Welcome ${user.displayName}!`,
         status: 'success',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       dispatch(changeAuthenticated(true));
       navigate('/');
@@ -122,7 +126,7 @@ const Login = () => {
         description: 'Please try again later.',
         status: 'error',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       console.log(error);
     }
@@ -131,6 +135,11 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+          {' '}
+          <Logo />{' '}
+        </div>
+        <br />
         <Title>SIGN IN</Title>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Input placeholder='username' name='username' type='text' required />

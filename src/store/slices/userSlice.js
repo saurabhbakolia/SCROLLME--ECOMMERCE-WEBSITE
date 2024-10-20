@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { UserSignInAPI } from '../../services/userAPI/signInAPI';
 
 const initialState = {
   id: null,
@@ -6,19 +7,23 @@ const initialState = {
   lastName: '',
   email: '',
   name: '',
-  avatar: '',
-  bio: '',
   isAuthenticated: false,
   roles: [],
-  token: '',
-  sessionExpiry: null,
-  refreshToken: '',
   isFetching: false,
   error: null,
-  theme: 'light',
-  lastLogin: null
 };
-const userSlice = createSlice({
+
+// Thunk for userSignIn
+export const userSignIn = createAsyncThunk('user/signIn', async (loginData, { rejectWithValue }) => {
+  try {
+    const response = await UserSignInAPI(loginData);
+    return response;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -55,10 +60,41 @@ const userSlice = createSlice({
     },
     changeAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
-    }
-  }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(userSignIn.pending, (state) => {
+        state.isFetching = true;
+        state.error = null;
+      })
+      .addCase(userSignIn.fulfilled, (state, action) => {
+        const payload = action.payload;
+        state.id = payload.user.id;
+        const firstName = payload.user.firstName;
+        const lastName = payload.user.lastName;
+        state.firstName = firstName;
+        state.lastName = lastName;
+        state.email = payload.user.email;
+        state.name = `${firstName} ${lastName}`;
+        state.roles = payload.user.roles;
+        state.isAuthenticated = true;
+        state.isFetching = false;
+      })
+      .addCase(userSignIn.rejected, (state, action) => {
+        state.isFetching = false;
+        state.isAuthenticated = false;
+        state.id = null;
+        state.firstName = '';
+        state.lastName = '';
+        state.email = '';
+        state.name = '';
+        state.roles = [];
+        state.error = action.payload;
+      });
+  },
 });
 
-export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = userSlice.actions;
+export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = UserSlice.actions;
 
-export default userSlice.reducer;
+export default UserSlice.reducer;

@@ -1,10 +1,9 @@
 // hooks/useAuthCheck.js
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { changeAuthenticated } from '../store/slices/userSlice';
-import { API_BASE_URL } from '../api/endPoints';
 import { useNavigate } from 'react-router-dom';
+import { checkAuthStatusAPI } from '../services/auth/authService';
 
 const useAuthCheck = () => {
   const dispatch = useDispatch();
@@ -13,40 +12,41 @@ const useAuthCheck = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/auth/check`, {
-          withCredentials: true,
-        });
-        let isAuthenticated = false;
-        if(response.status === 200 && response.data.message === "Authenticated"){
-          isAuthenticated = true;
-        }
-        dispatch(changeAuthenticated(isAuthenticated));
+        const response = await checkAuthStatusAPI();
+        console.log('auth status response', response);
 
-        if (!isAuthenticated && isAuthenticated !== undefined) {
-          navigate('/login');
+        let isAuthenticated = false;
+        if (response.status === 200 && response.data.message === 'Authenticated') {
+          // User is authenticated, do nothing.
+          return;
+        } else {
+          if (isAuthenticated) {
+            dispatch(changeAuthenticated(false));
+            navigate('/login');
+          }
         }
       } catch (error) {
-        console.error('Error checking auth status:', error);
-
-        // Handle token expiration or server errors
-        if (error.response && error.response.status === 401) {
-          // Token expired or invalid
-          dispatch(changeAuthenticated(false));
-          navigate('/login');
+        // Handle different types of errors more safely
+        if (error.response) {
+          // Error response from server
+          if (error.response.status === 401) {
+            dispatch(changeAuthenticated(false));
+            navigate('/login');
+          }
+        } else if (error.request) {
+          // No response was received from the server (e.g., network error)
+          console.error('Network error:', error.request);
         } else {
-          // General error handling
-          dispatch(changeAuthenticated(false));
+          // Error occurred during setup (e.g., bad configuration)
+          console.error('Error in request setup:', error.message);
         }
+        // In any case, mark as not authenticated
+        dispatch(changeAuthenticated(false));
       }
     };
 
-    // Check auth status on component mount
     checkAuthStatus();
-
-    // Set up an interval to check auth status every 2 minutes (120,000 ms)
-    const intervalId = setInterval(checkAuthStatus, 120000);
-
-    // Clear the interval when the component unmounts
+    const intervalId = setInterval(checkAuthStatus, 120000); // Check every 2 minutes
     return () => clearInterval(intervalId);
   }, [dispatch, navigate]);
 };

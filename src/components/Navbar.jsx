@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-import { ShoppingCartOutlined } from '@mui/icons-material';
+import { ShoppingCartOutlined, FavoriteBorderOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import { AUTH_ENDPOINTS } from '../api/endPoints';
 import axios from 'axios';
 import { logOut } from '../store/slices/userSlice';
 import { Badge } from '@chakra-ui/react';
+import Logo from '../components/Logo';
 
 const Container = styled.div`
   height: 60px;
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
     padding: '10px 10px',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
   })}
 `;
 
@@ -60,10 +61,6 @@ const Center = styled.div`
   text-align: center;
 `;
 
-const Logo = styled.h1`
-  font-weight: bold;
-  ${mobile({ fontSize: '24px;' })}
-`;
 const Right = styled.div`
   flex: 1;
   display: flex;
@@ -90,7 +87,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
-        withCredentials: true // Include cookies in the request
+        withCredentials: true, // Include cookies in the request
       });
 
       if (res.status === 200) {
@@ -99,7 +96,7 @@ const Navbar = () => {
           description: res.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
-          isClosable: true
+          isClosable: true,
         });
         dispatch(logOut());
         navigate('/');
@@ -111,7 +108,7 @@ const Navbar = () => {
         description: error || 'Something went wrong logging out!',
         status: 'error',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
     }
   };
@@ -122,16 +119,15 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input />
+            <Input placeholder='Search' />
             <SearchIcon style={{ color: 'gray', fontSize: 16 }} />
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>
-            <Link to='/'>
-              SCROLL<span style={{ color: 'teal' }}>ME</span>
-            </Link>
-          </Logo>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+            {' '}
+            <Logo />{' '}
+          </div>
         </Center>
         <Right>
           <MenuItem>
@@ -150,21 +146,19 @@ const Navbar = () => {
           {isAuthenticated && <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>}
           <MenuItem>
             <Link to='/cart'>
-                <Box position="relative">
+              <Box position='relative'>
                 <ShoppingCartOutlined />
                 {totalQuantity > 0 && (
-                  <Badge
-                    colorScheme="teal"
-                    borderRadius="full"
-                    position="absolute"
-                    top="-5px"  
-                    right="-10px"
-                    fontSize="0.8em"
-                  >
+                  <Badge colorScheme='teal' borderRadius='full' position='absolute' top='-5px' right='-10px' fontSize='0.8em'>
                     {totalQuantity}
                   </Badge>
                 )}
               </Box>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to='/wishlist'>
+              <FavoriteBorderOutlined />
             </Link>
           </MenuItem>
         </Right>

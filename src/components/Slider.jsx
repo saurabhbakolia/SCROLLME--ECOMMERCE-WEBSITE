@@ -73,7 +73,7 @@ const InfoContainer = styled.div`
   ${tablet({
     padding: '10px',
     textAlign: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   })}
   ${mobile({ padding: '5px', justifyContent: 'flex-start' })}
 `;
@@ -107,7 +107,7 @@ const ButtonContainer = styled.div`
   ${mobile({
     position: 'absolute',
     top: '20px',
-    right: '20px'
+    right: '20px',
   })}
 `;
 

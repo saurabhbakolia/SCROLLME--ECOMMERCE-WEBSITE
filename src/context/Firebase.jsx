@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: 'scrollme-40ba6',
   storageBucket: 'scrollme-40ba6.appspot.com',
   messagingSenderId: '748771881750',
-  appId: '1:748771881750:web:2cb97bb2c7b7468a7c1637'
+  appId: '1:748771881750:web:2cb97bb2c7b7468a7c1637',
 };
 
 // Initialize Firebase

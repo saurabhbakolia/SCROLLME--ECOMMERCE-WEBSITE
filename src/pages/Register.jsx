@@ -8,10 +8,10 @@ import { Triangle } from 'react-loader-spinner';
 import { mobile, tablet } from '../responsive';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useToast } from '@chakra-ui/react';
-
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; // Import user creation method
-import { auth } from '../context/Firebase'; // Update import
-import { FaGoogle } from 'react-icons/fa'; // Add this import
+import Logo from '../components/Logo';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../context/Firebase';
+import { FaGoogle } from 'react-icons/fa';
 
 const LoaderOverlay = styled.div`
   position: absolute;
@@ -127,7 +127,7 @@ const Register = () => {
         description: 'First name must be at least 2 characters long and contain only letters.',
         status: 'warning',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       return false;
     }
@@ -140,7 +140,7 @@ const Register = () => {
         description: 'Last name must be at least 2 characters long and contain only letters.',
         status: 'warning',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       return false;
     }
@@ -151,7 +151,7 @@ const Register = () => {
         description: 'Username must be at least 2 characters long.',
         status: 'warning',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       return false;
     }
@@ -167,7 +167,7 @@ const Register = () => {
         description: 'Password must be at least 8 characters long, contain at least one digit and one special character.',
         status: 'warning',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       return false;
     }
@@ -184,7 +184,7 @@ const Register = () => {
         description: `Welcome ${user.displayName}!`,
         status: 'success',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       dispatch(changeAuthenticated(true));
       navigate('/');
@@ -194,7 +194,7 @@ const Register = () => {
         description: 'Please try again later.',
         status: 'error',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       console.log(error);
     }
@@ -209,7 +209,7 @@ const Register = () => {
       username: e.target.username.value,
       email: e.target.email.value,
       password: e.target.password.value,
-      confirmPassword: e.target.confirmPassword.value
+      confirmPassword: e.target.confirmPassword.value,
     };
 
     if (formData.password !== formData.confirmPassword) {
@@ -218,7 +218,7 @@ const Register = () => {
         description: 'Passwords do not match, change the password!.',
         status: 'warning',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
       setIsLoading(false);
       return;
@@ -237,7 +237,7 @@ const Register = () => {
         description: res.message || 'You have successfully registered. Welcome!',
         status: 'success',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
     } catch (error) {
       console.error(error);
@@ -246,7 +246,7 @@ const Register = () => {
         description: error || 'An error occurred during registration.',
         status: 'error',
         duration: 5000,
-        isClosable: true
+        isClosable: true,
       });
     } finally {
       setTimeout(() => {
@@ -268,6 +268,11 @@ const Register = () => {
       )}
       <Container>
         <Wrapper>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+            {' '}
+            <Logo />{' '}
+          </div>
+          <br />
           <Title>CREATE AN ACCOUNT</Title>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Input type='text' name='firstName' placeholder='first name' required />

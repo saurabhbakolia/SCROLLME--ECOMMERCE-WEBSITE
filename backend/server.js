@@ -5,7 +5,7 @@ const authRoutes = require("./api/routes/authRoute");
 const cartRoute = require("./api/routes/cartRoute");
 const productRoute = require("./api/routes/productRoute");
 const userRoute = require("./api/routes/userRoute");
-const authCheckStatusRoute = require("./api/routes/authCheckStatusRoute");
+const authStatusRoute = require("./api/routes/authStatusRoute");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
@@ -38,7 +38,7 @@ app.use("/api/auth", authRoutes); // Authentication routes
 app.use("/api/cart", authMiddleware, cartRoute); // Cart routes
 app.use("/api/product", productRoute); // Product routes
 app.use("/api/user", userRoute); // user routes
-app.use("/api/auth", authCheckStatusRoute); // Check Auth Status
+app.use("/api/auth", authStatusRoute); // Check Auth Status
 
 
 // // Rate limiting middleware
