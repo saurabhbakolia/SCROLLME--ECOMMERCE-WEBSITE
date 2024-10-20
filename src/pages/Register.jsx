@@ -72,7 +72,7 @@ const Input = styled.input`
   margin: 20px 10px 0px 0px;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 `;
