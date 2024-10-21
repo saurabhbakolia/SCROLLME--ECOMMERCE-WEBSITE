@@ -1,375 +1,259 @@
-import styled from 'styled-components';
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import Newsletter from '../components/Newsletter';
-import { mobile, tablet } from '../responsive';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Footer from '../components/Footer';
-import { getProductByIdAPI } from '../services/products/productService';
-import { renderStars } from '../components/ProductCard';
-import { capitalizeFirstChar } from '../utils/stringUtils';
-import { Box, ButtonSpinner, Text } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/react';
-import { addToCart } from '../store/slices/cartSlice';
-import { useDispatch } from 'react-redux';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useSelector } from 'react-redux';
-import { addToWishlist, removeFromWishlist } from '../store/slices/wishlistSlice';
+import styled from "styled-components";
+import Navbar from "../components/Navbar";
+import Announcement from "../components/Announcement";
+import Newsletter from "../components/Newsletter";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { mobile } from "../responsive";
+import { useParams } from "react-router-dom";
+import { allProducts } from "../data";
+import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
 
 const Product = () => {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { productId } = useParams();
-  const toast = useToast();
-  const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist?.items);
-  const isInWishlist = wishlist?.includes(product?._id);
+    const [product, setProduct] = useState();
+    const [modalOpen, setModalOpen] = useState(false); // State for modal visibility
+    const params = useParams();
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const selectedProduct = await getProductByIdAPI(productId);
+    useEffect(() => {
+        const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
         setProduct(selectedProduct);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
+    }, [params.productId]);
+
+    const handleImageClick = () => {
+        setModalOpen(true); // Open modal on image click
     };
-    fetchProduct();
-  }, [productId]);
 
-  const handleAddToCart = async () => {
-    try {
-      console.log('product', product);
-      const itemToAdd = {
-        productId: product._id,
-        name: product.name,
-        price: product.price,
-        image: product.imageUrl,
-        brand: product.brand,
-        category: product.category,
-        quantity: 1,
-      };
-      const result = await dispatch(addToCart(itemToAdd)).unwrap();
-      if (result.response) {
-        toast({
-          title: 'Product added to cart.',
-          description: 'You can view your cart to proceed.',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-    } catch (err) {
-      toast({
-        title: 'Error adding product to cart.',
-        description: err.message || 'Something went wrong.',
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  };
+    const closeModal = () => {
+        setModalOpen(false); // Close modal
+    };
 
-  const getDetailHeading = (detailItem) => {
-    switch (detailItem) {
-      case 'material':
-        return capitalizeFirstChar('material');
-      case 'brand':
-        return `${capitalizeFirstChar('brand')} Name`;
-      case 'weight':
-        return capitalizeFirstChar('weight');
-      case 'category':
-        return `${capitalizeFirstChar('category')} Name`;
-      default:
-        return null;
-    }
-  };
+    // Prevent background scrolling when modal is open
+    useEffect(() => {
+        if (modalOpen) {
+            document.body.style.overflow = "hidden"; // Disable background scrolling
+        } else {
+            document.body.style.overflow = "auto"; // Enable scrolling again
+        }
+    }, [modalOpen]);
 
-  const renderProductDetails = () => {
-    const productDetailItems = ['material', 'brand', 'weight', 'category'];
-
-    return productDetailItems.map((d) => {
-      return (
-        <DetailContainer key={d}>
-          {' '}
-          {/* Add a unique key for each item */}
-          <ProductDetailInfo>{getDetailHeading(d)}</ProductDetailInfo>
-          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo> {/* Use bracket notation to access dynamic properties */}
-        </DetailContainer>
-      );
-    });
-  };
-
-  const handleWishlistToggle = () => {
-    if (isInWishlist) {
-      dispatch(removeFromWishlist(product._id));
-    } else {
-      dispatch(addToWishlist(product._id));
-    }
-  };
-
-  if (loading) {
     return (
-      <Box display='flex' justifyContent='center' alignItems='center' height='100vh'>
-        <ButtonSpinner size='xl' />
-      </Box>
-    );
-  }
+        <Container>
+            <Navbar />
+            <Announcement />
+            <Wrapper>
+                <ImgContainer>
+                    {product && (
+                        <Image
+                            src={product.img}
+                            alt={product.title}
+                            onClick={handleImageClick}
+                        />
+                    )}
+                </ImgContainer>
+                <InfoContainer>
+                    <Title>{product?.title}</Title>
+                    <Desc>{product?.desc}</Desc>
+                    <Price>₹{product?.price}</Price>
+                    <FilterContainer>
+                        <Filter>
+                            <FilterTitle>Color</FilterTitle>
+                            <FilterColor color="black" />
+                            <FilterColor color="darkblue" />
+                            <FilterColor color="gray" />
+                        </Filter>
+                        <Filter>
+                            <FilterTitle>Size</FilterTitle>
+                            <FilterSize>
+                                <FilterSizeOption>XS</FilterSizeOption>
+                                <FilterSizeOption>S</FilterSizeOption>
+                                <FilterSizeOption>M</FilterSizeOption>
+                                <FilterSizeOption>L</FilterSizeOption>
+                                <FilterSizeOption>XL</FilterSizeOption>
+                            </FilterSize>
+                        </Filter>
+                    </FilterContainer>
+                    <AddContainer>
+                        <AmountContainer>
+                            <RemoveIcon />
+                            <Amount>1</Amount>
+                            <AddIcon />
+                        </AmountContainer>
+                        <Button>ADD TO CART</Button>
+                    </AddContainer>
+                </InfoContainer>
+            </Wrapper>
+            <Newsletter />
+            <Footer />
 
-  if (error) {
-    return (
-      <Box display='flex' justifyContent='center' alignItems='center' height='100vh'>
-        <Text color='red.500' fontSize='xl'>
-          {error}
-        </Text>
-      </Box>
+            {/* Modal for enlarged image */}
+            {modalOpen && (
+                <Modal>
+                    <ModalContent>
+                        <CloseButton onClick={closeModal}>✖</CloseButton>
+                        <ModalImage src={product.img} alt={product.title} />
+                    </ModalContent>
+                </Modal>
+            )}
+        </Container>
     );
-  }
-  return (
-    <Container>
-      <Navbar />
-      <Announcement />
-      <Wrapper>
-        <ImgContainer>{product && <Image src={product?.imageUrl} />}</ImgContainer>
-        <InfoContainer>
-          <Flex>
-            <Title>{product?.name}</Title>
-            <HeartIcon isInWishlist={isInWishlist} onClick={handleWishlistToggle}>
-              {isInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
-            </HeartIcon>
-          </Flex>
-          <ProductRating>
-            <AverageRating>{product?.ratings?.averageRating}</AverageRating>
-            <ProductStar>{renderStars(product?.ratings.averageRating)}</ProductStar>
-            <ProductReview>{product?.ratings.numberOfReviews} reviews</ProductReview>
-          </ProductRating>
-          <Desc>{product?.description}</Desc>
-          <Price>$ {product?.price}</Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color='black' />
-              <FilterColor color='darkblue' />
-              <FilterColor color='gray' />
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <ActionButtons>
-              <Button onClick={handleAddToCart}>ADD TO CART</Button>
-              <Button>BUY NOW</Button>
-            </ActionButtons>
-          </AddContainer>
-          <ProductDetails>
-            <ProductDetailTitle>Product details</ProductDetailTitle>
-            {renderProductDetails()}
-          </ProductDetails>
-        </InfoContainer>
-      </Wrapper>
-      <Newsletter />
-      <Footer />
-    </Container>
-  );
 };
 
 export default Product;
 
+// Styled Components
 const Container = styled.div``;
 
-const Flex = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 6px;
-`;
-
 const Wrapper = styled.div`
-  padding: 50px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  ${mobile({ flexDirection: 'column;' })}
-  ${mobile({ padding: '10px;' })}
-    ${tablet({ padding: '10px;' })}
+    padding: 50px;
+    display: flex;
+    ${mobile({ flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
-  flex: 1;
+    flex: 1;
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 64vh;
-  object-fit: contain;
-  ${mobile({ height: '40vh;' })}
-  ${mobile({ width: '100%;' })}
-    ${tablet({ height: '40vh;' })}
-    ${tablet({ width: '100%;' })}
-    object-position: center;
+    width: 100%;
+    height: 64vh;
+    object-fit: contain;
+    cursor: pointer; /* Change cursor to indicate image is clickable */
+    ${mobile({ height: "40vh" })}
 `;
 
 const InfoContainer = styled.div`
-  flex: 1;
-  padding: 0px 50px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  ${mobile({ padding: '4px;' })}
-  text-align: left;
+    flex: 1;
+    padding: 0px 50px;
+    ${mobile({ padding: "10px" })}
 `;
 
 const Title = styled.h1`
-  font-weight: 500;
-  font-size: 24px;
-`;
-
-const ProductRating = styled.div`
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-`;
-
-const AverageRating = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-`;
-
-const ProductStar = styled.div`
-  width: content-fit;
-  // height: 40px
-  margin-inline-end: 10px;
-`;
-
-const ProductReview = styled.p`
-  font-size: 14px;
-  font-weight: 400;
-  color: #2c90d7;
+    font-weight: 200;
 `;
 
 const Desc = styled.p`
-  margin: 10px 0px;
-  font-size: 18px;
-  font-weight: 400;
+    margin: 20px 0px;
 `;
 
 const Price = styled.span`
-  font-weight: 200;
-  font-size: 40px;
+    font-weight: 100;
+    font-size: 40px;
 `;
 
 const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+    width: 50%;
+    margin: 30px 0px;
+    display: flex;
+    justify-content: space-between;
 `;
 
 const Filter = styled.div`
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 `;
 
 const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
+    font-size: 20px;
+    font-weight: 200;
 `;
 
 const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: ${(props) => props.color};
+    margin: 0px 5px;
+    cursor: pointer;
 `;
 
 const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
+    margin-left: 10px;
+    padding: 5px;
 `;
 
 const FilterSizeOption = styled.option``;
 
 const AddContainer = styled.div`
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
-const ActionButtons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+const AmountContainer = styled.div`
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+`;
+
+const Amount = styled.span`
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid teal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 5px;
 `;
 
 const Button = styled.button`
-  width: 200px;
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 500;
-  &:hover {
-    background-color: #f8f4f4;
-  }
+    padding: 15px;
+    border: 2px solid teal;
+    background-color: white;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover {
+        background-color: #f8f4f4;
+    }
 `;
 
-const ProductDetails = styled.div`
-  width: 320px;
-  margin-block-start: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  justify-content: flex-start;
-  align-items: flex-start;
+// Modal Styles
+const Modal = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Ensures the modal takes full height of the viewport */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Prevents horizontal scrolling */
 `;
 
-const ProductDetailTitle = styled.h2`
-  font-size: 18px;
-  font-weight: 600;
+const ModalContent = styled.div`
+    position: relative;
+    width: 90%;
+    max-width: 900px; /* Set max-width for the modal content */
+    max-height: 90vh; /* Limit max height to allow scrolling */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 20px; /* Add some padding */
 `;
 
-const DetailContainer = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  align-items: center;
+const CloseButton = styled.button`
+    position: fixed; /* Keep the button fixed */
+    top: 20px; /* Space from the top */
+    right: 20px; /* Space from the right */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it appears above the modal content */
 `;
 
-const ProductDetailInfo = styled.p`
-  width: 50%;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
-`;
-
-const HeartIcon = styled.div`
-  cursor: pointer;
-  margin-left: 10px;
-  color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
+const ModalImage = styled.img`
+    width: 100%; /* Set width to 100% to fit within the modal */
+    max-height: 90vh; /* Limit the max height to the viewport height */
+    height: auto; /* Keep height auto to maintain aspect ratio */
+    object-fit: contain; /* Maintain aspect ratio without distortion */
+    transition: transform 0.3s ease; /* Smooth zoom transition */
+    &:hover {
+        transform: scale(1.1); /* Zoom in effect on hover */
+    }
 `;
