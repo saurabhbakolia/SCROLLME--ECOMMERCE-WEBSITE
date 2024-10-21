@@ -1,6 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
-import './components.css'
+import styled from 'styled-components';
+
+const Button = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 10px;
+  background-color: #374151; /* bg-gray-700 */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* drop-shadow-2xl */
+  opacity: 0.8;
+  color: white;
+  padding: 1rem; /* p-3 */
+  border-radius: 9999px; /* rounded-full */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* shadow-lg */
+  transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #111827; /* hover:bg-gray-900 */
+    opacity: 1;
+    transform: translateY(-3px); /* Small lift effect on hover */
+  }
+`;
+
 const BackToTopButton = () => {
   const [showButton, setShowButton] = useState(false);
 
@@ -20,23 +43,27 @@ const BackToTopButton = () => {
     };
   }, []);
 
-  // Scroll the page to the top
+  
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    const scrollDuration = 700; 
+    const scrollStep = -window.scrollY / (scrollDuration / 15); 
+
+    const scrollAnimation = () => {
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep);
+        requestAnimationFrame(scrollAnimation);
+      }
+    };
+
+    requestAnimationFrame(scrollAnimation);
   };
 
   return (
     <>
       {showButton && (
-        <button
-          onClick={scrollToTop}
-          className="fixed-bottom-right"
-        >
+        <Button onClick={scrollToTop}>
           <MdOutlineKeyboardArrowUp />
-        </button>
+        </Button>
       )}
     </>
   );
