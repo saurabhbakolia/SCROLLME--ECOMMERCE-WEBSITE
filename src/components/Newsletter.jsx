@@ -1,6 +1,7 @@
 import { Send } from '@mui/icons-material';
 import styled from 'styled-components';
 import { mobile } from '../responsive';
+import { useState } from 'react';
 
 const Container = styled.div`
   height: 60vh;
@@ -43,18 +44,30 @@ const Button = styled.button`
 `;
 
 const Newsletter = () => {
-  return (
-    <Container>
-      <Title>Newsletter</Title>
-      <Description>Get timely updates from your favorite products.</Description>
-      <InputContainer>
-        <Input placeholder='Your email address' />
-        <Button>
-          <Send />
-        </Button>
-      </InputContainer>
-    </Container>
-  );
-};
+    const [email, setEmail] = useState('');
+
+    const handleNotify = () => {
+      alert(`Thank you! We will notify you at ${email}`);
+      setEmail('');
+    };
+
+    return (
+      <Container>
+        <Title>Newsletter</Title>
+        <Description>Get timely updates from your favorite products.</Description>
+        <InputContainer>
+          <Input
+            placeholder='Your email address'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button onClick={handleNotify}>
+            <Send />
+          </Button>
+        </InputContainer>
+      </Container>
+    );
+  };
+
 
 export default Newsletter;

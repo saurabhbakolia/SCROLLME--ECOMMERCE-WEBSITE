@@ -123,16 +123,30 @@ const Footer = () => {
           <ListItem>
             <Link to={'/cart'}>Cart</Link>
           </ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Men Fashion</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Woman Fashion</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Accessories</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>My Account</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Order Tracking</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Wishlist</Link>
+          </ListItem>
           <ListItem>
             <Link to={'/contributors'}>Contributors</Link>
           </ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Terms</Link>
+          </ListItem>
         </List>
       </Center>
       <Right>
