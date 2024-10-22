@@ -41,7 +41,7 @@ function App() {
           path='/products'
           element={
             <Suspense fallback='Loading...'>
-              <LazyAllProducts />
+                <LazyAllProducts />
             </Suspense>
           }
         />

@@ -107,7 +107,7 @@ const Login = () => {
       .then((response) => {
         toast({
           title: 'Login Successful',
-          description: response.message || 'You have successfully logged in. Welcome back!',
+          description: response?.message || 'You have successfully logged in. Welcome back!',
           status: 'success',
           duration: 5000,
           isClosable: true,

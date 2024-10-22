@@ -5,11 +5,10 @@ import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
-import { AUTH_ENDPOINTS } from '../api/endPoints';
-import axios from 'axios';
 import { logOut } from '../store/slices/userSlice';
 import { Badge } from '@chakra-ui/react';
 import Logo from '../components/Logo';
+import { UserSingOutAPI } from '../services/userAPI/userService';
 
 const Container = styled.div`
   height: 60px;
@@ -24,12 +23,12 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   ${mobile({
-    height: '90px',
-    padding: '10px 10px',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  })}
+  height: '90px',
+  padding: '10px 10px',
+  flexDirection: 'column',
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
+})}
 `;
 
 const Left = styled.div`
@@ -78,6 +77,7 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  console.log("isAuthenticated", isAuthenticated);
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
   const navigate = useNavigate();
@@ -86,14 +86,12 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
-        withCredentials: true, // Include cookies in the request
-      });
+      const res = await UserSingOutAPI();
 
-      if (res.status === 200) {
+      if (res?.status === 200) {
         toast({
           title: 'Logout Successfully!',
-          description: res.message || 'You have successfully logged out!',
+          description: res?.data?.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
           isClosable: true,

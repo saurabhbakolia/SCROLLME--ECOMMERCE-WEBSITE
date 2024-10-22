@@ -41,7 +41,17 @@ const UserSlice = createSlice({
       state.isAuthenticated = user.isAuthenticated;
     },
     logOut: (state) => {
-      Object.assign(state, initialState);
+      state.id = null;
+      state.firstName = '';
+      state.lastName = '';
+      state.email = '';
+      state.name = '';
+      state.roles = [];
+      state.isAuthenticated = false;
+      state.token = null;
+      state.refreshToken = null;
+      state.error = null;
+      state.lastLogin = null;
     },
     // Update user profile information
     updateProfile: (state, action) => {
