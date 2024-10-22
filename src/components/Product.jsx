@@ -95,7 +95,7 @@ const Product = ({ item }) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const wishlist = useSelector((state) => state.wishlist?.items);
-  const isInWishlist = wishlist?.some(item => item._id === item?._id);
+  const isInWishlist = wishlist?.some((item) => item._id === item?._id);
   const [isProductInWishlist, setIsProductInWishlist] = useState(isInWishlist);
 
   const handleProductSearch = (id) => {
@@ -120,7 +120,9 @@ const Product = ({ item }) => {
           position: 'bottom-right',
           status: 'success',
           render: () => (
-            <Box color='white' p={3} bg='teal' borderRadius={4}>Product added to cart.</Box>
+            <Box color='white' p={3} bg='teal' borderRadius={4}>
+              Product added to cart.
+            </Box>
           ),
         });
       }
@@ -129,7 +131,9 @@ const Product = ({ item }) => {
         position: 'bottom-right',
         status: 'error',
         render: () => (
-          <Box color='white' p={3} bg='red' borderRadius={4}>Error adding product to cart.</Box>
+          <Box color='white' p={3} bg='red' borderRadius={4}>
+            Error adding product to cart.
+          </Box>
         ),
       });
     }
@@ -159,7 +163,6 @@ const Product = ({ item }) => {
         ),
       });
     }
-    
   };
 
   return (

@@ -18,7 +18,7 @@ const Products = () => {
 
   const fetchPopularProducts = async () => {
     try {
-      const response = await listProductsAPI(1,10);
+      const response = await listProductsAPI(1, 10);
       setProducts(response?.products);
     } catch (error) {
       setError(error);

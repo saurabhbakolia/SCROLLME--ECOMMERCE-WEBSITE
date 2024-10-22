@@ -271,7 +271,9 @@ const Cart = () => {
           </Link>
           <TopTexts>
             <TopText>Shopping Bag({cartItems.length})</TopText>
-            <TopText><Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link></TopText>
+            <TopText>
+              <Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link>
+            </TopText>
           </TopTexts>
           <TopButton type='filled'>CHECKOUT NOW</TopButton>
         </Top>

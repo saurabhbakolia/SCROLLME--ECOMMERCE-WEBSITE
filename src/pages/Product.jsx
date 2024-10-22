@@ -27,7 +27,7 @@ const Product = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist?.items);
-  const isInWishlist = wishlist?.some(item => item._id === product?._id);
+  const isInWishlist = wishlist?.some((item) => item._id === product?._id);
   const [isProductInWishlist, setIsProductInWishlist] = useState(isInWishlist);
 
   useEffect(() => {

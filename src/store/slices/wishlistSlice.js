@@ -10,14 +10,14 @@ const wishlistSlice = createSlice({
   reducers: {
     addToWishlist: (state, action) => {
       const product = action.payload;
-      const item = state.items?.find(item => item._id === product._id);
-      if(item === undefined) {
+      const item = state.items?.find((item) => item._id === product._id);
+      if (item === undefined) {
         const prodObj = {
           _id: product._id,
           name: product.name,
           imageUrl: product.imageUrl,
           price: product.price,
-          color: product.color
+          color: product.color,
         };
         state.items?.push(prodObj);
       }
@@ -26,7 +26,7 @@ const wishlistSlice = createSlice({
       const itemId = action.payload;
       return {
         ...state,
-        items: state.items?.filter(item => item._id !== itemId),
+        items: state.items?.filter((item) => item._id !== itemId),
       };
     },
     clearWishlist: () => initialState,
