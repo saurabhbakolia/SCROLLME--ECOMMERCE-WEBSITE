@@ -97,14 +97,13 @@ const Link = styled.a`
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 100%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
   color: white;
   cursor: pointer;
   transition: transform 0.3s ease;
-
   &:hover {
     transform: scale(1.05);
   }
@@ -116,8 +115,8 @@ const PasswordBox = styled.div`
   height: fit-content;
 `;
 const GoogleButton = styled(Button)`
-  background-color: #4285f4; /* Google blue color */
-  width: 40%; /* Full width */
+  background-color: #4285f4;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
