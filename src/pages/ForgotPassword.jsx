@@ -41,10 +41,12 @@ const Input = styled.input`
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
+  border: 1px solid gray;
+  border-radius: 2px;
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 100%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
@@ -58,6 +60,9 @@ const Link = styled.a`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  &:hover {
+    color: blue;
+  }
 `;
 
 const ForgotPassword = () => {
@@ -69,6 +74,7 @@ const ForgotPassword = () => {
     const email = e.target.email.value;
 
     try {
+      // !TODO: Need to add support for mongodb, to change the password.
       await sendPasswordResetEmail(auth, email);
       toast({
         title: 'Password Reset Email Sent',
