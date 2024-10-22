@@ -127,9 +127,9 @@ const Product = () => {
 
   useEffect(() => {
     if (modalOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
   }, [modalOpen]);
 
@@ -403,48 +403,48 @@ const HeartIcon = styled.div`
 `;
 
 const Modal = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
 `;
 
 const ModalContent = styled.div`
-    position: relative;
-    width: 90%;
-    max-width: 900px;
-    max-height: 90vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 20px;
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
 `;
 
 const CloseButton = styled.button`
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1001;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
 `;
 
 const ModalImage = styled.img`
-    width: 100%;
-    max-height: 90vh; 
-    height: auto;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-    &:hover {
-        transform: scale(1.1);
-    }
+  width: 100%;
+  max-height: 90vh;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
