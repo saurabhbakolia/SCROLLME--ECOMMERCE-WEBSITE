@@ -12,7 +12,7 @@ const dbName = 'scrollme';
 const collectionName = 'products';
 
 // Path to the products.json file
-const productsFilePath = path.join(__dirname, 'products.json');
+const productsFilePath = path.join(__dirname, 'generatedProducts.json');
 
 // Function to seed the database
 async function seedProducts() {
