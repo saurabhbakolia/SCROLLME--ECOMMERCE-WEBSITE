@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Facebook, Instagram, LinkedIn } from '@mui/icons-material';
+import XIcon from '@mui/icons-material/X';
+import { mobile } from '../responsive';
 
 // Styled Components
 const Container = styled.div`
@@ -12,6 +15,29 @@ const Container = styled.div`
   font-family: 'Poppins', sans-serif;
 `;
 
+const SocialContainer = styled.div`
+  margin-top: 26px;
+  display: flex;
+  ${mobile({ justifyContent: 'center' })}
+`;
+
+const SocialIcon = styled.a`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #${(props) => props.color};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 const Logo = styled.h1`
   font-size: 3rem;
   color: #333;
@@ -54,22 +80,6 @@ const NotifyButton = styled.button`
   }
 `;
 
-const SocialLinks = styled.div`
-  margin-top: 30px;
-  display: flex;
-  gap: 20px;
-`;
-
-const SocialIcon = styled.a`
-  font-size: 1.5rem;
-  color: #555;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: #ff6f61;
-  }
-`;
-
 const ComingSoon = () => {
   const [email, setEmail] = useState('');
 
@@ -84,25 +94,23 @@ const ComingSoon = () => {
       <Heading>Coming Soon</Heading>
       <SubHeading>We are working hard to give you a better experience. Stay tuned!</SubHeading>
       <div>
-        <EmailInput
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <EmailInput type='email' placeholder='Enter your email' value={email} onChange={(e) => setEmail(e.target.value)} />
         <NotifyButton onClick={handleNotify}>Notify Me</NotifyButton>
       </div>
-      <SocialLinks>
-        <SocialIcon href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-          <i className="fab fa-facebook-f"></i>
+      <SocialContainer>
+        <SocialIcon href='https://facebook.com' target='_blank' rel='noopener_noreferrrer' color='3B5999'>
+          <Facebook />
         </SocialIcon>
-        <SocialIcon href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-          <i className="fab fa-twitter"></i>
+        <SocialIcon href='https://instagram.com' target='_blank' rel='noopener_noreferrer' color='E4405F'>
+          <Instagram />
         </SocialIcon>
-        <SocialIcon href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-          <i className="fab fa-instagram"></i>
+        <SocialIcon href='https://twitter.com' target='_blank' rel='noopener_noreferrer' color='55ACEE'>
+          <XIcon />
         </SocialIcon>
-      </SocialLinks>
+        <SocialIcon href='https://www.linkedin.com' target='_blank' rel='noopener_noreferrer' color='E60023'>
+          <LinkedIn />
+        </SocialIcon>
+      </SocialContainer>
     </Container>
   );
 };
