@@ -23,6 +23,7 @@ const Product = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const { productId } = useParams();
   const toast = useToast();
   const dispatch = useDispatch();
@@ -99,9 +100,8 @@ const Product = () => {
       return (
         <DetailContainer key={d}>
           {' '}
-          {/* Add a unique key for each item */}
           <ProductDetailInfo>{getDetailHeading(d)}</ProductDetailInfo>
-          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo> {/* Use bracket notation to access dynamic properties */}
+          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo>
         </DetailContainer>
       );
     });
@@ -116,6 +116,22 @@ const Product = () => {
       setIsProductInWishlist(true);
     }
   };
+
+  const handleImageClick = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [modalOpen]);
 
   if (loading) {
     return (
@@ -139,7 +155,7 @@ const Product = () => {
       <Navbar />
       <Announcement />
       <Wrapper>
-        <ImgContainer>{product && <Image src={product?.imageUrl} />}</ImgContainer>
+        <ImgContainer>{product && <Image src={product?.imageUrl} onClick={handleImageClick} />}</ImgContainer>
         <InfoContainer>
           <Flex>
             <Title>{product?.name}</Title>
@@ -186,6 +202,14 @@ const Product = () => {
       </Wrapper>
       <Newsletter />
       <Footer />
+      {modalOpen && (
+        <Modal>
+          <ModalContent>
+            <CloseButton onClick={closeModal}>✖</CloseButton>
+            <ModalImage src={product?.imageUrl} alt={product.title} />
+          </ModalContent>
+        </Modal>
+      )}
     </Container>
   );
 };
@@ -214,12 +238,14 @@ const Wrapper = styled.div`
 
 const ImgContainer = styled.div`
   flex: 1;
+  width: 200px;
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: fit-content;
   height: 64vh;
   object-fit: contain;
+  margin-inline: auto;
   ${mobile({ height: '40vh;' })}
   ${mobile({ width: '100%;' })}
     ${tablet({ height: '40vh;' })}
@@ -374,4 +400,51 @@ const HeartIcon = styled.div`
   cursor: pointer;
   margin-left: 10px;
   color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
+`;
+
+const Modal = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden;
+`;
+
+const ModalContent = styled.div`
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+`;
+
+const CloseButton = styled.button`
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+`;
+
+const ModalImage = styled.img`
+    width: 100%;
+    max-height: 90vh; 
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    &:hover {
+        transform: scale(1.1);
+    }
 `;
