@@ -77,7 +77,6 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-  console.log('isAuthenticated', isAuthenticated);
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
   const navigate = useNavigate();

@@ -27,7 +27,8 @@ const Product = () => {
   const toast = useToast();
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist?.items);
-  const isInWishlist = wishlist?.includes(product?._id);
+  const isInWishlist = wishlist?.some(item => item._id === product?._id);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(isInWishlist);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -46,7 +47,6 @@ const Product = () => {
 
   const handleAddToCart = async () => {
     try {
-      console.log('product', product);
       const itemToAdd = {
         productId: product._id,
         name: product.name,
@@ -108,10 +108,12 @@ const Product = () => {
   };
 
   const handleWishlistToggle = () => {
-    if (isInWishlist) {
+    if (isProductInWishlist) {
+      setIsProductInWishlist(false);
       dispatch(removeFromWishlist(product._id));
     } else {
-      dispatch(addToWishlist(product._id));
+      dispatch(addToWishlist(product));
+      setIsProductInWishlist(true);
     }
   };
 
@@ -141,8 +143,8 @@ const Product = () => {
         <InfoContainer>
           <Flex>
             <Title>{product?.name}</Title>
-            <HeartIcon isInWishlist={isInWishlist} onClick={handleWishlistToggle}>
-              {isInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
+            <HeartIcon isInWishlist={isProductInWishlist} onClick={handleWishlistToggle}>
+              {!isProductInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
             </HeartIcon>
           </Flex>
           <ProductRating>
