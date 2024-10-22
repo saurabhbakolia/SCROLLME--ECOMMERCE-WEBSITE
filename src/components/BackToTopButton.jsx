@@ -6,21 +6,21 @@ const Button = styled.button`
   position: fixed;
   bottom: 30px;
   right: 10px;
-  background-color: #374151; /* bg-gray-700 */
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* drop-shadow-2xl */
+  background-color: #374151;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   opacity: 0.8;
   color: white;
-  padding: 1rem; /* p-3 */
-  border-radius: 9999px; /* rounded-full */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* shadow-lg */
+  padding: 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
   z-index: 50;
   cursor: pointer;
   
   &:hover {
-    background-color: #111827; /* hover:bg-gray-900 */
+    background-color: #111827;
     opacity: 1;
-    transform: translateY(-3px); /* Small lift effect on hover */
+    transform: translateY(-3px);
   }
 `;
 
