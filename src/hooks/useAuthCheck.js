@@ -13,10 +13,8 @@ const useAuthCheck = () => {
     const checkAuthStatus = async () => {
       try {
         const response = await checkAuthStatusAPI();
-        console.log('auth status response', response);
-
         let isAuthenticated = false;
-        if (response.status === 200 && response.data.message === 'Authenticated') {
+        if (response?.status === 200 && response?.data?.message === 'Authenticated') {
           // User is authenticated, do nothing.
           return;
         } else {
@@ -27,18 +25,18 @@ const useAuthCheck = () => {
         }
       } catch (error) {
         // Handle different types of errors more safely
-        if (error.response) {
+        if (error?.response) {
           // Error response from server
-          if (error.response.status === 401) {
+          if (error?.response?.status === 401) {
             dispatch(changeAuthenticated(false));
             navigate('/login');
           }
-        } else if (error.request) {
+        } else if (error?.request) {
           // No response was received from the server (e.g., network error)
-          console.error('Network error:', error.request);
+          console.error('Network error:', error?.request);
         } else {
           // Error occurred during setup (e.g., bad configuration)
-          console.error('Error in request setup:', error.message);
+          console.error('Error in request setup:', error?.message);
         }
         // In any case, mark as not authenticated
         dispatch(changeAuthenticated(false));

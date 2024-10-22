@@ -199,6 +199,7 @@ const Button = styled.button`
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
+  const wishListItems = useSelector((state) => state.wishlist?.items);
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const toast = useToast();
   const dispatch = useDispatch();
@@ -270,7 +271,9 @@ const Cart = () => {
           </Link>
           <TopTexts>
             <TopText>Shopping Bag({cartItems.length})</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            <TopText>
+              <Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link>
+            </TopText>
           </TopTexts>
           <TopButton type='filled'>CHECKOUT NOW</TopButton>
         </Top>

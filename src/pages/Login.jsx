@@ -44,16 +44,25 @@ const Input = styled.input`
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 100%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Link = styled.a`
@@ -61,11 +70,23 @@ const Link = styled.a`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  &:hover {
+    color: blue;
+  }
 `;
 
 const GoogleButton = styled(Button)`
   background-color: #4285f4; /* Google blue color */
   width: 100%; /* Full width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Login = () => {
@@ -86,7 +107,7 @@ const Login = () => {
       .then((response) => {
         toast({
           title: 'Login Successful',
-          description: response.message || 'You have successfully logged in. Welcome back!',
+          description: response?.message || 'You have successfully logged in. Welcome back!',
           status: 'success',
           duration: 5000,
           isClosable: true,
@@ -136,8 +157,7 @@ const Login = () => {
     <Container>
       <Wrapper>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-          {' '}
-          <Logo />{' '}
+          <Logo />
         </div>
         <br />
         <Title>SIGN IN</Title>
@@ -145,7 +165,7 @@ const Login = () => {
           <Input placeholder='username' name='username' type='text' required />
           <Input placeholder='password' name='password' type='password' required />
           <Button type='submit'>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+          <Link href='/forgot-password'>DO NOT YOU REMEMBER THE PASSWORD?</Link>
           <Link href='/register'>CREATE A NEW ACCOUNT</Link>
         </Form>
         <GoogleButton onClick={handleGoogleLogin}>

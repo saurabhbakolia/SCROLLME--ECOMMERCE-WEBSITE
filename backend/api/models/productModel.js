@@ -17,6 +17,9 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
+    discounted_price: {
+      type: Number, 
+    },
     category: {
       type: String,
       trim: true,
@@ -58,6 +61,26 @@ const ProductSchema = new Schema(
     color: {
       type: String,
       trim: true,
+    },
+    sizes: {
+      type: [Number],
+      validate: {
+        validator: function (v) {
+          return Array.isArray(v) && v.every(size => Number.isInteger(size));
+        },
+        message: 'Sizes must be an array of integers',
+      },
+      default: [],
+    },
+    tags: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: function (v) {
+          return Array.isArray(v) && v.every(tag => typeof tag === 'string');
+        },
+        message: 'Tags must be an array of strings',
+      },
     },
     ratings: {
       averageRating: {

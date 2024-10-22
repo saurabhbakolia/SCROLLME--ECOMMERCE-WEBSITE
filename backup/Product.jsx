@@ -80,7 +80,7 @@ const Product = ({ item }) => {
                 </Icon>
             </Info>
         </Container>
-    )
-}
+    );
+};
 
-export default Product
+export default Product;

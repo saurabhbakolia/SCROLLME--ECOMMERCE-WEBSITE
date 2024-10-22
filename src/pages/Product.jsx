@@ -11,31 +11,123 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 
 const Product = () => {
-    const [product, setProduct] = useState();
-    const [modalOpen, setModalOpen] = useState(false); // State for modal visibility
-    const params = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { productId } = useParams();
+  const toast = useToast();
+  const dispatch = useDispatch();
+  const wishlist = useSelector((state) => state.wishlist?.items);
+  const isInWishlist = wishlist?.some((item) => item._id === product?._id);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(isInWishlist);
 
     useEffect(() => {
         const selectedProduct = allProducts.find((item) => item.id === Number(params.productId));
         setProduct(selectedProduct);
-    }, [params.productId]);
-
-    const handleImageClick = () => {
-        setModalOpen(true); // Open modal on image click
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
     };
+    fetchProduct();
+  }, [productId]);
 
-    const closeModal = () => {
-        setModalOpen(false); // Close modal
-    };
+  const handleAddToCart = async () => {
+    try {
+      const itemToAdd = {
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl,
+        brand: product.brand,
+        category: product.category,
+        quantity: 1,
+      };
+      const result = await dispatch(addToCart(itemToAdd)).unwrap();
+      if (result.response) {
+        toast({
+          title: 'Product added to cart.',
+          description: 'You can view your cart to proceed.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (err) {
+      toast({
+        title: 'Error adding product to cart.',
+        description: err.message || 'Something went wrong.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
-    // Prevent background scrolling when modal is open
-    useEffect(() => {
-        if (modalOpen) {
-            document.body.style.overflow = "hidden"; // Disable background scrolling
-        } else {
-            document.body.style.overflow = "auto"; // Enable scrolling again
-        }
-    }, [modalOpen]);
+  const getDetailHeading = (detailItem) => {
+    switch (detailItem) {
+      case 'material':
+        return capitalizeFirstChar('material');
+      case 'brand':
+        return `${capitalizeFirstChar('brand')} Name`;
+      case 'weight':
+        return capitalizeFirstChar('weight');
+      case 'category':
+        return `${capitalizeFirstChar('category')} Name`;
+      default:
+        return null;
+    }
+  };
+
+  const renderProductDetails = () => {
+    const productDetailItems = ['material', 'brand', 'weight', 'category'];
+
+    return productDetailItems.map((d) => {
+      return (
+        <DetailContainer key={d}>
+          {' '}
+          <ProductDetailInfo>{getDetailHeading(d)}</ProductDetailInfo>
+          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo>
+        </DetailContainer>
+      );
+    });
+  };
+
+  const handleWishlistToggle = () => {
+    if (isProductInWishlist) {
+      setIsProductInWishlist(false);
+      dispatch(removeFromWishlist(product._id));
+    } else {
+      dispatch(addToWishlist(product));
+      setIsProductInWishlist(true);
+    }
+  };
+
+  const handleImageClick = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [modalOpen]);
+
+  if (loading) {
+    return (
+      <Box display='flex' justifyContent='center' alignItems='center' height='100vh'>
+        <ButtonSpinner size='xl' />
+      </Box>
+    );
+  }
 
     return (
         <Container>
@@ -97,6 +189,69 @@ const Product = () => {
             )}
         </Container>
     );
+  }
+  return (
+    <Container>
+      <Navbar />
+      <Announcement />
+      <Wrapper>
+        <ImgContainer>{product && <Image src={product?.imageUrl} onClick={handleImageClick} />}</ImgContainer>
+        <InfoContainer>
+          <Flex>
+            <Title>{product?.name}</Title>
+            <HeartIcon isInWishlist={isProductInWishlist} onClick={handleWishlistToggle}>
+              {!isProductInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
+            </HeartIcon>
+          </Flex>
+          <ProductRating>
+            <AverageRating>{product?.ratings?.averageRating}</AverageRating>
+            <ProductStar>{renderStars(product?.ratings.averageRating)}</ProductStar>
+            <ProductReview>{product?.ratings.numberOfReviews} reviews</ProductReview>
+          </ProductRating>
+          <Desc>{product?.description}</Desc>
+          <Price>$ {product?.price}</Price>
+          <FilterContainer>
+            <Filter>
+              <FilterTitle>Color</FilterTitle>
+              <FilterColor color='black' />
+              <FilterColor color='darkblue' />
+              <FilterColor color='gray' />
+            </Filter>
+            <Filter>
+              <FilterTitle>Size</FilterTitle>
+              <FilterSize>
+                <FilterSizeOption>XS</FilterSizeOption>
+                <FilterSizeOption>S</FilterSizeOption>
+                <FilterSizeOption>M</FilterSizeOption>
+                <FilterSizeOption>L</FilterSizeOption>
+                <FilterSizeOption>XL</FilterSizeOption>
+              </FilterSize>
+            </Filter>
+          </FilterContainer>
+          <AddContainer>
+            <ActionButtons>
+              <Button onClick={handleAddToCart}>ADD TO CART</Button>
+              <Button>BUY NOW</Button>
+            </ActionButtons>
+          </AddContainer>
+          <ProductDetails>
+            <ProductDetailTitle>Product details</ProductDetailTitle>
+            {renderProductDetails()}
+          </ProductDetails>
+        </InfoContainer>
+      </Wrapper>
+      <Newsletter />
+      <Footer />
+      {modalOpen && (
+        <Modal>
+          <ModalContent>
+            <CloseButton onClick={closeModal}>✖</CloseButton>
+            <ModalImage src={product?.imageUrl} alt={product.title} />
+          </ModalContent>
+        </Modal>
+      )}
+    </Container>
+  );
 };
 
 export default Product;
@@ -110,16 +265,20 @@ const Wrapper = styled.div`
     ${mobile({ flexDirection: "column" })}
 `;
 
-const ImgContainer = styled.div`
-    flex: 1;
+  flex: 1;
+  width: 200px;
 `;
 
 const Image = styled.img`
-    width: 100%;
-    height: 64vh;
-    object-fit: contain;
-    cursor: pointer; /* Change cursor to indicate image is clickable */
-    ${mobile({ height: "40vh" })}
+  width: fit-content;
+  height: 64vh;
+  object-fit: contain;
+  margin-inline: auto;
+  ${mobile({ height: '40vh;' })}
+  ${mobile({ width: '100%;' })}
+    ${tablet({ height: '40vh;' })}
+    ${tablet({ width: '100%;' })}
+    object-position: center;
 `;
 
 const InfoContainer = styled.div`
@@ -247,13 +406,55 @@ const CloseButton = styled.button`
     z-index: 1001; /* Ensure it appears above the modal content */
 `;
 
+const HeartIcon = styled.div`
+  cursor: pointer;
+  margin-left: 10px;
+  color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+`;
+
+const CloseButton = styled.button`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+`;
+
 const ModalImage = styled.img`
-    width: 100%; /* Set width to 100% to fit within the modal */
-    max-height: 90vh; /* Limit the max height to the viewport height */
-    height: auto; /* Keep height auto to maintain aspect ratio */
-    object-fit: contain; /* Maintain aspect ratio without distortion */
-    transition: transform 0.3s ease; /* Smooth zoom transition */
-    &:hover {
-        transform: scale(1.1); /* Zoom in effect on hover */
-    }
+  width: 100%;
+  max-height: 90vh;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

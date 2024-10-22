@@ -9,14 +9,25 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishlist: (state, action) => {
-      const itemId = action.payload;
-      if (!state.items?.includes(itemId)) {
-        state.items?.push(itemId);
+      const product = action.payload;
+      const item = state.items?.find((item) => item._id === product._id);
+      if (item === undefined) {
+        const prodObj = {
+          _id: product._id,
+          name: product.name,
+          imageUrl: product.imageUrl,
+          price: product.price,
+          color: product.color,
+        };
+        state.items?.push(prodObj);
       }
     },
     removeFromWishlist: (state, action) => {
       const itemId = action.payload;
-      return state.items?.filter((id) => id !== itemId);
+      return {
+        ...state,
+        items: state.items?.filter((item) => item._id !== itemId),
+      };
     },
     clearWishlist: () => initialState,
   },

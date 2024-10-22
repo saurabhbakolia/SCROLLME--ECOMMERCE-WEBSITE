@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromWishlist } from '../store/slices/wishlistSlice';
-import { allProducts } from '../data'; // Import allProducts data
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
+import { getProductByIdAPI } from '../services/products/productService';
+import { useToast } from '@chakra-ui/react';
+import { addToCart } from '../store/slices/cartSlice';
 
 const Container = styled.div`
   margin-top: 100px;
@@ -18,7 +20,7 @@ const ProductCard = styled.div`
   margin: 10px;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -28,9 +30,10 @@ const ProductCard = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
+  object-position: top;
   margin-bottom: 10px;
 `;
 
@@ -78,11 +81,44 @@ const EmptyWishlist = styled.p`
 
 const Wishlist = () => {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.wishlist?.items);
-  const wishlistItems = allProducts.filter((product) => wishlist.items?.includes(product.id));
+  const toast = useToast();
+  const wishlistItems = useSelector((state) => state.wishlist?.items);
 
-  const handleRemoveFromWishlist = (id) => {
-    dispatch(removeFromWishlist(id));
+  const handleRemoveFromWishlist = (_id) => {
+    dispatch(removeFromWishlist(_id));
+  };
+
+  const handleAddToCart = async (_id) => {
+    try {
+      const product = await getProductByIdAPI(_id);
+      const itemToAdd = {
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl,
+        brand: product.brand,
+        category: product.category,
+        quantity: 1,
+      };
+      const result = await dispatch(addToCart(itemToAdd)).unwrap();
+      if (result.response) {
+        toast({
+          title: 'Product added to cart.',
+          description: 'You can view your cart to proceed.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (err) {
+      toast({
+        title: 'Error adding product to cart.',
+        description: err?.message || 'Something went wrong.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -90,14 +126,14 @@ const Wishlist = () => {
       <Navbar />
       <Announcement />
       <Container>
-        {wishlistItems.length > 0 ? (
-          wishlistItems.map((product) => (
-            <ProductCard key={product.id}>
-              <RemoveButton onClick={() => handleRemoveFromWishlist(product.id)}>X</RemoveButton>
-              <Image src={product.colors[0].img} alt={product.title} />
-              <Title>{product.title}</Title>
-              <Price>{product.price}</Price>
-              <MoveToBagButton>Move to Cart</MoveToBagButton>
+        {wishlistItems?.length > 0 ? (
+          wishlistItems?.map((product) => (
+            <ProductCard key={product?._id}>
+              <RemoveButton onClick={() => handleRemoveFromWishlist(product?._id)}>X</RemoveButton>
+              <Image src={product?.imageUrl} alt={product?.name} />
+              <Title>{product?.name}</Title>
+              <Price>{product?.price}</Price>
+              <MoveToBagButton onClick={() => handleAddToCart(product._id)}>Move to Cart</MoveToBagButton>
             </ProductCard>
           ))
         ) : (

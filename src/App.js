@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/global.css';
 import Home from './pages/Home';
 import Product from './pages/Product';
 import Register from './pages/Register';
@@ -10,6 +10,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
+import ForgotPassword from './pages/ForgotPassword';
 import useAuthCheck from './hooks/useAuthCheck';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
@@ -45,14 +46,6 @@ function App() {
           }
         />
         <Route
-          path='/wishlist'
-          element={
-            <ProtectedRoute>
-              <Wishlist />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path='/:categorySlug'
           element={
             <Suspense fallback='Loading...'>
@@ -63,6 +56,7 @@ function App() {
         <Route path='/contributors' element={<ContributorsPage />} />
         <Route path='/:categorySlug/:productId' element={<Product />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/register' element={<Register />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
         <Route path='*' element={<h1>404 Not Found</h1>} />
