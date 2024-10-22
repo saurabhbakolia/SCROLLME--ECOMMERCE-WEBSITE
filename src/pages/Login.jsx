@@ -44,6 +44,10 @@ const Input = styled.input`
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const Button = styled.button`
@@ -54,6 +58,11 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Link = styled.a`
@@ -61,11 +70,23 @@ const Link = styled.a`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
+  &:hover {
+    color: blue;
+  }
 `;
 
 const GoogleButton = styled(Button)`
   background-color: #4285f4; /* Google blue color */
   width: 100%; /* Full width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Login = () => {
