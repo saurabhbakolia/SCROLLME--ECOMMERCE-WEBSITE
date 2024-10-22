@@ -138,8 +138,7 @@ const Footer = () => {
           <ListItem>
             <Link to={'/comingsoon'}>Order Tracking</Link>
           </ListItem>
-          <ListItem>
-            <Link to={'/comingsoon'}>Wishlist</Link>
+            <Link to={'/wishlist'}>Wishlist</Link>
           </ListItem>
           <ListItem>
             <Link to={'/contributors'}>Contributors</Link>

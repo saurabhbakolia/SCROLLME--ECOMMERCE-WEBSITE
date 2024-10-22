@@ -14,6 +14,10 @@ import { Box, ButtonSpinner, Text } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 import { addToCart } from '../store/slices/cartSlice';
 import { useDispatch } from 'react-redux';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useSelector } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from '../store/slices/wishlistSlice';
 
 const Product = () => {
   const [product, setProduct] = useState(null);
@@ -22,8 +26,8 @@ const Product = () => {
   const { productId } = useParams();
   const toast = useToast();
   const dispatch = useDispatch();
-
-  console.log('product', product);
+  const wishlist = useSelector((state) => state.wishlist?.items);
+  const isInWishlist = wishlist?.includes(product?._id);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -103,6 +107,14 @@ const Product = () => {
     });
   };
 
+  const handleWishlistToggle = () => {
+    if (isInWishlist) {
+      dispatch(removeFromWishlist(product._id));
+    } else {
+      dispatch(addToWishlist(product._id));
+    }
+  };
+
   if (loading) {
     return (
       <Box display='flex' justifyContent='center' alignItems='center' height='100vh'>
@@ -127,7 +139,12 @@ const Product = () => {
       <Wrapper>
         <ImgContainer>{product && <Image src={product?.imageUrl} />}</ImgContainer>
         <InfoContainer>
-          <Title>{product?.name}</Title>
+          <Flex>
+            <Title>{product?.name}</Title>
+            <HeartIcon isInWishlist={isInWishlist} onClick={handleWishlistToggle}>
+              {isInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
+            </HeartIcon>
+          </Flex>
           <ProductRating>
             <AverageRating>{product?.ratings?.averageRating}</AverageRating>
             <ProductStar>{renderStars(product?.ratings.averageRating)}</ProductStar>
@@ -174,6 +191,14 @@ const Product = () => {
 export default Product;
 
 const Container = styled.div``;
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+`;
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -341,4 +366,10 @@ const ProductDetailInfo = styled.p`
   font-size: 14px;
   font-weight: 500;
   text-align: left;
+`;
+
+const HeartIcon = styled.div`
+  cursor: pointer;
+  margin-left: 10px;
+  color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
 `;
