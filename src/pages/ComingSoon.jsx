@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Facebook, Instagram, LinkedIn } from '@mui/icons-material';
 import XIcon from '@mui/icons-material/X';
 import { mobile } from '../responsive';
+import Logo from '../components/Logo';
 
-// Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,14 +38,9 @@ const SocialIcon = styled.a`
     transform: scale(1.1);
   }
 `;
-const Logo = styled.h1`
-  font-size: 3rem;
-  color: #333;
-  margin-bottom: 20px;
-`;
 
 const Heading = styled.h2`
-  font-size: 2rem;
+  font-size: 1.4rem;
   color: #555;
   margin-bottom: 10px;
 `;
@@ -69,14 +64,15 @@ const NotifyButton = styled.button`
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #ff6f61;
+  background-color: teal;
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 80%;
 
   &:hover {
-    background-color: #ff3b2f;
+    opacity: 100%;
   }
 `;
 
@@ -90,7 +86,7 @@ const ComingSoon = () => {
 
   return (
     <Container>
-      <Logo>SCROLL ME</Logo>
+      <Logo/>
       <Heading>Coming Soon</Heading>
       <SubHeading>We are working hard to give you a better experience. Stay tuned!</SubHeading>
       <div>
