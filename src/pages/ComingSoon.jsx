@@ -86,7 +86,7 @@ const ComingSoon = () => {
 
   return (
     <Container>
-      <Logo/>
+      <Logo />
       <Heading>Coming Soon</Heading>
       <SubHeading>We are working hard to give you a better experience. Stay tuned!</SubHeading>
       <div>

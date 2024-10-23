@@ -44,30 +44,25 @@ const Button = styled.button`
 `;
 
 const Newsletter = () => {
-    const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
 
-    const handleNotify = () => {
-      alert(`Thank you! We will notify you at ${email}`);
-      setEmail('');
-    };
-
-    return (
-      <Container>
-        <Title>Newsletter</Title>
-        <Description>Get timely updates from your favorite products.</Description>
-        <InputContainer>
-          <Input
-            placeholder='Your email address'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Button onClick={handleNotify}>
-            <Send />
-          </Button>
-        </InputContainer>
-      </Container>
-    );
+  const handleNotify = () => {
+    alert(`Thank you! We will notify you at ${email}`);
+    setEmail('');
   };
 
+  return (
+    <Container>
+      <Title>Newsletter</Title>
+      <Description>Get timely updates from your favorite products.</Description>
+      <InputContainer>
+        <Input placeholder='Your email address' value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Button onClick={handleNotify}>
+          <Send />
+        </Button>
+      </InputContainer>
+    </Container>
+  );
+};
 
 export default Newsletter;

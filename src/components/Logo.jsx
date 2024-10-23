@@ -5,7 +5,7 @@ const LogoWrapper = styled.h1`
   font-size: ${({ size }) => size || '2rem'};
 `;
 
-const Logo = ({size}) => {
+const Logo = ({ size }) => {
   return (
     <LogoWrapper size={size}>
       <Link to='/'>
