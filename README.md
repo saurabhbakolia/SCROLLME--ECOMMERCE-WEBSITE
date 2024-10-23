@@ -25,11 +25,11 @@ ScrollMe is an open-source, feature-rich eCommerce platform that provides a mode
 - [ ] **Product Management**: Admin interface for adding, updating, and removing products.
 - [x] **User Authentication**: Secure user registration, login, and JWT-based authentication.
 - [ ] **Search and Filters**: Search for products and apply filters based on categories, prices, and more.
-- [ ] **Shopping Cart**: Add, update, or remove items from the cart, with real-time calculations.
+- [x] **Shopping Cart**: Add, update, or remove items from the cart, with real-time calculations.
 - [ ] **Checkout Process**: Easy and secure checkout experience.
 - [ ] **Order History**: View past orders and order details.
 - [ ] **Product Reviews and Ratings**: Users can review and rate products.
-- [ ] **Wishlist**: Save favorite items for later purchase.
+- [x] **Wishlist**: Save favorite items for later purchase.
 - [ ] **Payment Gateway Integration**: Add integration with payment providers like Stripe or PayPal.
 - [x] **Responsive Design**: Optimized for all devices (mobile, tablet, and desktop).
 - [x] **MongoDB Integration**: Backend management of products, users, and orders with MongoDB.
