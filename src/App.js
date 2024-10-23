@@ -10,6 +10,7 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import ContributorsPage from './pages/ContributorsPage';
 import { lazy, Suspense } from 'react';
 import ContactUsPage from './pages/ContactUsPage';
+import ComingSoon from './pages/ComingSoon';
 import ForgotPassword from './pages/ForgotPassword';
 import useAuthCheck from './hooks/useAuthCheck';
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
@@ -59,6 +60,7 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/register' element={<Register />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
+        <Route path='/comingsoon' element={<ComingSoon />} />
         <Route path='*' element={<h1>404 Not Found</h1>} />
       </Routes>
     </div>
