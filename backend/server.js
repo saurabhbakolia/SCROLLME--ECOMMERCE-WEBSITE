@@ -12,7 +12,7 @@ const helmet = require("helmet");
 const authMiddleware = require("./api/middleware/authMiddleware");
 require("dotenv").config();
 const bodyParser = require('body-parser');
-
+const payment = require("./api/controllers/PaymentGetway.js")
 
 // Connect to the database
 dbConnect();
@@ -39,7 +39,7 @@ app.use("/api/cart", authMiddleware, cartRoute); // Cart routes
 app.use("/api/product", productRoute); // Product routes
 app.use("/api/user", userRoute); // user routes
 app.use("/api/auth", authStatusRoute); // Check Auth Status
-
+app.use("/api/pay", payment)
 
 // // Rate limiting middleware
 // const limiter = rateLimit({

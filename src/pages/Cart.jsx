@@ -10,7 +10,7 @@ import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
 import { deleteCartItem, updateCartItem } from '../store/slices/cartSlice';
-
+import commonBackendURL from '../common/constants/apiConstants.js'
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -203,6 +203,38 @@ const Cart = () => {
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const toast = useToast();
   const dispatch = useDispatch();
+// payment getway initiate and send data to backend
+  const initiatePayment = async () => {
+    try {
+      // Await the fetch to complete
+      const response = await fetch(commonBackendURL.paymentGetway.url, {
+        method: commonBackendURL.paymentGetway.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        }
+      });
+  
+      // Parse the response as JSON
+      const responseData = await response.json();
+  
+      // Log the parsed response data
+      console.log('responseData:', responseData);
+  
+      // If the response contains a redirect URL, perform the redirection
+      if (responseData.success && responseData.url) {
+        const redirectUrl = responseData.url;
+        console.log('Redirecting to:', redirectUrl);
+        
+        // Perform the redirection
+        window.location.href = redirectUrl;
+        // onSuccessPayment();
+        Cart();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   const handleQuantityChange = (productId, quantity) => {
     dispatch(updateCartItem({ productId, quantity }))
@@ -275,7 +307,7 @@ const Cart = () => {
               <Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link>
             </TopText>
           </TopTexts>
-          <TopButton type='filled'>CHECKOUT NOW</TopButton>
+          <TopButton type='filled' onClick={()=>{initiatePayment()}}>CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -319,7 +351,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button onClick={()=>{initiatePayment()}}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>
