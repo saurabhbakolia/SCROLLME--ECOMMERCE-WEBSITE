@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@chakra-ui/react": "^2.9.3",
+    "@chakra-ui/react": "^2.10.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.7",
-    "@mui/material": "^5.11.9",
+    "@mui/material": "^5.16.7",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -15,8 +15,8 @@
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "axios": "^1.6.0",
-    "firebase": "^10.14.0",
-    "framer-motion": "^11.9.0",
+    "firebase": "^10.14.1",
+    "framer-motion": "^11.11.10",
     "myapp": "file:",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,7 +31,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "save": "^2.9.0",
-    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.11",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -83,5 +83,10 @@
     "react-router-dom": "^6.26.2",
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^36.0.1"
-  }
+  },
+  "description": "ScrollMe is an open-source, feature-rich eCommerce platform that provides a modern shopping experience. Built with **JavaScript**, **React**, **Styled Components**, **Node.js (Express.js)**, and **MongoDB**, ScrollMe offers a robust front-end with a highly scalable backend. This project is ideal for those looking to contribute to an eCommerce solution or understand the integration of modern web technologies.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
