@@ -6,13 +6,14 @@ import Newsletter from '../components/Newsletter';
 import Products from '../components/Products';
 import Slider from '../components/Slider';
 import FAQ from '../components/FAQ';
-
+import BackToTopButton from '../components/BackToTopButton';
 const Home = () => {
   return (
     <div>
       <Announcement />
       <Navbar />
       <Slider />
+      <BackToTopButton />
       <Categories />
       <Products />
       <FAQ />

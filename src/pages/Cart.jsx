@@ -15,6 +15,7 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -198,6 +199,7 @@ const Button = styled.button`
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
+  const wishListItems = useSelector((state) => state.wishlist?.items);
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const toast = useToast();
   const dispatch = useDispatch();
@@ -269,7 +271,9 @@ const Cart = () => {
           </Link>
           <TopTexts>
             <TopText>Shopping Bag({cartItems.length})</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            <TopText>
+              <Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link>
+            </TopText>
           </TopTexts>
           <TopButton type='filled'>CHECKOUT NOW</TopButton>
         </Top>
@@ -304,12 +308,12 @@ const Cart = () => {
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemText>Tax</SummaryItemText>
+              <SummaryItemPrice>$ 30</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemText>Delivery Charges</SummaryItemText>
+              <SummaryItemPrice>$ 20</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type='total'>
               <SummaryItemText>Total</SummaryItemText>

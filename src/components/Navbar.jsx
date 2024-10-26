@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
-import { ShoppingCartOutlined } from '@mui/icons-material';
+import { ShoppingCartOutlined, FavoriteBorderOutlined } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
-import { AUTH_ENDPOINTS } from '../api/endPoints';
-import axios from 'axios';
 import { logOut } from '../store/slices/userSlice';
 import { Badge } from '@chakra-ui/react';
 import Logo from '../components/Logo';
+import { UserSingOutAPI } from '../services/userAPI/userService';
 
 const Container = styled.div`
   height: 60px;
@@ -88,14 +87,14 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
-        withCredentials: true,
-      });
 
-      if (res.status === 200) {
+      const res = await UserSingOutAPI();
+
+
+      if (res?.status === 200) {
         toast({
           title: 'Logout Successfully!',
-          description: res.message || 'You have successfully logged out!',
+          description: res?.data?.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
           isClosable: true,
@@ -161,6 +160,11 @@ const Navbar = () => {
                   </Badge>
                 )}
               </Box>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to='/wishlist'>
+              <FavoriteBorderOutlined />
             </Link>
           </MenuItem>
         </Right>

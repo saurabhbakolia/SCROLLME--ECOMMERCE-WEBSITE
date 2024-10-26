@@ -23,7 +23,7 @@ export const userSignIn = createAsyncThunk('user/signIn', async (loginData, { re
   }
 });
 
-const userSlice = createSlice({
+const UserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -41,7 +41,17 @@ const userSlice = createSlice({
       state.isAuthenticated = user.isAuthenticated;
     },
     logOut: (state) => {
-      Object.assign(state, initialState);
+      state.id = null;
+      state.firstName = '';
+      state.lastName = '';
+      state.email = '';
+      state.name = '';
+      state.roles = [];
+      state.isAuthenticated = false;
+      state.token = null;
+      state.refreshToken = null;
+      state.error = null;
+      state.lastLogin = null;
     },
     // Update user profile information
     updateProfile: (state, action) => {
@@ -95,6 +105,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = userSlice.actions;
+export const { loginSuccess, logOut, updateProfile, setFetching, setError, changeAuthenticated } = UserSlice.actions;
 
-export default userSlice.reducer;
+export default UserSlice.reducer;

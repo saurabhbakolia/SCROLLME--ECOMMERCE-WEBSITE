@@ -13,9 +13,8 @@ const useAuthCheck = () => {
     const checkAuthStatus = async () => {
       try {
         const response = await checkAuthStatusAPI();
-        console.log('auth status response', response);
         let isAuthenticated = false;
-        if (response.status === 200 && response.data.message === 'Authenticated') {
+        if (response?.status === 200 && response?.data?.message === 'Authenticated') {
           // User is authenticated, do nothing.
           return;
         } else {
@@ -25,18 +24,27 @@ const useAuthCheck = () => {
           }
         }
       } catch (error) {
-        console.error('Error checking auth status:', error);
-        if (error.response && error.response.status === 401) {
-          dispatch(changeAuthenticated(false));
-          navigate('/login');
+        // Handle different types of errors more safely
+        if (error?.response) {
+          // Error response from server
+          if (error?.response?.status === 401) {
+            dispatch(changeAuthenticated(false));
+            navigate('/login');
+          }
+        } else if (error?.request) {
+          // No response was received from the server (e.g., network error)
+          console.error('Network error:', error?.request);
         } else {
-          dispatch(changeAuthenticated(false));
+          // Error occurred during setup (e.g., bad configuration)
+          console.error('Error in request setup:', error?.message);
         }
+        // In any case, mark as not authenticated
+        dispatch(changeAuthenticated(false));
       }
     };
 
     checkAuthStatus();
-    const intervalId = setInterval(checkAuthStatus, 120000);
+    const intervalId = setInterval(checkAuthStatus, 120000); // Check every 2 minutes
     return () => clearInterval(intervalId);
   }, [dispatch, navigate]);
 };

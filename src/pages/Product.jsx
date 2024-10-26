@@ -14,16 +14,22 @@ import { Box, ButtonSpinner, Text } from '@chakra-ui/react';
 import { useToast } from '@chakra-ui/react';
 import { addToCart } from '../store/slices/cartSlice';
 import { useDispatch } from 'react-redux';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useSelector } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from '../store/slices/wishlistSlice';
 
 const Product = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const { productId } = useParams();
   const toast = useToast();
   const dispatch = useDispatch();
-
-  console.log('product', product);
+  const wishlist = useSelector((state) => state.wishlist?.items);
+  const isInWishlist = wishlist?.some((item) => item._id === product?._id);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(isInWishlist);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -42,7 +48,6 @@ const Product = () => {
 
   const handleAddToCart = async () => {
     try {
-      console.log('product', product);
       const itemToAdd = {
         productId: product._id,
         name: product.name,
@@ -95,13 +100,38 @@ const Product = () => {
       return (
         <DetailContainer key={d}>
           {' '}
-          {/* Add a unique key for each item */}
           <ProductDetailInfo>{getDetailHeading(d)}</ProductDetailInfo>
-          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo> {/* Use bracket notation to access dynamic properties */}
+          <ProductDetailInfo>{product?.[d]}</ProductDetailInfo>
         </DetailContainer>
       );
     });
   };
+
+  const handleWishlistToggle = () => {
+    if (isProductInWishlist) {
+      setIsProductInWishlist(false);
+      dispatch(removeFromWishlist(product._id));
+    } else {
+      dispatch(addToWishlist(product));
+      setIsProductInWishlist(true);
+    }
+  };
+
+  const handleImageClick = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [modalOpen]);
 
   if (loading) {
     return (
@@ -125,9 +155,14 @@ const Product = () => {
       <Navbar />
       <Announcement />
       <Wrapper>
-        <ImgContainer>{product && <Image src={product?.imageUrl} />}</ImgContainer>
+        <ImgContainer>{product && <Image src={product?.imageUrl} onClick={handleImageClick} />}</ImgContainer>
         <InfoContainer>
-          <Title>{product?.name}</Title>
+          <Flex>
+            <Title>{product?.name}</Title>
+            <HeartIcon isInWishlist={isProductInWishlist} onClick={handleWishlistToggle}>
+              {!isProductInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
+            </HeartIcon>
+          </Flex>
           <ProductRating>
             <AverageRating>{product?.ratings?.averageRating}</AverageRating>
             <ProductStar>{renderStars(product?.ratings.averageRating)}</ProductStar>
@@ -167,6 +202,14 @@ const Product = () => {
       </Wrapper>
       <Newsletter />
       <Footer />
+      {modalOpen && (
+        <Modal>
+          <ModalContent>
+            <CloseButton onClick={closeModal}>✖</CloseButton>
+            <ModalImage src={product?.imageUrl} alt={product.title} />
+          </ModalContent>
+        </Modal>
+      )}
     </Container>
   );
 };
@@ -174,6 +217,14 @@ const Product = () => {
 export default Product;
 
 const Container = styled.div``;
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+`;
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -187,12 +238,14 @@ const Wrapper = styled.div`
 
 const ImgContainer = styled.div`
   flex: 1;
+  width: 200px;
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: fit-content;
   height: 64vh;
   object-fit: contain;
+  margin-inline: auto;
   ${mobile({ height: '40vh;' })}
   ${mobile({ width: '100%;' })}
     ${tablet({ height: '40vh;' })}
@@ -341,4 +394,57 @@ const ProductDetailInfo = styled.p`
   font-size: 14px;
   font-weight: 500;
   text-align: left;
+`;
+
+const HeartIcon = styled.div`
+  cursor: pointer;
+  margin-left: 10px;
+  color: ${({ isInWishlist }) => (isInWishlist ? 'white' : 'gray')};
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+`;
+
+const CloseButton = styled.button`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+`;
+
+const ModalImage = styled.img`
+  width: 100%;
+  max-height: 90vh;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

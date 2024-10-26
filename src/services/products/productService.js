@@ -39,11 +39,11 @@ export const getProductByIdAPI = async (productId) => {
   return await axios
     .get(PRODUCT_ENDPOINTS.GET_PRODUCT_BY_ID(productId))
     .then((response) => {
-      return Promise.resolve(response.data);
+      return Promise.resolve(response?.data);
     })
     .catch((error) => {
       console.error(error);
-      return Promise.reject(error.response.data);
+      return Promise.reject(error?.response?.data);
     });
 };
 

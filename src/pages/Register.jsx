@@ -71,6 +71,10 @@ const Input = styled.input`
   min-width: 40%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 `;
 
 const Agreement = styled.span`
@@ -87,15 +91,22 @@ const Link = styled.a`
   margin: 5px 0px;
   text-decoration: underline;
   cursor: pointer;
+  &:hover {
+    color: blue;
+  }
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 100%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
   color: white;
   cursor: pointer;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const PasswordBox = styled.div`
@@ -104,8 +115,17 @@ const PasswordBox = styled.div`
   height: fit-content;
 `;
 const GoogleButton = styled(Button)`
-  background-color: #4285f4; /* Google blue color */
-  width: 40%; /* Full width */
+  background-color: #4285f4;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);

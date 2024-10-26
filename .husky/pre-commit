@@ -1,1 +1,13 @@
 npm run lint-fix && npm run lint-format
+
+npm run lint-fix
+if [ $? -ne 0 ]; then
+  echo "ESLint failed, aborting commit."
+  exit 1
+fi
+
+npm run lint-format
+if [ $? -ne 0 ]; then
+  echo "Prettier formatting failed, aborting commit."
+  exit 1
+fi

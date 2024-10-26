@@ -29,7 +29,7 @@ const useGithubRepositoryInfo = () => {
     };
 
     fetchData();
-  }, [REPO_URLS.CONTRIBUTORS, REPO_URLS.REPO_DETAILS]);
+  }, []);
 
   return { contributors, repoStats, loading, error };
 };

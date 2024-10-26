@@ -93,7 +93,7 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo /> {/* Using Logo component directly */}
+        <Logo size={'3rem'} /> {/* Using Logo component directly */}
         <Desc>
           Welcome to <span style={{ color: 'teal', fontWeight: 600 }}>ScrollMe</span> Web Store, your ultimate destination for trendy and
           fashionable clothing. We pride ourselves on curating a diverse collection of high-quality apparel that caters to your unique style
@@ -123,16 +123,30 @@ const Footer = () => {
           <ListItem>
             <Link to={'/cart'}>Cart</Link>
           </ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Men Fashion</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Woman Fashion</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Accessories</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>My Account</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Order Tracking</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={'/wishlist'}>Wishlist</Link>
+          </ListItem>
           <ListItem>
             <Link to={'/contributors'}>Contributors</Link>
           </ListItem>
-          <ListItem>Terms</ListItem>
+          <ListItem>
+            <Link to={'/comingsoon'}>Terms</Link>
+          </ListItem>
         </List>
       </Center>
       <Right>

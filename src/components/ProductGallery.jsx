@@ -14,8 +14,8 @@ const ProductGallery = () => {
   const fetchProducts = async (page) => {
     try {
       const response = await listProductsAPI(page);
-      setProducts(response.products);
-      setTotalPages(response.totalPages);
+      setProducts(response?.products);
+      setTotalPages(response?.totalPages);
     } catch (err) {
       setError(err);
     } finally {

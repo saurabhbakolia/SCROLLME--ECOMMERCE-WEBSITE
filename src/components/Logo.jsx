@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Styled component for the Logo (optional)
-const LogoWrapper = styled.h1``;
+const LogoWrapper = styled.h1`
+  font-size: ${({ size }) => size || '2rem'};
+`;
 
-const Logo = () => {
+const Logo = ({ size }) => {
   return (
-    <LogoWrapper>
+    <LogoWrapper size={size}>
       <Link to='/'>
         SCROLL<span style={{ color: 'teal' }}>ME</span>
       </Link>

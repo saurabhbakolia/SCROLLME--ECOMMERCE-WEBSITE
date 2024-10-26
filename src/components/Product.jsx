@@ -1,7 +1,15 @@
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToWishlist, removeFromWishlist } from '../store/slices/wishlistSlice';
+import { Box, useToast } from '@chakra-ui/react';
+import { useState } from 'react';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { getProductByIdAPI } from '../services/products/productService';
+import { addToCart } from '../store/slices/cartSlice';
 
 const Info = styled.div`
   opacity: 0;
@@ -42,20 +50,20 @@ const Circle = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  height: 75%; // Adjust as needed
-  width: 60%; // Adjust as needed, should be less than or equal to height to maintain aspect ratio
+  height: 75%;
+  width: 60%;
   position: relative;
   overflow: hidden;
-  display: flex; // Added to center content
-  align-items: center; // Centering vertically
-  justify-content: center; // Centering horizontally
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: auto;
 `;
 
 const Image = styled.img`
-  height: 100%; // Ensure image fits container height
-  width: 100%; // Ensure image fits container width
-  object-fit: cover; // Maintain aspect ratio and cover container
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
   z-index: 2;
 `;
 
@@ -80,13 +88,81 @@ const Icon = styled.div`
 const Placeholder = styled.div`
   height: 100%;
   width: 100%;
-  background-color: #f0f0f0; // Placeholder color
+  background-color: #f0f0f0;
 `;
 const Product = ({ item }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
+  const wishlist = useSelector((state) => state.wishlist?.items);
+  const isInWishlist = wishlist?.some((item) => item._id === item?._id);
+  const [isProductInWishlist, setIsProductInWishlist] = useState(isInWishlist);
 
   const handleProductSearch = (id) => {
     navigate(`/product/${id}`);
+  };
+
+  const handleAddToCart = async (_id) => {
+    try {
+      const product = await getProductByIdAPI(_id);
+      const itemToAdd = {
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl,
+        brand: product.brand,
+        category: product.category,
+        quantity: 1,
+      };
+      const result = await dispatch(addToCart(itemToAdd)).unwrap();
+      if (result.response) {
+        toast({
+          position: 'bottom-right',
+          status: 'success',
+          render: () => (
+            <Box color='white' p={3} bg='teal' borderRadius={4}>
+              Product added to cart.
+            </Box>
+          ),
+        });
+      }
+    } catch (err) {
+      toast({
+        position: 'bottom-right',
+        status: 'error',
+        render: () => (
+          <Box color='white' p={3} bg='red' borderRadius={4}>
+            Error adding product to cart.
+          </Box>
+        ),
+      });
+    }
+  };
+
+  const handleAddToWishlist = (item) => {
+    if (isProductInWishlist) {
+      setIsProductInWishlist(false);
+      dispatch(removeFromWishlist(item._id));
+      toast({
+        position: 'bottom-right',
+        render: () => (
+          <Box color='white' p={3} bg='teal' borderRadius={4}>
+            Product removed from wishlist!
+          </Box>
+        ),
+      });
+    } else {
+      dispatch(addToWishlist(item));
+      setIsProductInWishlist(true);
+      toast({
+        position: 'bottom-right',
+        render: () => (
+          <Box color='white' p={3} bg='teal' borderRadius={4}>
+            Product added to wishlist!
+          </Box>
+        ),
+      });
+    }
   };
 
   return (
@@ -94,20 +170,21 @@ const Product = ({ item }) => {
       <Circle />
       <ImageContainer>
         <LazyLoad height={200.5} offset={10} once placeholder={<Placeholder />}>
-          <Image src={item.img} />
+          <Image src={item?.imageUrl} />
         </LazyLoad>
       </ImageContainer>
       <Info>
-        <Icon>
-          <Link to='/cart'>
+        <Link to='/cart'>
+          <Icon onClick={() => handleAddToCart(item?._id)}>
             <ShoppingCartOutlined />
-          </Link>
-        </Icon>
-        <Icon onClick={() => handleProductSearch(item.id)}>
+          </Icon>
+        </Link>
+
+        <Icon onClick={() => handleProductSearch(item?._id)}>
           <SearchOutlined />
         </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
+        <Icon onClick={() => handleAddToWishlist(item)}>
+          {!isProductInWishlist ? <FavoriteBorderIcon style={{ color: 'teal' }} /> : <FavoriteIcon style={{ color: 'teal' }} />}
         </Icon>
       </Info>
     </Container>
