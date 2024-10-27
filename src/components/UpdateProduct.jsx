@@ -1,7 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaTag, FaDollarSign, FaBoxOpen, FaPalette, FaPaintBrush, FaRegistered, FaEdit } from 'react-icons/fa'; // Updated import
-import { useToast, ChakraProvider, Box, Button, Input, Textarea, FormControl, FormLabel, Flex, Heading, Alert, AlertIcon } from "@chakra-ui/react";
+import {
+  useToast,
+  ChakraProvider,
+  Box,
+  Button,
+  Input,
+  Textarea,
+  FormControl,
+  FormLabel,
+  Flex,
+  Heading,
+  Alert,
+  AlertIcon,
+} from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { updateProductAPI, getProductByIdAPI } from '../services/products/productService';
 import Navbar from '../components/Navbar';
@@ -12,7 +25,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center/cover;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center/cover;
 `;
 
 const FormContainer = styled(Box)`
@@ -52,7 +67,7 @@ const UpdateProduct = () => {
     material: '',
     color: '',
     ratings: { averageRating: 0, numberOfReviews: 0 },
-    stock: 0 
+    stock: 0,
   };
 
   const [product, setProduct] = useState(initialProduct);
@@ -72,7 +87,6 @@ const UpdateProduct = () => {
       setProduct(data);
     };
     fetchData();
-
   }, [id]);
 
   const submitForm = async (e) => {
@@ -92,9 +106,8 @@ const UpdateProduct = () => {
       });
       setTimeout(() => {
         navigate('/admin');
-      }, 2000); 
-
-    }catch(error) {
+      }, 2000);
+    } catch (error) {
       toast({
         title: 'Error in Updating the product',
         status: 'success',
@@ -103,7 +116,7 @@ const UpdateProduct = () => {
         position: 'top-right',
       });
     }
-
+    setErrorMessage(error);
   };
 
   return (
@@ -112,134 +125,99 @@ const UpdateProduct = () => {
       <Navbar />
       <br></br>
       <br></br>
-      
+
       <Container>
-        <FormContainer as="form" onSubmit={submitForm}>
-          <Heading as="h1" textAlign="center" mb={4}>Update Product</Heading>
+        <FormContainer as='form' onSubmit={submitForm}>
+          <Heading as='h1' textAlign='center' mb={4}>
+            Update Product
+          </Heading>
           {errorMessage && (
-            <Alert status="error" mb={4}>
+            <Alert status='error' mb={4}>
               <AlertIcon />
               {errorMessage}
             </Alert>
           )}
-          <Flex direction="column" gap={4}>
+          <Flex direction='column' gap={4}>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaTag /></IconWrapper>Name
+                <IconWrapper>
+                  <FaTag />
+                </IconWrapper>
+                Name
               </FormLabel>
-              <Input
-                type="text"
-                name="name"
-                value={product.name}
-                onChange={inputChangeHandler}
-                required
-              />
+              <Input type='text' name='name' value={product.name} onChange={inputChangeHandler} required />
             </FormControl>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaDollarSign /></IconWrapper>Price
+                <IconWrapper>
+                  <FaDollarSign />
+                </IconWrapper>
+                Price
               </FormLabel>
-              <Input
-                type="number"
-                name="price"
-                value={product.price}
-                onChange={inputChangeHandler}
-                required
-              />
+              <Input type='number' name='price' value={product.price} onChange={inputChangeHandler} required />
             </FormControl>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaBoxOpen /></IconWrapper>Stock
+                <IconWrapper>
+                  <FaBoxOpen />
+                </IconWrapper>
+                Stock
               </FormLabel>
-              <Input
-                type="number"
-                name="stock"
-                value={product.stock}
-                onChange={inputChangeHandler}
-                required
-              />
+              <Input type='number' name='stock' value={product.stock} onChange={inputChangeHandler} required />
             </FormControl>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaPalette /></IconWrapper>Material
+                <IconWrapper>
+                  <FaPalette />
+                </IconWrapper>
+                Material
               </FormLabel>
-              <Input
-                type="text"
-                name="material"
-                value={product.material}
-                onChange={inputChangeHandler}
-                required
-              />
+              <Input type='text' name='material' value={product.material} onChange={inputChangeHandler} required />
             </FormControl>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaPaintBrush /></IconWrapper>Color
+                <IconWrapper>
+                  <FaPaintBrush />
+                </IconWrapper>
+                Color
               </FormLabel>
-              <Input
-                type="text"
-                name="color"
-                value={product.color}
-                onChange={inputChangeHandler}
-                required
-              />
+              <Input type='text' name='color' value={product.color} onChange={inputChangeHandler} required />
             </FormControl>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaRegistered /></IconWrapper>Brand
+                <IconWrapper>
+                  <FaRegistered />
+                </IconWrapper>
+                Brand
               </FormLabel>
-              <Input
-                type="text"
-                name="brand"
-                value={product.brand}
-                onChange={inputChangeHandler}
-                required
-              />
+              <Input type='text' name='brand' value={product.brand} onChange={inputChangeHandler} required />
             </FormControl>
             <FormControl>
               <FormLabel>
-                <IconWrapper><FaEdit /></IconWrapper>Description
+                <IconWrapper>
+                  <FaEdit />
+                </IconWrapper>
+                Description
               </FormLabel>
-              <Textarea
-                name="description"
-                value={product.description}
-                onChange={inputChangeHandler}
-                rows="4"
-                required
-              />
+              <Textarea name='description' value={product.description} onChange={inputChangeHandler} rows='4' required />
             </FormControl>
             <Flex gap={4}>
               <FormControl>
                 <FormLabel>Length</FormLabel>
-                <Input
-                  type="number"
-                  name="length"
-                  value={product.dimensions.length}
-                  onChange={inputChangeHandler}
-                  required
-                />
+                <Input type='number' name='length' value={product.dimensions.length} onChange={inputChangeHandler} required />
               </FormControl>
               <FormControl>
                 <FormLabel>Width</FormLabel>
-                <Input
-                  type="number"
-                  name="width"
-                  value={product.dimensions.width}
-                  onChange={inputChangeHandler}
-                  required
-                />
+                <Input type='number' name='width' value={product.dimensions.width} onChange={inputChangeHandler} required />
               </FormControl>
               <FormControl>
                 <FormLabel>Height</FormLabel>
-                <Input
-                  type="number"
-                  name="height"
-                  value={product.dimensions.height}
-                  onChange={inputChangeHandler}
-                  required
-                />
+                <Input type='number' name='height' value={product.dimensions.height} onChange={inputChangeHandler} required />
               </FormControl>
             </Flex>
-            <Button type="submit" colorScheme="blue" w="full" mt={4}>Update Product</Button>
+            <Button type='submit' colorScheme='blue' w='full' mt={4}>
+              Update Product
+            </Button>
           </Flex>
         </FormContainer>
       </Container>

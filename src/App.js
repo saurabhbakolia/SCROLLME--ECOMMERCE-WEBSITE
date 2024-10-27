@@ -1,7 +1,7 @@
-import  { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import './styles/global.css'; 
+import './styles/global.css';
 import useAuthCheck from './hooks/useAuthCheck';
 import ProtectedRoute from './utils/ProtectedRoute';
 import Home from './pages/Home';
@@ -15,19 +15,17 @@ import ContactUsPage from './pages/ContactUsPage';
 import ComingSoon from './pages/ComingSoon';
 import ForgotPassword from './pages/ForgotPassword';
 import Admin from './components/Admin';
-import UpdateProduct from './components/UpdateProduct'; 
+import UpdateProduct from './components/UpdateProduct';
 import AddNewProduct from './components/AddNewProduct';
-
 
 const LazyAllProducts = lazy(() => import('./pages/AllProducts'));
 const LazyCategoryProducts = lazy(() => import('./pages/CategoryProducts'));
 
-
-const theme = createTheme(); 
+const theme = createTheme();
 
 function App() {
   useAuthCheck();
-  
+
   return (
     <ThemeProvider theme={theme}>
       <div className='App'>

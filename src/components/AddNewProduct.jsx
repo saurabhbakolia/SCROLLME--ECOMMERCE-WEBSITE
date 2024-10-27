@@ -5,7 +5,7 @@ import { FaTag, FaDollarSign, FaBoxOpen, FaPalette, FaPaintBrush, FaRegistered, 
 import { useToast, Box } from '@chakra-ui/react';
 import styled from 'styled-components';
 import Navbar from '../components/Navbar';
-import Announcement from './Announcement'; 
+import Announcement from './Announcement';
 import { addProductAPI } from '../services/products/productService';
 
 const StyledContainer = styled(Container)`
@@ -18,11 +18,10 @@ const StyledContainer = styled(Container)`
 `;
 
 const AddNewProduct = () => {
-  
   const navigate = useNavigate();
   const toast = useToast();
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   const initialProduct = {
     name: '',
     description: '',
@@ -72,7 +71,7 @@ const AddNewProduct = () => {
       });
       setTimeout(() => {
         navigate('/admin');
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       console.log(error);
       setErrorMessage('Error updating product. Please try again.');
@@ -92,17 +91,17 @@ const AddNewProduct = () => {
           pt: '56px',
         }}
       >
-        <StyledContainer maxWidth="sm">
-          <Typography variant="h4" align="center" gutterBottom>
+        <StyledContainer maxWidth='sm'>
+          <Typography variant='h4' align='center' gutterBottom>
             ADD NEW PRODUCT
           </Typography>
           {errorMessage && <Snackbar open={true} message={errorMessage} onClose={() => setErrorMessage('')} />}
           <form onSubmit={submitForm}>
             <TextField
               fullWidth
-              margin="normal"
-              label="Name"
-              name="name"
+              margin='normal'
+              label='Name'
+              name='name'
               value={product.name}
               onChange={inputChangeHandler}
               required
@@ -112,10 +111,10 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Price"
-              type="number"
-              name="price"
+              margin='normal'
+              label='Price'
+              type='number'
+              name='price'
               value={product.price}
               onChange={inputChangeHandler}
               required
@@ -125,10 +124,10 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Stock"
-              type="number"
-              name="stock"
+              margin='normal'
+              label='Stock'
+              type='number'
+              name='stock'
               value={product.stock}
               onChange={inputChangeHandler}
               required
@@ -138,9 +137,9 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Material"
-              name="material"
+              margin='normal'
+              label='Material'
+              name='material'
               value={product.material}
               onChange={inputChangeHandler}
               required
@@ -150,9 +149,9 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Color"
-              name="color"
+              margin='normal'
+              label='Color'
+              name='color'
               value={product.color}
               onChange={inputChangeHandler}
               required
@@ -162,9 +161,9 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Brand"
-              name="brand"
+              margin='normal'
+              label='Brand'
+              name='brand'
               value={product.brand}
               onChange={inputChangeHandler}
               required
@@ -174,9 +173,9 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Description"
-              name="description"
+              margin='normal'
+              label='Description'
+              name='description'
               value={product.description}
               onChange={inputChangeHandler}
               required
@@ -188,10 +187,10 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Length"
-              type="number"
-              name="length"
+              margin='normal'
+              label='Length'
+              type='number'
+              name='length'
               value={product.dimensions.length}
               onChange={inputChangeHandler}
               required
@@ -201,10 +200,10 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Height"
-              type="number"
-              name="height"
+              margin='normal'
+              label='Height'
+              type='number'
+              name='height'
               value={product.dimensions.height}
               onChange={inputChangeHandler}
               required
@@ -214,10 +213,10 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Width"
-              type="number"
-              name="width"
+              margin='normal'
+              label='Width'
+              type='number'
+              name='width'
               value={product.dimensions.width}
               onChange={inputChangeHandler}
               required
@@ -227,9 +226,9 @@ const AddNewProduct = () => {
             />
             <TextField
               fullWidth
-              margin="normal"
-              label="Image URL"
-              name="imageUrl"
+              margin='normal'
+              label='Image URL'
+              name='imageUrl'
               value={product.imageUrl}
               onChange={inputChangeHandler}
               required
@@ -238,9 +237,9 @@ const AddNewProduct = () => {
               }}
             />
             <Button
-              type="submit"
-              variant="contained"
-              color="primary"
+              type='submit'
+              variant='contained'
+              color='primary'
               sx={{
                 borderRadius: '25px',
                 padding: '12px 24px',

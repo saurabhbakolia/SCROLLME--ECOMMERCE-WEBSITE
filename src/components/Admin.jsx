@@ -6,7 +6,6 @@ import Announcement from './Announcement';
 import { listProductsAPI, deleteProductAPI } from '../services/products/productService';
 import { useToast, Box } from '@chakra-ui/react';
 
-
 const Container = styled.div`
   padding: 20px;
   text-align: center;
