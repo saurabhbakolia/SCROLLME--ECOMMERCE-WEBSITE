@@ -5,10 +5,11 @@ import { mobile } from '../responsive';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
+import { AUTH_ENDPOINTS } from '../api/endPoints';
+import axios from 'axios';
 import { logOut } from '../store/slices/userSlice';
 import { Badge } from '@chakra-ui/react';
 import Logo from '../components/Logo';
-import { UserSingOutAPI } from '../services/userAPI/userService';
 
 const Container = styled.div`
   height: 60px;
@@ -85,12 +86,14 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await UserSingOutAPI();
+      const res = await axios.post(`${AUTH_ENDPOINTS.LOGOUT}`, {
+        withCredentials: true, // Include cookies in the request
+      });
 
-      if (res?.status === 200) {
+      if (res.status === 200) {
         toast({
           title: 'Logout Successfully!',
-          description: res?.data?.message || 'You have successfully logged out!',
+          description: res.message || 'You have successfully logged out!',
           status: 'success',
           duration: 5000,
           isClosable: true,
@@ -129,6 +132,9 @@ const Navbar = () => {
         <Right>
           <MenuItem>
             <Link to='/contact-us'>CONTACT US</Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to='/admin'>ADMIN</Link>
           </MenuItem>
           {!isAuthenticated && (
             <MenuItem>
