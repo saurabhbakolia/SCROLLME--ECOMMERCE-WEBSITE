@@ -115,8 +115,8 @@ const UpdateProduct = () => {
         isClosable: true,
         position: 'top-right',
       });
+      setErrorMessage(error);
     }
-    setErrorMessage(error);
   };
 
   return (
