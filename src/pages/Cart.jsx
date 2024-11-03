@@ -10,7 +10,9 @@ import { LeftDivider } from '../styles/Divider';
 import { useDispatch } from 'react-redux';
 import { Box, useToast } from '@chakra-ui/react';
 import { deleteCartItem, updateCartItem } from '../store/slices/cartSlice';
-import commonBackendURL from '../common/constants/apiConstants.js'
+import { paymentGatewayAPI } from '../services/payment/paymentService.js';
+
+
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -203,38 +205,35 @@ const Cart = () => {
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const toast = useToast();
   const dispatch = useDispatch();
-// payment getway initiate and send data to backend
+
   const initiatePayment = async () => {
     try {
       // Await the fetch to complete
-      const response = await fetch(commonBackendURL.paymentGetway.url, {
-        method: commonBackendURL.paymentGetway.method,
-        credentials: "include",
-        headers: {
-          "content-type": "application/json",
-        }
-      });
-  
-      // Parse the response as JSON
+      const response = await paymentGatewayAPI();
       const responseData = await response.json();
-  
-      // Log the parsed response data
-      console.log('responseData:', responseData);
-  
-      // If the response contains a redirect URL, perform the redirection
       if (responseData.success && responseData.url) {
         const redirectUrl = responseData.url;
-        console.log('Redirecting to:', redirectUrl);
-        
-        // Perform the redirection
         window.location.href = redirectUrl;
-        // onSuccessPayment();
+        toast({
+          title: 'Thank you for your purchase!',
+          description: 'Your payment went through smoothly. The item has been taken out of your cart.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
         Cart();
       }
     } catch (error) {
       console.error('Error:', error);
+      toast({
+        title: 'Payment Failed',
+        description: 'There was an issue processing your payment. Please try again.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  }
+  };
 
   const handleQuantityChange = (productId, quantity) => {
     dispatch(updateCartItem({ productId, quantity }))
@@ -307,7 +306,7 @@ const Cart = () => {
               <Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link>
             </TopText>
           </TopTexts>
-          <TopButton type='filled' onClick={()=>{initiatePayment()}}>CHECKOUT NOW</TopButton>
+          <TopButton type='filled' onClick={() => initiatePayment()}>CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
@@ -351,7 +350,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {totalPrice}</SummaryItemPrice>
             </SummaryItem>
-            <Button onClick={()=>{initiatePayment()}}>CHECKOUT NOW</Button>
+            <Button onClick={() => initiatePayment()}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>
