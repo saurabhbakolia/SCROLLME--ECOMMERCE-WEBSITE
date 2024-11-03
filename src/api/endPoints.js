@@ -25,3 +25,7 @@ export const CART_ENDPOINTS = {
 export const AUTH_STATUS = {
   AUTH_STATUS: `${API_BASE_URL}/auth/status`,
 };
+
+export const PAYMENT_ENDPOINTS = {
+  PAYMENT_GATEWAY: `${API_BASE_URL}/pay`,
+};
