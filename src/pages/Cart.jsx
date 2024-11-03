@@ -12,7 +12,6 @@ import { Box, useToast } from '@chakra-ui/react';
 import { deleteCartItem, updateCartItem } from '../store/slices/cartSlice';
 import { paymentGatewayAPI } from '../services/payment/paymentService.js';
 
-
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -306,7 +305,9 @@ const Cart = () => {
               <Link to={'/wishlist'}>Your Wishlist ({wishListItems?.length})</Link>
             </TopText>
           </TopTexts>
-          <TopButton type='filled' onClick={() => initiatePayment()}>CHECKOUT NOW</TopButton>
+          <TopButton type='filled' onClick={() => initiatePayment()}>
+            CHECKOUT NOW
+          </TopButton>
         </Top>
         <Bottom>
           <Info>
