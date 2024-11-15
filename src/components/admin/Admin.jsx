@@ -19,7 +19,7 @@ import { H1 } from '../../styles/Text';
 const Container = styled.div`
   padding: 20px;
   text-align: center;
-  background-color: #F5F5F7;
+  background-color: #f5f5f7;
 `;
 
 const TableWrapper = styled.div`
@@ -74,7 +74,8 @@ const Admin = () => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-  const { selectedRows, setSelectedRows, toggleSelectAllRows, toggleSelectRow, isRowSelected, deleteSelectedRows } = useTableSelection(products);
+  const { selectedRows, setSelectedRows, toggleSelectAllRows, toggleSelectRow, isRowSelected, deleteSelectedRows } =
+    useTableSelection(products);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -147,7 +148,7 @@ const Admin = () => {
     { label: 'Action', key: 'action' },
   ];
 
-  console.log("selected rows:", selectedRows);
+  console.log('selected rows:', selectedRows);
 
   return (
     <>
@@ -163,8 +164,15 @@ const Admin = () => {
               <IconButton icon={<ArrowForwardIosIcon />} />
             </FlexLeft>
             <ActionButtons>
-              {selectedRows.length > 0 && <DeleteButton onClick={() => setDeleteDialogOpen(true)}><DeleteOutlineIcon /> Delete</DeleteButton>}
-              <AddProductButton onClick={handleAddNewProduct}><AddIcon />Add Product</AddProductButton>
+              {selectedRows.length > 0 && (
+                <DeleteButton onClick={() => setDeleteDialogOpen(true)}>
+                  <DeleteOutlineIcon /> Delete
+                </DeleteButton>
+              )}
+              <AddProductButton onClick={handleAddNewProduct}>
+                <AddIcon />
+                Add Product
+              </AddProductButton>
             </ActionButtons>
           </TableHeader>
           <Table
@@ -176,11 +184,7 @@ const Admin = () => {
             isRowSelected={isRowSelected}
           />
         </TableWrapper>
-        <DeleteConfirmationDialog
-          isOpen={isDeleteDialogOpen}
-          onCancel={() => setDeleteDialogOpen(false)}
-          onConfirm={handleDelete}
-        />
+        <DeleteConfirmationDialog isOpen={isDeleteDialogOpen} onCancel={() => setDeleteDialogOpen(false)} onConfirm={handleDelete} />
       </Container>
     </>
   );

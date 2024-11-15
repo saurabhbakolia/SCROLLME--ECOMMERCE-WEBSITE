@@ -25,7 +25,7 @@ const Wrapper = styled.div`
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-})}
+  })}
 `;
 
 const Left = styled.div`
@@ -54,66 +54,63 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: '12px', marginInlineStart: '10px' })}
 `;
 
-
 const AdminAppBar = () => {
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const toast = useToast();
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
 
-    const handleLogout = async () => {
-        try {
-            const res = await UserSingOutAPI();
+  const handleLogout = async () => {
+    try {
+      const res = await UserSingOutAPI();
 
-            if (res?.status === 200) {
-                toast({
-                    title: 'Logout Successfully!',
-                    description: res?.data?.message || 'You have successfully logged out!',
-                    status: 'success',
-                    duration: 5000,
-                    isClosable: true,
-                });
-                dispatch(logOut());
-                navigate('/');
-            }
-        } catch (error) {
-            console.error('Logout failed:', error);
-            toast({
-                title: 'Logout Failed!',
-                description: error || 'Something went wrong logging out!',
-                status: 'error',
-                duration: 5000,
-                isClosable: true,
-            });
-        }
-    };
-    return (
-        <Container>
-            <Wrapper>
-                <Left>
-
-                </Left>
-                <Center>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-                        <Logo />
-                    </div>
-                </Center>
-                <Right>
-                    {!isAuthenticated && (
-                        <MenuItem>
-                            <Link to='/register'>REGISTER</Link>
-                        </MenuItem>
-                    )}
-                    {!isAuthenticated && (
-                        <MenuItem>
-                            <Link to='/login'>SIGN IN</Link>
-                        </MenuItem>
-                    )}
-                    {isAuthenticated && (<MenuItem onClick={handleLogout}>LOG OUT</MenuItem>)}
-                </Right>
-            </Wrapper>
-        </Container>
-    );
+      if (res?.status === 200) {
+        toast({
+          title: 'Logout Successfully!',
+          description: res?.data?.message || 'You have successfully logged out!',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        dispatch(logOut());
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+      toast({
+        title: 'Logout Failed!',
+        description: error || 'Something went wrong logging out!',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+  return (
+    <Container>
+      <Wrapper>
+        <Left></Left>
+        <Center>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+            <Logo />
+          </div>
+        </Center>
+        <Right>
+          {!isAuthenticated && (
+            <MenuItem>
+              <Link to='/register'>REGISTER</Link>
+            </MenuItem>
+          )}
+          {!isAuthenticated && (
+            <MenuItem>
+              <Link to='/login'>SIGN IN</Link>
+            </MenuItem>
+          )}
+          {isAuthenticated && <MenuItem onClick={handleLogout}>LOG OUT</MenuItem>}
+        </Right>
+      </Wrapper>
+    </Container>
+  );
 };
 
 export default AdminAppBar;

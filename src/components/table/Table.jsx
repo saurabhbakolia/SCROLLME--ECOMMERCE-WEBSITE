@@ -56,35 +56,35 @@ const StatusBadge = styled.span`
   text-transform: capitalize;
   border: 1px solid
     ${(props) => {
-        switch (props.status) {
-            case true:
-                return '#04771f';
-            case false:
-                return '#ff00153b';
-            default:
-                return '#85020d';
-        }
+      switch (props.status) {
+        case true:
+          return '#04771f';
+        case false:
+          return '#ff00153b';
+        default:
+          return '#85020d';
+      }
     }};
   color: ${(props) => {
-        switch (props.status) {
-            case true:
-                return '#04771f';
-            case false:
-                return '#85020d';
-            default:
-                return '#f0f0f0';
-        }
-    }};
+    switch (props.status) {
+      case true:
+        return '#04771f';
+      case false:
+        return '#85020d';
+      default:
+        return '#f0f0f0';
+    }
+  }};
   background-color: ${(props) => {
-        switch (props.status) {
-            case true:
-                return '#00ff3c14';
-            case false:
-                return '#ff001522';
-            default:
-                return '#f0f0f0';
-        }
-    }};
+    switch (props.status) {
+      case true:
+        return '#00ff3c14';
+      case false:
+        return '#ff001522';
+      default:
+        return '#f0f0f0';
+    }
+  }};
 `;
 
 const Image = styled.img`
@@ -109,58 +109,57 @@ const ActionButton = styled.button`
 `;
 
 const Table = ({ items, columns, selectedRows, toggleSelectAllRows, toggleSelectRow, isRowSelected }) => {
-
-    return (
-        <TableWrapper>
-            <TableHeader>
-                <Tr>
-                    {columns.map((column, index) =>
-                        column.isCheckbox ? (
-                            <CheckboxTh key={index}>
-                                <input
-                                    type='checkbox'
-                                    checked={selectedRows.length === items.length && items.length > 0}
-                                    onChange={toggleSelectAllRows}
-                                    style={{ accentColor: 'teal' }}
-                                />
-                            </CheckboxTh>
-                        ) : (
-                            <Th key={index}>{column.label}</Th>
-                        )
-                    )}
-                </Tr>
-            </TableHeader>
-            <tbody>
-                {items.map((product) => (
-                    <Tr key={product._id}>
-                        <CheckboxTd>
-                            <input
-                                type='checkbox'
-                                checked={isRowSelected(product._id)}
-                                onChange={() => toggleSelectRow(product._id)}
-                                style={{ accentColor: 'teal' }}
-                            />
-                        </CheckboxTd>
-                        <Td>
-                            <Flex>
-                                <Image src={product.imageUrl} alt={product.name} />
-                                {product.name}
-                            </Flex>
-                        </Td>
-                        <Td>{product.category}</Td>
-                        <Td>{product.price}</Td>
-                        <Td>{product.stock}</Td>
-                        <Td>
-                            <StatusBadge status={product.isActive}>{product.isActive ? 'active' : 'in active'}</StatusBadge>
-                        </Td>
-                        <Td>
-                            <ActionButton>Details</ActionButton>
-                        </Td>
-                    </Tr>
-                ))}
-            </tbody>
-        </TableWrapper>
-    );
+  return (
+    <TableWrapper>
+      <TableHeader>
+        <Tr>
+          {columns.map((column, index) =>
+            column.isCheckbox ? (
+              <CheckboxTh key={index}>
+                <input
+                  type='checkbox'
+                  checked={selectedRows.length === items.length && items.length > 0}
+                  onChange={toggleSelectAllRows}
+                  style={{ accentColor: 'teal' }}
+                />
+              </CheckboxTh>
+            ) : (
+              <Th key={index}>{column.label}</Th>
+            )
+          )}
+        </Tr>
+      </TableHeader>
+      <tbody>
+        {items.map((product) => (
+          <Tr key={product._id}>
+            <CheckboxTd>
+              <input
+                type='checkbox'
+                checked={isRowSelected(product._id)}
+                onChange={() => toggleSelectRow(product._id)}
+                style={{ accentColor: 'teal' }}
+              />
+            </CheckboxTd>
+            <Td>
+              <Flex>
+                <Image src={product.imageUrl} alt={product.name} />
+                {product.name}
+              </Flex>
+            </Td>
+            <Td>{product.category}</Td>
+            <Td>{product.price}</Td>
+            <Td>{product.stock}</Td>
+            <Td>
+              <StatusBadge status={product.isActive}>{product.isActive ? 'active' : 'in active'}</StatusBadge>
+            </Td>
+            <Td>
+              <ActionButton>Details</ActionButton>
+            </Td>
+          </Tr>
+        ))}
+      </tbody>
+    </TableWrapper>
+  );
 };
 
 export default Table;
