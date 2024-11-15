@@ -20,3 +20,9 @@ export const Paragraph = styled.p`
   color: ${({ color }) => color || 'inherit'}; // Optional: add color prop
   margin: 0; // Optional: reset margin for consistent spacing
 `;
+
+export const H1 = styled.h1`
+  font-size: ${({ fontSize }) => fontSize || '14px'};
+  font-weight: ${({ weight }) => weight || 'normal'};
+  color: ${({ color }) => color || 'inherit'};
+`;

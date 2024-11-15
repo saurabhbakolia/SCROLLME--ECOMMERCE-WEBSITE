@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { PAYMENT_ENDPOINTS } from '../../api/endPoints';
+import { createFetchOptions, HttpMethod } from '../../utils/apiConfig';
 
 // Function to payment gateway
 export const paymentGatewayAPI = async () => {

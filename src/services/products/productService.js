@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { PRODUCT_ENDPOINTS } from '../../api/endPoints'; // Adjust the path as needed
+import { createFetchOptions, HttpMethod } from '../../utils/apiConfig';
 
 // Function to add a new product
 export const addProductAPI = async (productData) => {
@@ -67,8 +68,9 @@ export const updateProductAPI = async (productId, productData) => {
 
 // Function to delete a product by ID
 export const deleteProductAPI = async (productId) => {
+  const config = createFetchOptions(HttpMethod.DELETE, true);
   return await axios
-    .delete(PRODUCT_ENDPOINTS.DELETE_PRODUCT(productId))
+    .delete(PRODUCT_ENDPOINTS.DELETE_PRODUCT(productId), config)
     .then((response) => {
       return Promise.resolve(response.data);
     })

@@ -14,7 +14,7 @@ import ContributorsPage from './pages/ContributorsPage';
 import ContactUsPage from './pages/ContactUsPage';
 import ComingSoon from './pages/ComingSoon';
 import ForgotPassword from './pages/ForgotPassword';
-import Admin from './components/Admin';
+import Admin from './components/admin/Admin';
 import UpdateProduct from './components/UpdateProduct';
 import AddNewProduct from './components/AddNewProduct';
 
