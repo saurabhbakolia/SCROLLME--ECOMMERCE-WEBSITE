@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import { ShoppingCartOutlined, FavoriteBorderOutlined } from '@mui/icons-material';
@@ -37,17 +38,17 @@ const Left = styled.div`
   align-items: center;
 `;
 
-const Language = styled.span`
+const GTranslateWrapper = styled.div`
   font-size: 14px;
   cursor: pointer;
-  ${mobile({ display: 'none;' })}
+  margin-right: 20px !important; /* Space between the translate widget and the search bar */
+  ${mobile({ display: 'none !important;' })}
 `;
 
 const SearchContainer = styled.div`
   border: 1px solid lightgray;
   display: flex;
   align-items: center;
-  margin-inline-start: 25px;
   padding: 5px;
 `;
 
@@ -55,6 +56,7 @@ const Input = styled.input`
   border: none;
   margin: 'auto' ${mobile({ width: '200px;', margin: '0 auto' })};
 `;
+
 const Center = styled.div`
   flex: 1;
   text-align: center;
@@ -85,7 +87,9 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+
       const res = await UserSingOutAPI();
+
 
       if (res?.status === 200) {
         toast({
@@ -110,11 +114,17 @@ const Navbar = () => {
     }
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.gtranslate.net/widgets/latest/float.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
           <SearchContainer>
             <Input placeholder='Search' />
             <SearchIcon style={{ color: 'gray', fontSize: 16 }} />
@@ -122,8 +132,7 @@ const Navbar = () => {
         </Left>
         <Center>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-            {' '}
-            <Logo />{' '}
+            <Logo />
           </div>
         </Center>
         <Right>
@@ -160,6 +169,8 @@ const Navbar = () => {
           </MenuItem>
         </Right>
       </Wrapper>
+
+      <GTranslateWrapper className='gtranslate_wrapper'></GTranslateWrapper>
     </Container>
   );
 };
