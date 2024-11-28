@@ -1,3 +1,4 @@
+
 import './styles/global.css';
 import Home from './pages/Home';
 import Product from './pages/Product';
