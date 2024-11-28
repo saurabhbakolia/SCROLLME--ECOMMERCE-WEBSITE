@@ -23,12 +23,12 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   ${mobile({
-    height: '90px',
-    padding: '10px 10px',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  })}
+  height: '90px',
+  padding: '10px 10px',
+  flexDirection: 'column',
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
+})}
 `;
 
 const Left = styled.div`
